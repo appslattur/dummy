@@ -90,7 +90,7 @@ public class GPSLocationsActivity extends Activity {
     }
 
     private void saveLocation(Location location, String name){
-        myLocations.addLine(location.getLatitude()+"", location.getLongitude()+"", name);
+        myLocations.addLine(location.getLongitude()+"", location.getLatitude()+"", name);
         makeToast("Saved!");
     }
 
