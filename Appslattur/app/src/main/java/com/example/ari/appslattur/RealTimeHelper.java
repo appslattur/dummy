@@ -5,7 +5,7 @@ package com.example.ari.appslattur;
  */
 public class RealTimeHelper {
     public RealTimeHelper(){
-
+        // Testing
     }
 
     public String getRealTime(){
