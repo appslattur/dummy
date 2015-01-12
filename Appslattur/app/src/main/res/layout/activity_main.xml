@@ -9,39 +9,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GPS Ping"
-        android:id="@+id/GPSBtn"
+        android:id="@+id/gpspingButton"
         android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Push Notification"
-        android:id="@+id/PUSHBtn"
+        android:id="@+id/pushnotificationButton"
         android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Real Time"
-        android:id="@+id/TIMEBtn"
+        android:id="@+id/realtimeButton"
         android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Connectivity"
-        android:id="@+id/CONNECTIVITYBtn"
+        android:id="@+id/displayconnectionsButton"
         android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="GPS Activity"
-        android:id="@+id/GPSActivityBtn"
+        android:id="@+id/gotogpsActivityButton"
         android:layout_gravity="center_horizontal" />
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Proximity Check"
-        android:id="@+id/proximityBtn"/>
+        android:id="@+id/proximityButton"/>
 </LinearLayout>

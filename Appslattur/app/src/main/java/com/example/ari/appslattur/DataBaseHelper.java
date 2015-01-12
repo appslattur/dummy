@@ -40,7 +40,9 @@ class DataBaseHelper extends SQLiteOpenHelper {
         values.put("NAME", s3);
         this.db.insert(DATABASE_TABLE_LOCATIONS, null, values);
     }
-
+    /*
+    This function needs massive work in preperation for more advanced use of the application.
+     */
     public String getLocations(){
         String query = "SELECT * FROM "+ DATABASE_TABLE_LOCATIONS+ " ORDER by ID DESC Limit 50";
         Cursor cursor = this.db.rawQuery(query, null);

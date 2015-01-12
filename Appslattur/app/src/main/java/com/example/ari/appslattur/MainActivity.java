@@ -29,32 +29,32 @@ public class MainActivity extends Activity {
         myRealTimeHelper = new RealTimeHelper();
         myConnectivityHelper = new ConnectivityHelper(MainActivity.this);
 
-        findViewById(R.id.GPSBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.gpspingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeToast(myGPSHelper.getGPS());
             }
         });
-        findViewById(R.id.PUSHBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.pushnotificationButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeToast(myPushNotificationHelper.pushNotification());
             }
         });
-        findViewById(R.id.TIMEBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.realtimeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeToast(myRealTimeHelper.getRealTime());
             }
         });
-        findViewById(R.id.CONNECTIVITYBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.displayconnectionsButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeToast(myConnectivityHelper.getAvailibleConnections());
             }
         });
 
-        findViewById(R.id.GPSActivityBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.gotogpsActivityButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent myintent = new Intent(MainActivity.this, GPSLocationsActivity.class);
@@ -62,7 +62,12 @@ public class MainActivity extends Activity {
             }
         });
 
-        findViewById(R.id.proximityBtn).setOnClickListener(new View.OnClickListener() {
+
+        /*
+        Much is simplified here since we dont need to know what location we are near,
+        knowing that we can detect priximity within 50m is sufficient for now
+         */
+        findViewById(R.id.proximityButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myGPSHelper.proximityScanner(myGPSHelper.getRawGPS()) != null){
@@ -72,7 +77,9 @@ public class MainActivity extends Activity {
         });
     }
 
-    //Toasts a String
+    /*
+    Simplified toast making for convinience.
+     */
     private void makeToast(String s){
         Toast.makeText(getApplicationContext(), s,
                 Toast.LENGTH_LONG).show();

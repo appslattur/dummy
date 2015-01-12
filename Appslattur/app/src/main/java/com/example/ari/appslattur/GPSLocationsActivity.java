@@ -23,20 +23,20 @@ public class GPSLocationsActivity extends Activity {
 
 
         //Buttons on Main layout
-        findViewById(R.id.PINGGPSBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.gpspingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeToast(myGPSHelper.getGPS());
             }
         });
-        findViewById(R.id.SAVECURRENTBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.gotosavecurrentlocationMenuButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleBottom();
             }
         });
 
-        findViewById(R.id.POLEDISTANCEBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.distancetopoleButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myGPSHelper.getRawGPS() != null){
@@ -47,7 +47,7 @@ public class GPSLocationsActivity extends Activity {
 
 
         //BottomLayout, sublayout branches from SAVECURRENTBtn
-        findViewById(R.id.FINISHCURRENTBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.finishsavingcurrentlocationButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myGPSHelper.getRawGPS() == null)goError();
@@ -58,21 +58,21 @@ public class GPSLocationsActivity extends Activity {
             }
         });
 
-        findViewById(R.id.SEELOCATIONSBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.seesavedlocationsButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 makeToast(myLocations.getLocations());
             }
         });
 
-        findViewById(R.id.CREATEBtn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.gotocreatelocationMenuButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toggleCreate();
             }
         });
         //Sublayout branching from CREATEBtn,
-        findViewById(R.id.CREATELocBtn2).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.finishcreatinglocationButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 createLocation();
