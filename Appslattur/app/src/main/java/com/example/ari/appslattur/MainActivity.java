@@ -61,6 +61,15 @@ public class MainActivity extends Activity {
                 MainActivity.this.startActivity(myintent);
             }
         });
+
+        findViewById(R.id.proximityBtn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(myGPSHelper.proximityScanner(myGPSHelper.getRawGPS()) != null){
+                    makeToast("You are near something!");
+                };
+            }
+        });
     }
 
     //Toasts a String
