@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:visibility="gone"
-        android:id="@+id/topLayout"
+        android:id="@+id/gpsOptionSelectionMenuLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
 
     <LinearLayout
         android:visibility="gone"
-        android:id="@+id/bottomLayout"
+        android:id="@+id/setNameForCurrentLocationLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -60,40 +60,49 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Finish"
-            android:id="@+id/finishsavingcurrentlocationButton"/>
+            android:id="@+id/finishSavingCurrentLocationButton"/>
 
         </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/nameField2"
-        android:hint="Name"
-        android:layout_gravity="right" />
+
 
     <LinearLayout
         android:visibility="visible"
-        android:id="@+id/CREATELayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:id="@+id/createNewLocationLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="fill_horizontal">
         <EditText
-            android:layout_width="381dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameField2"
+            android:hint="Name"
+            android:layout_gravity="right"
+            android:gravity="fill_horizontal|top" />
+        <EditText
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/latitudeField"
             android:hint="Latitude"
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:gravity="start" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/longitudeField"
+            android:hint="Longitude"
+            android:inputType="numberDecimal"
+            android:gravity="start" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="CREATE"
+            android:id="@+id/finishcreatinglocationButton"
+            android:gravity="start"
+            android:textAlignment="center" />
     </LinearLayout>
 
-    <EditText
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/longitudeField"
-        android:hint="Longitude"
-        android:inputType="numberDecimal" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="CREATE"
-        android:id="@+id/finishcreatinglocationButton" />
 </LinearLayout>

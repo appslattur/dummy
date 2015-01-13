@@ -47,13 +47,13 @@ public class GPSLocationsActivity extends Activity {
 
 
         //BottomLayout, sublayout branches from SAVECURRENTBtn
-        findViewById(R.id.finishsavingcurrentlocationButton).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.finishSavingCurrentLocationButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(myGPSHelper.getRawGPS() == null)goError();
                 else {
                     saveLocation(myGPSHelper.getRawGPS(), getLocationName());
-                    toggleTop();
+                    toggleMainSelectionMenu();
                 }
             }
         });
@@ -68,7 +68,7 @@ public class GPSLocationsActivity extends Activity {
         findViewById(R.id.gotocreatelocationMenuButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toggleCreate();
+                toggleCreateNewLocationMenu();
             }
         });
         //Sublayout branching from CREATEBtn,
@@ -110,7 +110,7 @@ public class GPSLocationsActivity extends Activity {
                 //myLocations.addLine(lat.getText().toString(), lng.getText().toString(), nm.getText().toString());
                 saveLocation(newLoc, nm.getText().toString());
                 makeToast("Saved!");
-                toggleTop();
+                toggleMainSelectionMenu();
             } catch (Exception e) {
                 //Log something
             }
@@ -126,17 +126,17 @@ public class GPSLocationsActivity extends Activity {
     }
 
     private void toggleBottom(){
-        findViewById(R.id.topLayout).setVisibility(View.GONE);
-        findViewById(R.id.bottomLayout).setVisibility(View.VISIBLE);
+        findViewById(R.id.gpsOptionSelectionMenuLayout).setVisibility(View.GONE);
+        findViewById(R.id.setNameForCurrentLocationLayout).setVisibility(View.VISIBLE);
     }
-    private void toggleTop(){
-        findViewById(R.id.bottomLayout).setVisibility(View.GONE);
-        findViewById(R.id.CREATELayout).setVisibility(View.GONE);
-        findViewById(R.id.topLayout).setVisibility(View.VISIBLE);
+    private void toggleMainSelectionMenu(){
+        findViewById(R.id.setNameForCurrentLocationLayout).setVisibility(View.GONE);
+        findViewById(R.id.createNewLocationLayout).setVisibility(View.GONE);
+        findViewById(R.id.gpsOptionSelectionMenuLayout).setVisibility(View.VISIBLE);
     }
-    private void toggleCreate(){
-        findViewById(R.id.topLayout).setVisibility(View.GONE);
-        findViewById(R.id.CREATELayout).setVisibility(View.VISIBLE);
+    private void toggleCreateNewLocationMenu(){
+        findViewById(R.id.gpsOptionSelectionMenuLayout).setVisibility(View.GONE);
+        findViewById(R.id.createNewLocationLayout).setVisibility(View.VISIBLE);
     }
 
     private boolean checkIfFieldIsValid(EditText field){
