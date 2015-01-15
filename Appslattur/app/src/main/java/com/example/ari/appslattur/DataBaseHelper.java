@@ -5,6 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.location.Location;
+
+import java.util.ArrayList;
 
 /**
  * Created by Ari on 10.1.2015.
@@ -30,6 +33,10 @@ class DataBaseHelper extends SQLiteOpenHelper {
                         "LATITUDE TEXT NOT NULL, "+
                         "NAME VARCHAR NOT NULL);";
         db.execSQL(tmpTable);
+    }
+
+    public void clearTable(){
+        this.db.delete(DATABASE_TABLE_LOCATIONS, null, null);
     }
 
     public void addLine(String s1, String s2,String s3)
@@ -61,6 +68,27 @@ class DataBaseHelper extends SQLiteOpenHelper {
 
         }
         return MASSIVESTRING;
+    }
+
+    public ArrayList<Location> getLocationList(){
+        String query = "SELECT * FROM "+ DATABASE_TABLE_LOCATIONS+ " ORDER by ID DESC Limit 50";
+        Cursor cursor = this.db.rawQuery(query, null);
+        ArrayList<Location> myLocations = new ArrayList<Location>();
+        if(cursor.moveToFirst()){
+            do{
+                double longitude = Double.parseDouble(cursor.getString(1));
+                double latitude = Double.parseDouble(cursor.getString(2));
+                String name = cursor.getString(3);
+                Location tempLocation = new Location(name);
+                tempLocation.setLatitude(latitude);
+                tempLocation.setLongitude(longitude);
+                myLocations.add(tempLocation);
+            }
+            while(cursor.moveToNext());
+
+
+        }
+        return myLocations;
     }
 
     public void establishConnection()

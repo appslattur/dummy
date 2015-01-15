@@ -26,7 +26,7 @@ public class GPSHelper {
                 e.printStackTrace();
             }
         }
-        return "No Location";
+        return "";
     }
 
     public Location getRawGPS(){
