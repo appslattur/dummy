@@ -70,6 +70,12 @@ public class MainActivity extends Activity {
                 searchLocationsInRange();
             }
         });
+        findViewById(R.id.clearlocations).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myLocations.clearTable();
+            }
+        });
     }
 
 
@@ -134,6 +140,12 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 searchLocationsInRange();
+            }
+        });
+        findViewById(R.id.clearlocations).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myLocations.clearTable();
             }
         });
     }
