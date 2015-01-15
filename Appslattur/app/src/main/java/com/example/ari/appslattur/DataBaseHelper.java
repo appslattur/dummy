@@ -82,6 +82,7 @@ class DataBaseHelper extends SQLiteOpenHelper {
                 Location tempLocation = new Location(name);
                 tempLocation.setLatitude(latitude);
                 tempLocation.setLongitude(longitude);
+
                 myLocations.add(tempLocation);
             }
             while(cursor.moveToNext());

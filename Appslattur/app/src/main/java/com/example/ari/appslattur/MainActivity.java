@@ -159,7 +159,9 @@ public class MainActivity extends Activity {
         boolean match = false;
         for(Location l : locations){
             if(myGPSHelper.getRawGPS().distanceTo(l) <= searchRange){
-                makeToast("Close to something");
+                
+                String name = l.getProvider();
+                makeToast("Close to :"+ name);
                 match=true;
                 break;
             }
