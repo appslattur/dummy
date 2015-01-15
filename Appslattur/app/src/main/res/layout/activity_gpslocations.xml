@@ -6,7 +6,7 @@
     >
 
     <LinearLayout
-        android:visibility="gone"
+        android:visibility="visible"
         android:id="@+id/gpsOptionSelectionMenuLayout"
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -67,7 +67,7 @@
 
 
     <LinearLayout
-        android:visibility="visible"
+        android:visibility="gone"
         android:id="@+id/createNewLocationLayout"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

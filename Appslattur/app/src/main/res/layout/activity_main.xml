@@ -44,4 +44,12 @@
         android:layout_height="wrap_content"
         android:text="Proximity Check"
         android:id="@+id/proximityButton"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/rangeField" />
+
 </LinearLayout>

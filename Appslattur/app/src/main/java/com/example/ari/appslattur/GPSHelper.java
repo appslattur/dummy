@@ -58,17 +58,17 @@ public class GPSHelper {
      */
     private void initHardLocations(){
         Location haskolatorg = new Location("Absolute");
-            haskolatorg.setLongitude(64.139992);
-            haskolatorg.setLatitude(-21.950347);
+            haskolatorg.setLatitude(64.139992);
+            haskolatorg.setLongitude(-21.950347);
 
 
         Location nord = new Location("Absolute");
-            nord.setLongitude(64.139657);
-            nord.setLatitude(-21.955915);
+            nord.setLatitude(64.139657);
+            nord.setLongitude(-21.955915);
 
         Location taeknigardur = new Location("Absolute");
-            taeknigardur.setLongitude(64.139391);
-            taeknigardur.setLatitude(-21.955272);
+            taeknigardur.setLatitude(64.139391);
+            taeknigardur.setLongitude(-21.955272);
 
         hardLocations.add(haskolatorg);
         hardLocations.add(nord);
@@ -81,12 +81,12 @@ public class GPSHelper {
     Runs throu the list of hardcoded locations and returns the first one
     within 50m.  If not match is found it returns null.
      */
-    public Location proximityScanner(Location myLocation){
+    public Location proximityScanner(Location myLocation, int range){
 
-        int range = 50;
+
 
         for(Location l : hardLocations){
-            if(myLocation.distanceTo(l) <= 50){
+            if(myLocation.distanceTo(l) <= range){
                 return l;
             }
         }

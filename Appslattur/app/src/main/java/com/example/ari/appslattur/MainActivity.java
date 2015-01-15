@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -70,7 +71,9 @@ public class MainActivity extends Activity {
         findViewById(R.id.proximityButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(myGPSHelper.proximityScanner(myGPSHelper.getRawGPS()) != null){
+
+
+                if(myGPSHelper.proximityScanner(myGPSHelper.getRawGPS(), getRange()) != null){
                     makeToast("You are near something!");
                 };
             }
@@ -85,6 +88,19 @@ public class MainActivity extends Activity {
                 Toast.LENGTH_LONG).show();
     }
 
+    private int getRange(){
+        int r = 50;
+
+        EditText strField =(EditText)findViewById(R.id.rangeField);
+
+        if(strField.getText().toString() != ""){
+            r = Integer.parseInt(strField.getText().toString());
+        }
+
+        return r;
+
+    }
+
 
 
     @Override
@@ -93,6 +109,7 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
