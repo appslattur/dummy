@@ -151,6 +151,12 @@ public class MainActivity extends Activity {
     }
     private void toggleSetRange(){
         setContentView(R.layout.searchrange);
+        findViewById(R.id.finishsettingrangebutton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                toggleMainSelectionMenuLayout();
+            }
+        });
         getSeekBarValue();
     }
 
@@ -159,7 +165,7 @@ public class MainActivity extends Activity {
         boolean match = false;
         for(Location l : locations){
             if(myGPSHelper.getRawGPS().distanceTo(l) <= searchRange){
-                
+
                 String name = l.getProvider();
                 makeToast("Close to :"+ name);
                 match=true;
@@ -219,9 +225,9 @@ public class MainActivity extends Activity {
 
     public void getSeekBarValue(){
         SeekBar myBar =(SeekBar)findViewById(R.id.seekBar);
-        int value = myBar.getProgress();
+        myBar.setProgress(searchRange);
         TextView mytext = (TextView)findViewById(R.id.displayrangeView);
-        mytext.setText(value+"m");
+        mytext.setText(searchRange+"m");
         myBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
