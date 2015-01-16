@@ -39,9 +39,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(canScan()){
-                    makeToast("Location service availible");
+                    makeToast("Location service available");
                 }
-                else makeToast("Location service unavailible");
+                else makeToast("Location service unavailable");
             }
         });
 
@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
                 if(canScan()) {
                     searchLocationsInRange();
                 }else{
-                    makeToast("Location service unavailible");
+                    makeToast("Location service unavailable");
                 }
             }
         });
@@ -115,9 +115,9 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 if(canScan()){
-                    makeToast("Location service availible");
+                    makeToast("Location service available");
                 }
-                else makeToast("Location service unavailible");
+                else makeToast("Location service unavailable");
             }
         });
 
@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
                 if(canScan()) {
                     searchLocationsInRange();
                 }else{
-                    makeToast("Location service unavailible");
+                    makeToast("Location service unavailable");
                 }
             }
         });
@@ -180,7 +180,7 @@ public class MainActivity extends Activity {
                 break;
             }
         }
-        if(!match)makeToast("Not near something");
+        if(!match)makeToast("Nothing in range");
     }
 
 
@@ -218,7 +218,7 @@ public class MainActivity extends Activity {
         makeToast("Saved!");
     }
     private void goError(){
-        makeToast("No Location Availible!");
+        makeToast("No Location Available!");
     }
 
     private String getLocationName(EditText et){
