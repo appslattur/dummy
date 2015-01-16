@@ -175,7 +175,7 @@ public class MainActivity extends Activity {
             if(myGPSHelper.getRawGPS().distanceTo(l) <= searchRange){
 
                 String name = l.getProvider();
-                makeToast("Close to :"+ name);
+                makeToast("Close to : "+ name);
                 match=true;
                 break;
             }
