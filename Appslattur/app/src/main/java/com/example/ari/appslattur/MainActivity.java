@@ -38,10 +38,10 @@ public class MainActivity extends Activity {
         findViewById(R.id.locationServiceButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(myGPSHelper.getGPS().trim() != ""){
-                    makeToast("Service Availible");
+                if(canScan()){
+                    makeToast("Location service availible");
                 }
-                else makeToast("Service Unavailible!");
+                else makeToast("Location service unavailible");
             }
         });
 
@@ -67,7 +67,11 @@ public class MainActivity extends Activity {
         findViewById(R.id.scanButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchLocationsInRange();
+                if(canScan()) {
+                    searchLocationsInRange();
+                }else{
+                    makeToast("Location service unavailible");
+                }
             }
         });
         findViewById(R.id.clearlocations).setOnClickListener(new View.OnClickListener() {
@@ -110,10 +114,10 @@ public class MainActivity extends Activity {
         findViewById(R.id.locationServiceButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(myGPSHelper.getGPS().trim() != ""){
-                    makeToast("Service Availible");
+                if(canScan()){
+                    makeToast("Location service availible");
                 }
-                else makeToast("Service Unavailible!");
+                else makeToast("Location service unavailible");
             }
         });
 
@@ -139,7 +143,11 @@ public class MainActivity extends Activity {
         findViewById(R.id.scanButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                searchLocationsInRange();
+                if(canScan()) {
+                    searchLocationsInRange();
+                }else{
+                    makeToast("Location service unavailible");
+                }
             }
         });
         findViewById(R.id.clearlocations).setOnClickListener(new View.OnClickListener() {
@@ -221,7 +229,11 @@ public class MainActivity extends Activity {
         return "NoName";
     }
 
+    private boolean canScan(){
 
+        if(myGPSHelper.getRawGPS() != null)return true;
+        return false;
+    }
 
     public void getSeekBarValue(){
         SeekBar myBar =(SeekBar)findViewById(R.id.seekBar);
