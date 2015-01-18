@@ -47,6 +47,13 @@
             android:text="Clear Saved Location"
             android:id="@+id/clearlocations"
             android:layout_gravity="center_horizontal" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Notify Me"
+            android:id="@+id/noti"
+            android:layout_gravity="center_horizontal" />
     </LinearLayout>
 
 
