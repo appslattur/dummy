@@ -13,6 +13,10 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/*
+Multi window single activity.  This class toggles layout files and initializes buttons
+instead of starting another activity.
+ */
 
 public class MainActivity extends Activity {
 
@@ -20,6 +24,7 @@ public class MainActivity extends Activity {
     PushNotificationHelper myPushNotificationHelper;
     ConnectivityHelper myConnectivityHelper;
     DataBaseHelper myLocations;
+
     int searchRange = 50;
 
     @Override
@@ -34,6 +39,8 @@ public class MainActivity extends Activity {
         myPushNotificationHelper = new PushNotificationHelper();
         myConnectivityHelper = new ConnectivityHelper(MainActivity.this);
         myLocations= new DataBaseHelper(this);
+
+
 
         findViewById(R.id.locationServiceButton).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,8 +89,6 @@ public class MainActivity extends Activity {
         });
     }
 
-
-
     private void toggleSaveCurrentLocationLayout(){
         setContentView(R.layout.savecurrentlocationlayout);
 
@@ -99,6 +104,7 @@ public class MainActivity extends Activity {
         });
 
     }
+
     private void toggleCreateNewLocationLayout(){
        setContentView(R.layout.createnewlocationlayout);
 
@@ -109,6 +115,7 @@ public class MainActivity extends Activity {
             }
         });
     }
+
     private void toggleMainSelectionMenuLayout(){
        setContentView(R.layout.activity_main);
         findViewById(R.id.locationServiceButton).setOnClickListener(new View.OnClickListener() {
@@ -157,6 +164,7 @@ public class MainActivity extends Activity {
             }
         });
     }
+
     private void toggleSetRange(){
         setContentView(R.layout.searchrange);
         findViewById(R.id.finishsettingrangebutton).setOnClickListener(new View.OnClickListener() {
@@ -168,7 +176,7 @@ public class MainActivity extends Activity {
         getSeekBarValue();
     }
 
-    private void searchLocationsInRange(){
+    protected void searchLocationsInRange(){
         ArrayList<Location> locations = myLocations.getLocationList();
         boolean match = false;
         for(Location l : locations){
@@ -183,15 +191,13 @@ public class MainActivity extends Activity {
         if(!match)makeToast("Nothing in range");
     }
 
-
-
     //Toasts a String
-    private void makeToast(String s){
+    protected void makeToast(String s){
         Toast.makeText(getApplicationContext(), s,
                 Toast.LENGTH_LONG).show();
     }
 
-    private void createLocation(){
+    protected void createLocation(){
         Location newLoc = new Location("NETWORK");
         EditText lat = (EditText)findViewById(R.id.latitudeField);
         EditText lng = (EditText)findViewById(R.id.longitudeField);
@@ -208,20 +214,23 @@ public class MainActivity extends Activity {
             }
         }else  makeToast("All fields must be filled!");
     }
-    private boolean checkIfFieldIsValid(EditText field){
+
+    protected boolean checkIfFieldIsValid(EditText field){
         if(field.getText().toString().trim().equals("")){
             return false;
         }else return true;
     }
-    private void saveLocation(Location location, String name){
+
+    protected void saveLocation(Location location, String name){
         myLocations.addLine(location.getLongitude()+"", location.getLatitude()+"", name);
         makeToast("Saved!");
     }
-    private void goError(){
+
+    protected void goError(){
         makeToast("No Location Available!");
     }
 
-    private String getLocationName(EditText et){
+    protected String getLocationName(EditText et){
 
         if(checkIfFieldIsValid(et)){
             return et.getText().toString();
@@ -229,13 +238,13 @@ public class MainActivity extends Activity {
         return "NoName";
     }
 
-    private boolean canScan(){
+    protected boolean canScan(){
 
         if(myGPSHelper.getRawGPS() != null)return true;
         return false;
     }
 
-    public void getSeekBarValue(){
+    protected void getSeekBarValue(){
         SeekBar myBar =(SeekBar)findViewById(R.id.seekBar);
         myBar.setProgress(searchRange);
         TextView mytext = (TextView)findViewById(R.id.displayrangeView);

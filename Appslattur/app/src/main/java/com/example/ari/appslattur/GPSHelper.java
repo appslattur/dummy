@@ -40,6 +40,17 @@ public class GPSHelper {
                 e.printStackTrace();
             }
         }
+        if(getGPSValidity()){
+            try {
+                //Get GPS Coords
+                Location location = myLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+                return location;
+            }catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
         return null;
     }
 
