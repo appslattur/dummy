@@ -9,22 +9,8 @@ import android.support.v4.app.NotificationCompat;
 
 /**
  * Created by Arnar Jónsson on 18.1.2015.
- *
- NotificationHandler nHandler = new NotificationHandler(getApplicationContext(),
-    "Random TickerTitle",
-    "Random Title",
-    "Random Text",
-    R.drawable.ic_launcher);
- nHandler.sendNotification();
- *
- *
- *
- *
- *
- *
  */
-
-public class NotifcationHandler {
+public class NotificationHandler {
 
     private NotificationCompat.Builder nBuilder;
     private Context context;
@@ -55,5 +41,4 @@ public class NotifcationHandler {
         notificationManager.notify(0, notification);
 
     }
-
 }
