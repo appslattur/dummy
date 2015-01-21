@@ -87,6 +87,17 @@ public class MainActivity extends Activity {
                 myLocations.clearTable();
             }
         });
+        findViewById(R.id.noti).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NotificationHandler nHandler = new NotificationHandler(getApplicationContext(),
+                        "Random TrickTitle",
+                        "Random Title",
+                        "Random Text",
+                        R.drawable.ic_launcher);
+                nHandler.sendNotification();
+            }
+        });
     }
 
     private void toggleSaveCurrentLocationLayout(){
@@ -161,6 +172,18 @@ public class MainActivity extends Activity {
             @Override
             public void onClick(View view) {
                 myLocations.clearTable();
+            }
+        });
+
+        findViewById(R.id.noti).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                NotificationHandler nHandler = new NotificationHandler(getApplicationContext(),
+                        "Random TrickTitle",
+                        "Random Title",
+                        "Random Text",
+                        R.drawable.ic_launcher);
+                nHandler.sendNotification();
             }
         });
     }
