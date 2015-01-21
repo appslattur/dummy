@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-
 public class MainActivity extends Activity {
 
     GPSHelper myGPSHelper;
