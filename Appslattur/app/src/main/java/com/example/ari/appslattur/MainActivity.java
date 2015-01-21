@@ -13,10 +13,12 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+
 /*
 Multi window single activity.  This class toggles layout files and initializes buttons
 instead of starting another activity.
  */
+
 
 public class MainActivity extends Activity {
 
