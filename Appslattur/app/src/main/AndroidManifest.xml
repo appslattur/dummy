@@ -23,6 +23,9 @@
         </activity>
 
         <service android:name=".BackgroundServiceStarter"/>
+        <service android:name="com.example.ari.appslattur.NotificationServiceHandler">
+
+        </service>
 
 
 
