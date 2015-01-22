@@ -6,7 +6,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by Arnar Jónsson on 18.1.2015.
@@ -82,8 +86,18 @@ public class NotificationHandler {
             notification.defaults = Notification.DEFAULT_VIBRATE;
         }
         */
-            NotificationManager notificationManager = (NotificationManager) this.context.getSystemService(this.context.NOTIFICATION_SERVICE);
+            final NotificationManager notificationManager = (NotificationManager) this.context.getSystemService(this.context.NOTIFICATION_SERVICE);
             notificationManager.notify(0, notification);
 
+            Timer timer = new Timer();
+            TimerTask task = new TimerTask() {
+                @Override
+                public void run() {
+                    notificationManager.cancel(0);
+                }
+            };
+            timer.schedule(task, 10000);
         }
+
+
 }
