@@ -26,8 +26,16 @@ public class NotificationHandler {
 
         private boolean soundFlag;
 
-        public NotificationHandler(Context context, String tickerTitle, String title, String text,
-                                   int icon, Uri uri, Intent startingIntent, boolean vibrate, Uri soundAlert,
+        public NotificationHandler(Context context,
+                                   String tickerTitle,
+                                   String title,
+                                   String text,
+                                   int lifeSpan,
+                                   int icon,
+                                   Uri uri,
+                                   Intent startingIntent,
+                                   boolean vibrate,
+                                   Uri soundAlert,
                                    boolean autoCancel) {
 
 

@@ -12,6 +12,16 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+
+        <!-- DUMMIE SERVICE FOR TESTING PURPOSES -->
+        <receiver android:name=".AutoStart">
+            <intent-filter>
+                <action android:name="android.intent.action.ACTION_BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- DUMMIE SERVICE ENDS HERE -->
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -23,13 +33,25 @@
         </activity>
 
         <service android:name=".BackgroundServiceStarter"/>
+
         <service android:name="com.example.ari.appslattur.NotificationServiceHandler">
 
         </service>
 
-
+        <!-- DUMMIE SERVICE FOR TESTING PURPOSES -->
+        <service android:name="com.example.ari.appslattur.DummyService"
+            android:enabled="true"
+            android:exported="false"
+            android:isolatedProcess="false"
+            android:label="Appslattur"
+            />
+        <!-- DUMMIE SERVICE ENDS HERE -->
 
 
     </application>
+
+    <!-- DUMMIE SERVICE FOR TESTING PURPOSES -->
+    <user-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"></user-permission>
+    <!-- DUMMIE SERVICE ENDS HERE -->
 
 </manifest>

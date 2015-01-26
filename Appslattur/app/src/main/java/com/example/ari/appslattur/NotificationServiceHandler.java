@@ -2,6 +2,7 @@ package com.example.ari.appslattur;
 
 import android.app.IntentService;
 import android.content.Intent;
+import android.os.Bundle;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -12,7 +13,7 @@ import java.util.TimerTask;
 public class NotificationServiceHandler extends IntentService {
 
 
-    private String title;
+    private ParcelDict parcelDict;
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -30,8 +31,8 @@ public class NotificationServiceHandler extends IntentService {
     @Override
     protected void onHandleIntent(Intent intent) {
 
-        this.title = intent.getStringExtra("titleMessage");
-        int delay = intent.getIntExtra("delay", 30000);
+        Bundle data = intent.getExtras();
+        this.parcelDict = (ParcelDict) data.getParcelable("ParcelDict");
 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -40,10 +41,16 @@ public class NotificationServiceHandler extends IntentService {
                 sendNotification();
             }
         };
-        timer.schedule(task, delay);
+        timer.schedule(task, this.parcelDict.getDelay());
     }
 
+
+
     private void sendNotification() {
-        NotificationHelper nHelper = new NotificationHelper(getApplicationContext(), title);
+        NotificationHelper nHelper = new NotificationHelper(getApplicationContext(),
+                this.parcelDict.getTickerTitle(),
+                this.parcelDict.getTitle(),
+                this.parcelDict.getText(),
+                this.parcelDict.getLifeSpan());
     }
 }

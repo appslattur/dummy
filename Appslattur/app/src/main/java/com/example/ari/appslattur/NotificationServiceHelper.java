@@ -9,11 +9,10 @@ import android.os.Bundle;
  */
 public class NotificationServiceHelper {
 
-    public NotificationServiceHelper(Context context, String title, int delay) {
+    public NotificationServiceHelper(Context context, String tickerTitle, String title, String text, int delay, int lifeSpan) {
 
         Intent nIntent = new Intent(context, NotificationServiceHandler.class);
-        nIntent.putExtra("titleMessage", "Random title");
-        nIntent.putExtra("delay", 30000);
+        nIntent.putExtra("parcelDict", new ParcelDict(tickerTitle, title, text, delay, lifeSpan));
         context.startService(nIntent);
 
     }

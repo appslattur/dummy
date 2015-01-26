@@ -10,12 +10,13 @@ public class NotificationHelper {
 
     NotificationHandler nHandler;
 
-    public NotificationHelper(Context context, String title) {
+    public NotificationHelper(Context context, String tickerTitle, String title, String text, int lifeSpan) {
 
         nHandler = new NotificationHandler(context,
-                "Random Ticker Title",
+                tickerTitle,
                 title,
-                "Random Text",
+                text,
+                lifeSpan,
                 R.drawable.ic_launcher,
                 null,
                 null,

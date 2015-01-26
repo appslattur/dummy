@@ -1,8 +1,13 @@
 package com.example.ari.appslattur;
 
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.Application;
+import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
+import android.test.ApplicationTestCase;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /*
@@ -33,6 +39,24 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*
+        //////////////
+        // DUMMIE IMMORTAL SERVICE TESTING
+        //////////////
+        if(isServiceRunning("DummyService")) {
+            Intent serviceIntent = new Intent(this,DummyService.class);
+            startService(serviceIntent);
+            bindService(serviceIntent,getApplicationContext().bindService(),0);
+        }
+        else {
+
+        }
+
+        startService(new Intent(this, DummyService.class));
+        //////////////
+        // DUMMIE IMMORTAL SERVICE TESTING ends here
+        //////////////
+        */
 
 
         //Helpers return strings, finish helper functions without modifications
@@ -305,4 +329,23 @@ public class MainActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    /////
+    // Service related testing
+    /////
+    private boolean isServiceRunning(String serviceClassName) {
+        ActivityManager activityManager = (ActivityManager)getApplicationContext().
+                getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(
+                Integer.MAX_VALUE);
+        for(ActivityManager.RunningServiceInfo runningServiceInfo: services) {
+            if(runningServiceInfo.service.getClassName().equals(serviceClassName)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    /////
+    // Service related testing stopped
+    /////
 }
