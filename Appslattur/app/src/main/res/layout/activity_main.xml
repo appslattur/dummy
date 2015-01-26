@@ -10,43 +10,6 @@
         android:layout_height="match_parent"
         android:id="@+id/mainSelectionLayout"
         android:visibility="visible">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Check Location Service"
-            android:id="@+id/locationServiceButton"
-            android:layout_gravity="center_horizontal" />
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/gotoSaveCurrentButton"
-            android:text="Save Current Location"/>
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/gotoCreateNewLocationButton"
-            android:text="Create New Location"/>
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Set Range"
-            android:id="@+id/gotosetrangelayout"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Scan"
-            android:id="@+id/scanButton"
-            android:layout_gravity="center_horizontal" />
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Clear Saved Location"
-            android:id="@+id/clearlocations"
-            android:layout_gravity="center_horizontal" />
 
         <Button
             android:layout_width="match_parent"

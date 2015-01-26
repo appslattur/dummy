@@ -34,10 +34,6 @@
 
         <service android:name=".BackgroundServiceStarter"/>
 
-        <service android:name="com.example.ari.appslattur.NotificationServiceHandler">
-
-        </service>
-
         <!-- DUMMIE SERVICE FOR TESTING PURPOSES -->
         <service android:name="com.example.ari.appslattur.DummyService"
             android:enabled="true"

@@ -21,17 +21,6 @@ public class DummyService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        TimerTask timerTask = new TimerTask() {
-            public void run() {
-                NotificationServiceHelper tempNSH = new NotificationServiceHelper(
-                        getApplicationContext(),
-                        "Random Title",
-                        10 * 1000);
-            }
-        };
-
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(timerTask, 5 * 60 * 1000, 5 * 60 * 1000);
         return START_STICKY;
     }
     @Override
