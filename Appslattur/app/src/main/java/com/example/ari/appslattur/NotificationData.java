@@ -1,35 +1,39 @@
 package com.example.ari.appslattur;
 
 import android.content.Context;
+import android.net.Uri;
 
 /**
  * Created by Arnar Jónsson on 26.1.2015.
  */
 public class NotificationData {
 
-    private Context context;
+    private String id;
     private String tickerTitle;
     private String title;
     private String text;
-    private boolean vibration;
-    private boolean willRecycle;
+    private String icon;
+    private String sound;
+    private String vibrationLength;
 
-    public NotificationData(Context context,
-                            String tickerTitle,
-                            String title,
-                            String text,
-                            boolean vibration,
-                            boolean willRecycle) {
-        this.context = context;
+
+    public NotificationData(int id, String tickerTitle, String title, String text, int icon, Uri sound, int vibrationLength) {
+
+        this.id = Integer.toString(id);
         this.tickerTitle = tickerTitle;
         this.title = title;
         this.text = text;
-        this.vibration = vibration;
-        this.willRecycle = willRecycle;
+        this.icon = Integer.toString(icon);
+        this.sound = sound.toString();
+        this.vibrationLength = Integer.toString(vibrationLength);
+
     }
 
-    public Context getContext() {
-        return this.context;
+    /////
+    // Public Methods
+    /////
+    public int getId() {
+        return Integer.parseInt(this.id);
     }
 
     public String getTickerTitle() {
@@ -44,11 +48,20 @@ public class NotificationData {
         return this.text;
     }
 
-    public boolean willVibrate() {
-        return this.vibration;
+    public int getIcon() {
+        return Integer.parseInt(this.icon);
     }
 
-    public boolean isEternal() {
-        return this.willRecycle;
+    public Uri getSound() {
+        return Uri.parse(this.sound);
     }
+
+    public int getVibrationLength() {
+        return Integer.parseInt(this.vibrationLength);
+    }
+
+    /////
+    // Parcelable thingies
+    /////
+    //TODO : Shiny things
 }

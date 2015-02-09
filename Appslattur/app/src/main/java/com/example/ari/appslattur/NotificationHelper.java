@@ -2,6 +2,8 @@ package com.example.ari.appslattur;
 
 /**
  * Created by Arnar Jónsson on 26.1.2015.
+ *
+ * USELESS SINCE 6.2.2015
  */
 public class NotificationHelper {
 
