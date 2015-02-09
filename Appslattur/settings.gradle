@@ -1,1 +1,9 @@
+<<<<<<< Updated upstream
 include ':app', ':mvp'
+=======
+<<<<<<< HEAD
+include ':app', ':protogui'
+=======
+include ':app', ':mvp'
+>>>>>>> 6fa8654513681bfa1f11a21d8927e99f542e9b3e
+>>>>>>> Stashed changes
