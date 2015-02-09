@@ -22,7 +22,17 @@
             </intent-filter>
         </activity>
 
+<<<<<<< HEAD
         <service android:name=".BackgroundServiceStarter" />
+=======
+        <service android:name=".BackgroundServiceStarter"/>
+        <service android:name="com.example.ari.appslattur.NotificationServiceHandler">
+
+        </service>
+
+
+
+>>>>>>> 61eb1d38aa25accaf3a6272ce3f3257c19dc94d9
 
         <activity
             android:name=".toThrowAway"

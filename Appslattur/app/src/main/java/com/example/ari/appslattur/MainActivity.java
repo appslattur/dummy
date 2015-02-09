@@ -92,12 +92,8 @@ public class MainActivity extends Activity {
         findViewById(R.id.noti).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotificationHandler nHandler = new NotificationHandler(getApplicationContext(),
-                        "Random TrickTitle",
-                        "Random Title",
-                        "Random Text",
-                        R.drawable.ic_launcher);
-                nHandler.sendNotification();
+                NotificationServiceHelper nSHelper = new NotificationServiceHelper(
+                        getApplicationContext(), "Random Title", 30000);
             }
         });
     }
@@ -180,12 +176,8 @@ public class MainActivity extends Activity {
         findViewById(R.id.noti).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NotificationHandler nHandler = new NotificationHandler(getApplicationContext(),
-                        "Random TrickTitle",
-                        "Random Title",
-                        "Random Text",
-                        R.drawable.ic_launcher);
-                nHandler.sendNotification();
+                NotificationServiceHelper nSHelper = new NotificationServiceHelper(
+                        getApplicationContext(), "Random Title", 30000);
             }
         });
     }
