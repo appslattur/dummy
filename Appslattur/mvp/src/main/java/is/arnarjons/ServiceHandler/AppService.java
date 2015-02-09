@@ -27,7 +27,7 @@ public class AppService extends Service {
     private int debugStage;
 
     //Notification and logic cheats
-    private NotificationHandler nHandler;
+    private static NotificationHandler nHandler;
     private Timer serviceTimer = new Timer();
     private int hasBounded;
     private boolean hasStarted;
@@ -67,10 +67,23 @@ public class AppService extends Service {
         }
     }
 
+    public void initiateLifeCycle() {
+        this.serviceTimer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                exceptionCanceler.post(new Runnable() {
+                    public void run() {
+                        new LifeCycle().run();
+                    }
+                });
+            }
+        }, 1, 50000);
+    }
+
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-
+        initiateLifeCycle();
 
         return START_STICKY;
     }
@@ -122,7 +135,7 @@ public class AppService extends Service {
         this.serviceTimer.cancel();
     }
 
-
+    /*
     private void sendNotification(String tickerTitle, String title, String text) {
         this.nHandler.addNotification(new NotificationData(
                         this.debugStage,
@@ -134,7 +147,7 @@ public class AppService extends Service {
                         500),
                 getPendingIntent());
     }
-
+    */
 
 
 
@@ -142,6 +155,21 @@ public class AppService extends Service {
     public class ServiceBinder extends Binder {
         public ServiceBinder getService() {
             return ServiceBinder.this;
+        }
+    }
+
+    private class LifeCycle implements Runnable {
+
+
+        private LifeCycle() {
+
+        }
+
+        public void run() {
+
+            // TODO : get current GPS and Check if you need to investigate further
+
+            // TODO : if you need to investigate further, do so, otherwise the thread kills itself
         }
     }
 
