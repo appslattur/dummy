@@ -22,7 +22,7 @@ public class NotificationHandler  {
     private int activeId = -1;
     private int notificationNumber = 0;
 
-    public NotificationHandler(NotificationData data) {
+    public NotificationHandler(Context context) {
         this.context = context;
 
         this.nManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
