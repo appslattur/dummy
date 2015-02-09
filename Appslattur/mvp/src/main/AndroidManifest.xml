@@ -6,6 +6,15 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name" >
+
+        <!-- Service autostart BroadCastReciever -->
+        <receiver android:name="is.arnarjons.ServiceHandler.AppService">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- Service autostart BroadCastReciever -->
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -15,6 +24,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Simple Service Implementation -->
+        <service android:name="is.arnarjons.ServiceHandler.AppService"
+            android:exported="true"/>
+        <!-- Simple Service Implementation -->
+
+        <activity
+            android:name=".SecondActivity"
+            android:label="@string/title_activity_second" >
+        </activity>
     </application>
+
+    <!-- Vibrate permission -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Vibrate permission -->
+
+    <!-- Service autostart permission -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- service autostart permission -->
 
 </manifest>
