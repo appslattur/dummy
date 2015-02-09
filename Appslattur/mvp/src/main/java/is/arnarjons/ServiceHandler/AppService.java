@@ -122,9 +122,6 @@ public class AppService extends Service {
         this.serviceTimer.cancel();
     }
 
-    private int calculateInterval() {
-        return 15000;
-    }
 
     private void sendNotification(String tickerTitle, String title, String text) {
         this.nHandler.addNotification(new NotificationData(
@@ -138,23 +135,9 @@ public class AppService extends Service {
                 getPendingIntent());
     }
 
-    /*
-    private void incrementDebugStage() {
-        this.debugStage++;
-    }
 
-    private void initiateLifeCycle() {
-        this.serviceTimer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                exceptionCanceler.post(new Runnable() {
-                    public void run() {
-                        sendNotification();
-                    }
-                });
-            }
-        }, 1, calculateInterval());
-    }
-    */
+
+
 
     public class ServiceBinder extends Binder {
         public ServiceBinder getService() {
