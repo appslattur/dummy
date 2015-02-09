@@ -4,9 +4,9 @@ import android.content.Context;
 import android.location.Location;
 import android.location.LocationManager;
 
-import com.example.ari.protogui.LocationChainStructure.LocationChain;
-
 import java.util.ArrayList;
+
+import LocationChainStructure.LocationChain;
 
 /**
  * Created by Ari on 22.1.2015.
@@ -59,6 +59,18 @@ public class Radar {
             return true;
         }
         return false;
+    }
+    public int getDistanceToNearestLocation(){
+        int dist = Integer.MAX_VALUE;
+        for(LocationChain chain : locations) {
+            for (LocationChain.LocationLink l : chain.getLinks()) {
+                float tempdist = myLocation.distanceTo(l.getLocation());
+                if(tempdist < dist){
+                    dist = (int)tempdist;
+                }
+            }
+        }
+        return dist;
     }
 
     private boolean updateLocation(boolean connectionIsValid){
