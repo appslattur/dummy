@@ -20,7 +20,7 @@ public class Radar {
     public Context context;
 
     /*
-    Notkun:  MiniGPS myscanner = new MiniGPS(db.getLocationsList(), activity.this)
+    Notkun:  Radar myscanner = new Radar(db.getLocationsList(), activity.this)
             myscanner.cycle() - scannar hvort notandi sé nálægt staðsetningu í geymslu
             og skilar gildi ef svo er.
      */
@@ -33,7 +33,9 @@ public class Radar {
     public Location getLocation(){
         return myLocation;
     }
-
+    /*
+        Skilar location hlut í augnablikinu ef hann er innan marka, annars skilar hann null.
+     */
     public Location cycle()
     {
         myLocationManager = null;
