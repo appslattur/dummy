@@ -11,7 +11,7 @@ import java.util.ArrayList;
 /**
  * Created by Ari on 22.1.2015.
  */
-public class MiniGPS {
+public class Radar {
 
     Location myLocation;
     LocationManager myLocationManager;
@@ -19,11 +19,15 @@ public class MiniGPS {
     String lastPlace ="";
     public Context context;
 
-    public MiniGPS(ArrayList<LocationChain> l, Context contexxt){
-        context = contexxt;
+    /*
+    Notkun:  MiniGPS myscanner = new MiniGPS(db.getLocationsList(), activity.this)
+            myscanner.cycle() - scannar hvort notandi sé nálægt staðsetningu í geymslu
+            og skilar gildi ef svo er.
+     */
+    public Radar(ArrayList<LocationChain> l, Context ctx){
+        context = ctx;
         myLocationManager = (LocationManager)context.getSystemService(context.LOCATION_SERVICE);
         locations = l;
-
     }
 
     public Location getLocation(){
