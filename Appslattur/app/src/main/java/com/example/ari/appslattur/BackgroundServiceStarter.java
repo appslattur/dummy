@@ -3,7 +3,9 @@ package com.example.ari.appslattur;
 import android.app.IntentService;
 import android.content.Intent;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 import java.util.Timer;
@@ -38,6 +40,8 @@ public class BackgroundServiceStarter extends IntentService {
 
     private void startScanning(){
 
+
+
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
             @Override
@@ -45,7 +49,10 @@ public class BackgroundServiceStarter extends IntentService {
                 proximityScanner.cycle();
             }
         };
-        timer.schedule(task, 300000);
+
+        long delay = 60000;   //x*delay   = x minutes
+        long period = 3600000;//x*perdiod = x hours
+        timer.schedule(task, 5*delay, 1*period );
     }
 
 
@@ -54,16 +61,17 @@ public class BackgroundServiceStarter extends IntentService {
         Location myLocation;
         LocationManager myLocationManager;
         ArrayList<Location> locations;
+        MyLocationListener locationlistener = new MyLocationListener();
 
 
         private MiniGPS(ArrayList<Location> l){
             myLocationManager = (LocationManager)getSystemService(LOCATION_SERVICE);
             locations = l;
+            myLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000*10, 5, locationlistener);
         }
 
         private void cycle(){
             if(updateLocation(validateConnection()))scanSurroundings(locations);
-
         }
 
         private boolean updateLocation(boolean connectionIsValid){
@@ -83,8 +91,6 @@ public class BackgroundServiceStarter extends IntentService {
 
         //This function calls scanPositive if required.
         private void scanSurroundings(ArrayList<Location> res){
-
-            boolean match = false;
             for(Location l : res){
                 if(myLocation.distanceTo(l) <= 50){
                     scanPositive(l);
@@ -98,6 +104,29 @@ public class BackgroundServiceStarter extends IntentService {
             This function should recive a location to which you are near,
             then send a notification about it.
              */
+        }
+
+        private class MyLocationListener implements LocationListener {
+
+            @Override
+            public void onLocationChanged(Location location) {
+                updateLocation(validateConnection());
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
         }
 
     }
