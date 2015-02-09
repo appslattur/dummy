@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.ari.appslattur">
+    package="com.example.ari.appslattur" >
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -32,8 +32,8 @@
             </intent-filter>
         </activity>
 
-        <service android:name=".BackgroundServiceStarter"/>
-<<<<<<< Updated upstream
+
+        <service android:name=".BackgroundServiceStarter" />
 
         <!-- DUMMIE SERVICE FOR TESTING PURPOSES -->
         <service android:name="com.example.ari.appslattur.DummyService"
@@ -44,25 +44,6 @@
             />
         <!-- DUMMIE SERVICE ENDS HERE -->
 
-
-=======
-
-        <!-- DUMMIE SERVICE FOR TESTING PURPOSES -->
-        <service android:name="com.example.ari.appslattur.DummyService"
-            android:enabled="true"
-            android:exported="false"
-            android:isolatedProcess="false"
-            android:label="Appslattur"
-            />
-        <!-- DUMMIE SERVICE ENDS HERE -->
-
->>>>>>> 61eb1d38aa25accaf3a6272ce3f3257c19dc94d9
-
-        <activity
-            android:name=".toThrowAway"
-            android:label="@string/title_activity_to_throw_away" >
-        </activity>
->>>>>>> Stashed changes
     </application>
 
     <!-- DUMMIE SERVICE FOR TESTING PURPOSES -->

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Appslattur.iml" filepath="$PROJECT_DIR$/Appslattur.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+<<<<<<< HEAD
 <<<<<<< Updated upstream
       <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />
 =======
@@ -13,6 +14,9 @@
       <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />
 >>>>>>> 6fa8654513681bfa1f11a21d8927e99f542e9b3e
 >>>>>>> Stashed changes
+=======
+      <module fileurl="file://$PROJECT_DIR$/protogui/protogui.iml" filepath="$PROJECT_DIR$/protogui/protogui.iml" />
+>>>>>>> Ari_Ruglari
     </modules>
   </component>
 </project>
