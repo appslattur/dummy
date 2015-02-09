@@ -1,17 +1,42 @@
 package is.arnarjons.mvp;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
+import android.os.IBinder;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import is.arnarjons.NotificationHandler.NotificationHandler;
+import is.arnarjons.ServiceHandler.AppService;
+
 
 public class MainActivity extends ActionBarActivity {
+
+    private NotificationHandler nHandler;
+    private boolean isBounded;
+    AppService.ServiceBinder sBinder;
+    private ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            AppService.ServiceBinder serviceBinder = (AppService.ServiceBinder) service;
+            sBinder = serviceBinder.getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.nHandler = new NotificationHandler(getApplicationContext());
     }
 
 
@@ -35,5 +60,13 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void initiateServiceStart() {
+        startService(new Intent(getBaseContext(), AppService.class));
+    }
+
+    public void initiateServiceDestruction() {
+        stopService(new Intent(getBaseContext(), AppService.class));
     }
 }
