@@ -2,22 +2,11 @@ package com.example.ari.appslattur;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.Application;
 import android.content.Context;
-import android.content.Intent;
-import android.location.Location;
 import android.os.Bundle;
-import android.test.ApplicationTestCase;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.SeekBar;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,16 +42,7 @@ public class MainActivity extends Activity {
         //////////////
         */
         Button button = (Button)findViewById(R.id.noti);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                new NotificationHelper(new NotificationData(getApplicationContext(),
-                        "TestTickerTitle",
-                        "TestTitle",
-                        "TestText",
-                        true,
-                        false));
-            }
-        });
+
 
     }
 

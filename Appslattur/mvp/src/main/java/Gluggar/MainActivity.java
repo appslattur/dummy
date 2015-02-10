@@ -1,49 +1,140 @@
 package Gluggar;
 
-import android.content.ComponentName;
+import android.app.Activity;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.os.IBinder;
-import android.support.v7.app.ActionBarActivity;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.Toast;
 
-import NotificationHandler.NotificationHandler;
-import ServiceHandler.AppService;
+import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
+import DatabaseHelper.DataBaseHelper;
+import Gluggar.viewlocationsactivity;
+import LocationChainStructure.LocationChain;
+import Radar.Radar;
+import mvp.R;
 
-public class MainActivity extends ActionBarActivity {
-
-    private NotificationHandler nHandler;
-    private boolean isBounded;
-    AppService.ServiceBinder sBinder;
-    private ServiceConnection serviceConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-            AppService.ServiceBinder serviceBinder = (AppService.ServiceBinder) service;
-            sBinder = serviceBinder.getService();
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-
-        }
-    };
-
+public class MainActivity extends Activity {
+    Radar radar;
+    ArrayList<LocationChain> locs = new ArrayList<LocationChain>();
+    DataBaseHelper mdb;
+    Location myloc;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(is.arnarjons.MainActivity.R.layout.activity_main);
+        setContentView(R.layout.activity_main);
 
-        this.nHandler = new NotificationHandler(getApplicationContext());
+        mdb = new DataBaseHelper(this);
+        locs = mdb.getLocationList();
+        radar = new Radar(locs, this);
+        //radar.cycle();
+        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveScreen();
+            }
+        });
+        findViewById(R.id.seesavedlocationsbutton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, viewlocationsactivity.class );
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.clearTable).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mdb.clearTable();
+                mdb.populateTable();
+            }
+        });
+
+        //startLoop();
+
+
+    }
+
+    private void startLoop(){
+        Timer timer = new Timer();
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                radar.cycle();
+                startLoop();
+            }
+        };
+
+        long delay = 6000;   //x*delay   = x minutes
+        long period = 3600000;//x*perdiod = x hours
+        timer.schedule(task, delay, 1*period );
+    }
+
+
+
+    public void updateGPSList(){
+        radar.updateMyLocations(mdb.getLocationList());
+    }
+
+    protected void makeToast(String s){
+        Toast.makeText(getApplicationContext(), s,
+                Toast.LENGTH_LONG).show();
+    }
+    private void saveScreen(){
+        setContentView(R.layout.savecurrentlocationlayout);
+        findViewById(R.id.finishSavingCurrentLocationButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(radar.getLocation() != null){
+                    myloc = radar.getLocation();
+                    EditText getname= (EditText)findViewById(R.id.currentLocationNameField);
+                    String name = getname.getText().toString();
+                    mdb.newLocation(myloc.getLongitude() + "", myloc.getLatitude() + "", name, "1");
+                    makeToast("Saved :" + name + ", " + myloc.getLongitude()+ ", "+ myloc.getLatitude());
+                    updateGPSList();
+                    toggleMainSelectionMenuLayout();
+                }
+            }
+        });
+
+
+    }
+    private void toggleMainSelectionMenuLayout(){
+        setContentView(R.layout.activity_main);
+
+        findViewById(R.id.saveButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                saveScreen();
+            }
+        });
+        findViewById(R.id.seesavedlocationsbutton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, viewlocationsactivity.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+        findViewById(R.id.clearTable).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mdb.clearTable();
+                mdb.populateTable();
+            }
+        });
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(is.arnarjons.MainActivity.R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
@@ -55,18 +146,10 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == is.arnarjons.MainActivity.R.id.action_settings) {
+        if (id == R.id.action_settings) {
             return true;
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void initiateServiceStart() {
-        startService(new Intent(getBaseContext(), AppService.class));
-    }
-
-    public void initiateServiceDestruction() {
-        stopService(new Intent(getBaseContext(), AppService.class));
     }
 }

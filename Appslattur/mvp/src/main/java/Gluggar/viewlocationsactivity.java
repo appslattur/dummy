@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import DatabaseHelper.*;
-import LocationChainStructure.*;
-import is.arnarjons.MainActivity.R;
+import DatabaseHelper.DataBaseHelper;
+import LocationChainStructure.LocationChain;
+import mvp.R;
 
 
 public class viewlocationsactivity extends Activity {
