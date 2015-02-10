@@ -1,4 +1,4 @@
-package is.arnarjons.mvp;
+package Gluggar;
 
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -11,14 +11,14 @@ public class SecondActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_second);
+        setContentView(is.arnarjons.MainActivity.R.layout.activity_second);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_second, menu);
+        getMenuInflater().inflate(is.arnarjons.MainActivity.R.menu.menu_second, menu);
         return true;
     }
 
@@ -30,7 +30,7 @@ public class SecondActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == is.arnarjons.MainActivity.R.id.action_settings) {
             return true;
         }
 

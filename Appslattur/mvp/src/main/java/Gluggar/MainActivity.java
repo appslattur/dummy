@@ -1,4 +1,4 @@
-package is.arnarjons.mvp;
+package Gluggar;
 
 import android.content.ComponentName;
 import android.content.Intent;
@@ -9,8 +9,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import is.arnarjons.NotificationHandler.NotificationHandler;
-import is.arnarjons.ServiceHandler.AppService;
+import NotificationHandler.NotificationHandler;
+import ServiceHandler.AppService;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(is.arnarjons.MainActivity.R.layout.activity_main);
 
         this.nHandler = new NotificationHandler(getApplicationContext());
     }
@@ -43,7 +43,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(is.arnarjons.MainActivity.R.menu.menu_main, menu);
         return true;
     }
 
@@ -55,7 +55,7 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == is.arnarjons.MainActivity.R.id.action_settings) {
             return true;
         }
 

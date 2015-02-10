@@ -1,4 +1,4 @@
-package is.arnarjons.NotificationHandler;
+package NotificationHandler;
 
 import android.app.Notification;
 import android.app.NotificationManager;

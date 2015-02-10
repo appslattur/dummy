@@ -1,4 +1,4 @@
-package is.arnarjons.mvp;
+package is.arnarjons.MainActivity;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

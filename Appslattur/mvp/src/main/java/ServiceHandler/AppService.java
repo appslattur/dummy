@@ -1,9 +1,8 @@
-package is.arnarjons.ServiceHandler;
+package ServiceHandler;
 
 import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
-import android.media.RingtoneManager;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -12,10 +11,9 @@ import android.os.Looper;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import is.arnarjons.NotificationHandler.NotificationData;
-import is.arnarjons.NotificationHandler.NotificationHandler;
-import is.arnarjons.mvp.R;
-import is.arnarjons.mvp.SecondActivity;
+import DatabaseHelper.DataBaseHelper;
+import NotificationHandler.NotificationHandler;
+import Gluggar.SecondActivity;
 
 /**
  * Created by Arnar Jónsson on 9.2.2015.
@@ -27,7 +25,9 @@ public class AppService extends Service {
     private int debugStage;
 
     //Notification and logic cheats
-    private static NotificationHandler nHandler;
+    private NotificationHandler nHandler;
+    private DataBaseHelper db;
+
     private Timer serviceTimer = new Timer();
     private int hasBounded;
     private boolean hasStarted;
@@ -58,6 +58,7 @@ public class AppService extends Service {
     public void onCreate() {
 
         this.nHandler = new NotificationHandler(getBaseContext());
+        db = new DataBaseHelper(getBaseContext());
         this.debugStage = 1;
         this.hasBounded = 1;
         this.hasStarted = true;
@@ -72,7 +73,8 @@ public class AppService extends Service {
             public void run() {
                 exceptionCanceler.post(new Runnable() {
                     public void run() {
-                        new LifeCycle().run();
+                        //LifeCycle lC = new LifeCycle(this.nHandler, this.db);
+                        //lC.run();
                     }
                 });
             }
@@ -160,16 +162,17 @@ public class AppService extends Service {
 
     private class LifeCycle implements Runnable {
 
+        private NotificationHandler nHandler;
+        private DataBaseHelper db;
 
-        private LifeCycle() {
-
+        private LifeCycle(NotificationHandler nHandler, DataBaseHelper db) {
+            this.nHandler = nHandler;
+            this.db = db;
         }
 
         public void run() {
 
-            // TODO : get current GPS and Check if you need to investigate further
 
-            // TODO : if you need to investigate further, do so, otherwise the thread kills itself
         }
     }
 

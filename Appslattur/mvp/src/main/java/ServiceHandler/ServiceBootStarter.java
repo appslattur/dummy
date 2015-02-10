@@ -1,4 +1,4 @@
-package is.arnarjons.ServiceHandler;
+package ServiceHandler;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

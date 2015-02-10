@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 import DatabaseHelper.*;
 import LocationChainStructure.*;
-import is.arnarjons.mvp.R;
+import is.arnarjons.MainActivity.R;
 
 
 public class viewlocationsactivity extends Activity {
