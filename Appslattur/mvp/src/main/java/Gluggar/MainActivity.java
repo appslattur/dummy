@@ -15,7 +15,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import DatabaseHelper.DataBaseHelper;
-import Gluggar.viewlocationsactivity;
 import LocationChainStructure.LocationChain;
 import Radar.Radar;
 import mvp.R;

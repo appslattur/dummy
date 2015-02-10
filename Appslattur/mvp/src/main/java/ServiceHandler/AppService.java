@@ -1,6 +1,5 @@
 package ServiceHandler;
 
-import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
@@ -13,7 +12,7 @@ import java.util.TimerTask;
 
 import DatabaseHelper.DataBaseHelper;
 import NotificationHandler.NotificationHandler;
-import Gluggar.SecondActivity;
+
 
 /**
  * Created by Arnar Jónsson on 9.2.2015.
@@ -45,13 +44,7 @@ public class AppService extends Service {
 
     }
 
-    private PendingIntent getPendingIntent() {
-
-        Intent intent = new Intent(getBaseContext(), SecondActivity.class);
-        PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        return pIntent;
-
-    }
+    private void getPendingIntent() {}
 
 
     @Override
