@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.mvp.R;
+
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -17,7 +19,6 @@ import java.util.TimerTask;
 import DatabaseHelper.DataBaseHelper;
 import LocationChainStructure.LocationChain;
 import Radar.Radar;
-import mvp.R;
 
 public class MainActivity extends Activity {
     Radar radar;

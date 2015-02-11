@@ -1,4 +1,4 @@
-package Gluggar;
+package appslattur.appslatturdemo.Gluggar;
 
 import android.app.Activity;
 import android.app.Fragment;
@@ -16,9 +16,9 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import DatabaseHelper.DataBaseHelper;
-import LocationChainStructure.LocationChain;
-
+import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
+import appslattur.appslatturdemo.LocationChainStructure.LocationChain;
+import appslattur.appslatturdemo.R;
 
 
 public class viewlocationsactivity extends Activity {
