@@ -1,7 +1,9 @@
 package appslattur.appslatturdemo.ServiceHandler;
 
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Intent;
+import android.media.RingtoneManager;
 import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
@@ -12,7 +14,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
+import appslattur.appslatturdemo.NotificationHandler.NotificationData;
 import appslattur.appslatturdemo.NotificationHandler.NotificationHandler;
+import appslattur.appslatturdemo.R;
 import appslattur.appslatturdemo.Radar.Radar;
 
 
@@ -67,6 +71,8 @@ public class AppService extends Service {
         }
     }
 
+
+
     public void initiateLifeCycle() {
         this.serviceTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
@@ -80,8 +86,15 @@ public class AppService extends Service {
                             case -1:
                                 break;
                             default:
-                                //Ná í gögn sem við viljum nota í notification.
-                                //db.getShortDescByID(scanResult);
+                                nHandler.addNotification(new NotificationData(scanResult,
+                                        "Random Tiker Title",
+                                        db.getShortDescById(scanResult),
+                                        db.getLongDescById(scanResult),
+                                        R.mipmap.ic_launcher,
+                                        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
+                                        500),
+                                        PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0)
+                                        );
                                 makeToast("Found Something!");
                                 break;
                         }
