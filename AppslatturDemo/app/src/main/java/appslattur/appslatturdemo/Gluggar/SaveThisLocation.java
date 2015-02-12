@@ -1,5 +1,6 @@
 package appslattur.appslatturdemo.Gluggar;
 
+import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -42,7 +43,9 @@ public class SaveThisLocation extends ActionBarActivity {
                     EditText getname= (EditText)findViewById(R.id.currentLocationNameField);
                     String name = getname.getText().toString();
                     makeToast(name);
-                    mdb.newLocation(myloc.getLongitude() + "", myloc.getLatitude() + "", name, "1");
+                    mdb.newLocation(name, myloc.getLongitude() + "", myloc.getLatitude() + "", "1");
+                    Intent intent = new Intent(SaveThisLocation.this, Settings.class);
+                    SaveThisLocation.this.startActivity(intent);
                 }
             }
         });

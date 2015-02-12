@@ -7,11 +7,33 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <!-- Vibrate permission -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!-- Vibrate permission -->
+
+    <!-- Service autostart permission -->
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <!-- service autostart permission -->
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
+
+        <!-- Service autostart BroadCastReciever -->
+        <receiver android:name="appslattur.appslatturdemo.ServiceHandler.ServiceBootStarter">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- Service autostart BroadCastReciever -->
+
+        <!-- Simple Service Implementation -->
+        <service android:name="appslattur.appslatturdemo.ServiceHandler.AppService"
+            android:exported="true"/>
+        <!-- Simple Service Implementation -->
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name" >
@@ -45,5 +67,6 @@
             android:label="@string/title_activity_settings" >
         </activity>
     </application>
+
 
 </manifest>

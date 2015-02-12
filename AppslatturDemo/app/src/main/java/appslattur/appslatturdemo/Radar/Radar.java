@@ -1,8 +1,11 @@
 package appslattur.appslatturdemo.Radar;
 
 import android.content.Context;
+import android.location.Criteria;
 import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Bundle;
 
 import java.util.ArrayList;
 
@@ -16,6 +19,7 @@ public class Radar {
 
     Location myLocation;
     LocationManager myLocationManager;
+    LocationListener peeper;
     ArrayList<LocationChain> locations;
     String lastPlace ="";
     public Context context;
@@ -29,7 +33,31 @@ public class Radar {
         context = ctx;
         myLocationManager = (LocationManager)context.getSystemService(context.LOCATION_SERVICE);
         locations = l;
+        peeper = new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+                myLocation = location;
+            }
+
+            @Override
+            public void onStatusChanged(String s, int i, Bundle bundle) {
+
+            }
+
+            @Override
+            public void onProviderEnabled(String s) {
+
+            }
+
+            @Override
+            public void onProviderDisabled(String s) {
+
+            }
+        };
+        myLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,0,0,peeper);
     }
+
+
 
     public Location getLocation(){
         if(updateLocation(validateConnection())){
@@ -40,16 +68,13 @@ public class Radar {
     /*
         Skilar location hlut í augnablikinu ef hann er innan marka, annars skilar hann null.
      */
-    public Location cycle()
+    public int cycle()
     {
-        myLocationManager = null;
-        myLocationManager = (LocationManager)context.getSystemService(context.LOCATION_SERVICE);
         if(updateLocation(validateConnection())){
-            Location temp = scanSurroundings(locations);
-            if(temp != null)return temp;
+            int temp = scanSurroundings(locations);
+            if(temp != -1)return temp;
         }
-        return null;
-
+        return -1;
     }
 
     public void updateMyLocations(ArrayList<LocationChain> l){
@@ -79,8 +104,10 @@ public class Radar {
 
     private boolean updateLocation(boolean connectionIsValid){
         if(connectionIsValid){
+            Criteria c = new Criteria();
+
             this.myLocation = myLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-            this.myLocation = myLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+            //this.myLocation = myLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
             return true;
         }
         return false;
@@ -95,18 +122,16 @@ public class Radar {
 
 
     //This function calls scanPositive if required.
-    private Location scanSurroundings(ArrayList<LocationChain> res){
+    private int scanSurroundings(ArrayList<LocationChain> res){
         for(LocationChain chain : res){
             for(LocationChain.LocationLink l : chain.getLinks()){
-                if(myLocation.distanceTo(l.getLocation()) <= 5 && lastPlace != l.getLocation().getProvider() && l.isEnabled()){
-                    lastPlace=l.getLocation().getProvider();
-                    return l.getLocation();
-
+                if(myLocation.distanceTo(l.getLocation()) <= 5 && l.isEnabled()){
+                    return l.getId();
                 }
             }
 
         }
-        return null;
+        return -1;
     }
 
 }

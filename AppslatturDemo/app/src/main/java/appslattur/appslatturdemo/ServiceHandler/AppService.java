@@ -6,12 +6,14 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.NotificationHandler.NotificationHandler;
+import appslattur.appslatturdemo.Radar.Radar;
 
 
 /**
@@ -31,6 +33,7 @@ public class AppService extends Service {
     private int hasBounded;
     private boolean hasStarted;
     private static int nextInterval;
+    private Radar radar;
 
     //Timer.scheduleAtFixedRates exceptionHandler
     private Handler exceptionCanceler = new Handler(Looper.getMainLooper());
@@ -56,6 +59,9 @@ public class AppService extends Service {
         this.hasBounded = 1;
         this.hasStarted = true;
 
+
+
+
         if(this.debug) {
 
         }
@@ -68,16 +74,27 @@ public class AppService extends Service {
                     public void run() {
                         //LifeCycle lC = new LifeCycle(this.nHandler, this.db);
                         //lC.run();
+                        //makeToast("Hello World!");
+                        int scanResult = radar.cycle();
+                        switch (scanResult){
+                            case -1:
+                                break;
+                            default:
+                                //Ná í gögn sem við viljum nota í notification.
+                                //db.getShortDescByID(scanResult);
+                                makeToast("Found Something!");
+                                break;
+                        }
                     }
                 });
             }
-        }, 1, 50000);
+        }, 1, 5000);
     }
 
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-
+        this.radar = new Radar(db.getLocationList(), getBaseContext());
         initiateLifeCycle();
 
         return START_STICKY;
@@ -145,7 +162,10 @@ public class AppService extends Service {
     */
 
 
-
+    protected void makeToast(String s){
+        Toast.makeText(getApplicationContext(), s,
+                Toast.LENGTH_SHORT).show();
+    }
 
     public class ServiceBinder extends Binder {
         public ServiceBinder getService() {

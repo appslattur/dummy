@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.Gluggar.Settings;
+import appslattur.appslatturdemo.ServiceHandler.AppService;
 
 public class MainActivity extends Activity {
     DataBaseHelper mdb;
@@ -28,16 +29,20 @@ public class MainActivity extends Activity {
                 MainActivity.this.startActivity(intent);
             }
         });
+
         findViewById(R.id.startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makeToast("Start");
+                Intent starterIntent = new Intent(MainActivity.this, AppService.class);
+                startService(starterIntent);
             }
         });
         findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                makeToast("Stop");
+                //
+                Intent starterIntent = new Intent(MainActivity.this, AppService.class);
+                stopService(starterIntent);
             }
         });
 
