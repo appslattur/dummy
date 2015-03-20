@@ -1,0 +1,9 @@
+<!-- res/drawable/oval_ripple.xml -->
+<ripple xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="?android:colorControlHighlight">
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="#EFD74F"/>
+        </shape>
+    </item>
+</ripple>

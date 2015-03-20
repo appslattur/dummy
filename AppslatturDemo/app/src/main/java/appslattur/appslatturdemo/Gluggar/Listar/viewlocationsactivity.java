@@ -1,4 +1,4 @@
-package appslattur.appslatturdemo.Gluggar;
+package appslattur.appslatturdemo.Gluggar.Listar;
 
 import android.app.Activity;
 import android.app.Fragment;

@@ -162,7 +162,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
     public ArrayList<Location> getLocationsByName(String name){
         ArrayList<Location> tempList = new ArrayList<Location>();
-        String query = "SELECT (NAME, LONGITUDE, LATITUDE) FROM "+ DATABASE_TABLE_LOCATIONS+ "WHERE NAME="+name;
+        String query = "SELECT (NAME, LONGITUDE, LATITUDE) FROM "+ DATABASE_TABLE_LOCATIONS+ " WHERE NAME="+name;
         Cursor cur = this.db.rawQuery(query, null);
         if(cur.moveToFirst()){
             do{
@@ -176,7 +176,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
     }
     public Location getLocationById(int id){
 
-        String query = "SELECT (NAME, LONGITUDE, LATITUDE) FROM "+ DATABASE_TABLE_LOCATIONS+ "WHERE ID="+id;
+        String query = "SELECT (NAME, LONGITUDE, LATITUDE) FROM "+ DATABASE_TABLE_LOCATIONS+ " WHERE ID="+id;
         Cursor cur = this.db.rawQuery(query, null);
         if(cur.moveToFirst()){
             Location loc = new Location(cur.getString(0));

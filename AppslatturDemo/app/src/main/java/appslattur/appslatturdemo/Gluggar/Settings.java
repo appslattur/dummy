@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
+import appslattur.appslatturdemo.Gluggar.Listar.viewlocationsactivity;
 import appslattur.appslatturdemo.R;
 
 public class Settings extends ActionBarActivity {

@@ -1,45 +1,85 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MainActivity"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
     android:orientation="vertical"
     android:weightSum="1"
-    android:background="#ff000000">
+    android:background="#ffeceaeb">
 
 
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Start"
-        android:id="@+id/startButton"
-        />
-
-    <Button
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Stop"
-        android:id="@+id/stopButton"
+    <ImageView
+        android:layout_width="207dp"
+        android:layout_height="129dp"
+        android:id="@+id/bannerlogoview"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.14"
+        android:paddingLeft="60dp"
          />
 
     <Space
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:layout_weight="0.70"
-        android:id="@+id/space" />
+        android:layout_weight="0.39"
+        android:id="@+id/space"
+        android:backgroundTint="#ffffffff"
+        android:background="#fffffdc2"
+        android:backgroundTintMode="src_in"
+        android:focusableInTouchMode="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Mín Kort"
+        android:id="@+id/button3"
+        android:src="@anim/liftit"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ripple"
+        android:height="1dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sjá Loftmynd"
+        android:id="@+id/button2"
+        android:src="@anim/liftit"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ripple"
+        android:height="1dp"
+        android:layout_gravity="center_horizontal" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Settings"
+        android:src="@anim/liftit"
+        android:background="@drawable/ripple"
+        android:height="1dp"
+        android:layout_marginTop="4dp"
         android:id="@+id/settingsButton"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Setja í gang"
+        android:src="@anim/liftit"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/ripple"
+        android:height="1dp"
+        android:id="@+id/button" />
 
+    <ToggleButton
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New ToggleButton"
+        android:id="@+id/toggleButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.14" />
 
 
 </LinearLayout>

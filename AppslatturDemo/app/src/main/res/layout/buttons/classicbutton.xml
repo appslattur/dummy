@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:singleLine="false"
+        android:layout_marginTop="4dp"
+        android:src="@anim/liftit"
+        android:background="@drawable/ripple"
+        android:height="1dp"
+        />
+</resources>

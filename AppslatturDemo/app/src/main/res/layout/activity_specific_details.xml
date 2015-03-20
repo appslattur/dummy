@@ -1,0 +1,65 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:weightSum="10"
+tools:context="appslattur.appslatturdemo.Gluggar.SpecificDetails">
+
+    <!-- Holding Location Name -->
+    <LinearLayout
+        android:layout_weight="8.5"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#FF8080">
+    </LinearLayout>
+
+    <!-- Container for details -->
+    <LinearLayout
+        android:layout_weight="1"
+        android:weightSum="10"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:background="#E0C2FF">
+
+        <!-- Will contain textviews, details -->
+        <LinearLayout
+            android:layout_weight="3"
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#A3FFC2">
+            <!--Details and stuffs -->
+
+
+            <!--Details and stuffs -->
+        </LinearLayout>
+
+        <!-- Contains space and picture of card -->
+        <LinearLayout
+            android:layout_weight="5"
+            android:weightSum="10"
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="#FFFF99">
+            <!--Because space -->
+            <Space
+                android:background="#FF33CC"
+                android:layout_weight="7"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+            <!--put image of card here -->
+            <ImageView
+                android:layout_weight="3"
+                android:id="@+id/putthecardhere"
+                android:background="#FF33CC"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
+
+</LinearLayout>
