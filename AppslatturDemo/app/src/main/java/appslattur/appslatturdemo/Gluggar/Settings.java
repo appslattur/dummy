@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
-import appslattur.appslatturdemo.Gluggar.Listar.viewlocationsactivity;
+
 import appslattur.appslatturdemo.R;
 
 public class Settings extends ActionBarActivity {
@@ -27,13 +27,7 @@ public class Settings extends ActionBarActivity {
                 Settings.this.startActivity(intent);
             }
         });
-        findViewById(R.id.seesavedlocationsbutton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Settings.this, viewlocationsactivity.class );
-                Settings.this.startActivity(intent);
-            }
-        });
+
 
         findViewById(R.id.clearTable).setOnClickListener(new View.OnClickListener() {
             @Override

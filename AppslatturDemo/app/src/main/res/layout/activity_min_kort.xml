@@ -3,5 +3,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="appslattur.appslatturdemo.Gluggar.Listar.MinKort">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/container"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
 
+            </LinearLayout>
+
+        </ScrollView>
 </LinearLayout>

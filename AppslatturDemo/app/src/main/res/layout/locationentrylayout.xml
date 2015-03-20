@@ -1,37 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ff000000">
+    android:weightSum="7"
+    android:background="#fff">
 
-
-    <TextView
+    <ImageView
+        android:src="@mipmap/logo_placeholder"
+        android:layout_weight="3"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text=""
-        android:id="@+id/locationNameTextView" />
-
+        android:layout_height="fill_parent" />
     <LinearLayout
-        android:id="@+id/myspace"
-        android:visibility="gone"
-        android:orientation="horizontal"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:weightSum="10"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:weightSum="1"
-        >
+        android:layout_height="fill_parent">
         <Space
-            android:layout_weight="0.9"
+            android:layout_weight="8"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" />
-        <LinearLayout
-            android:layout_weight="0.1"
-            android:id="@+id/allLocations"
-            android:orientation="vertical"
+        <TextView
+            android:layout_weight="2"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent">
-
+            android:layout_height="fill_parent"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text=""
+            android:id="@+id/locationNameTextView" />
 
         </LinearLayout>
-    </LinearLayout>
+
+
+    <ImageButton
+        android:src="@mipmap/glass_placeholder"
+        android:layout_weight="3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent" />
+
 </LinearLayout>

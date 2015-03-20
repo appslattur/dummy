@@ -2,6 +2,7 @@ package appslattur.appslatturdemo;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,12 +10,14 @@ import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
+import appslattur.appslatturdemo.Gluggar.Listar.MinKort;
 
 public class MainActivity extends Activity {
     DataBaseHelper mdb;
@@ -39,6 +42,22 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        findViewById(R.id.minkortbutton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, MinKort.class);
+                MainActivity.this.startActivity(intent);
+            }
+        });
+
+        findViewById(R.id.populate).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DataBaseHelper ddddd = new DataBaseHelper(MainActivity.this.getBaseContext());
+                ddddd.populateTable();
+            }
+        });
 
     }
     protected void makeToast(String s){
