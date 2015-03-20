@@ -10,17 +10,21 @@ tools:context="appslattur.appslatturdemo.Gluggar.SpecificDetails">
         android:layout_weight="8.5"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#FF8080">
+       >
+        <TextView
+            android:id="@+id/locationname"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" />
     </LinearLayout>
 
     <!-- Container for details -->
     <LinearLayout
-        android:layout_weight="1"
+        android:layout_weight="1.5"
         android:weightSum="10"
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#E0C2FF">
+        >
 
         <!-- Will contain textviews, details -->
         <LinearLayout
@@ -28,24 +32,27 @@ tools:context="appslattur.appslatturdemo.Gluggar.SpecificDetails">
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#A3FFC2">
+            >
             <!--Details and stuffs -->
-
+            <TextView
+                android:id="@+id/details"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" />
 
             <!--Details and stuffs -->
         </LinearLayout>
 
         <!-- Contains space and picture of card -->
         <LinearLayout
-            android:layout_weight="5"
+            android:layout_weight="7"
             android:weightSum="10"
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:background="#FFFF99">
+            >
             <!--Because space -->
             <Space
-                android:background="#FF33CC"
+
                 android:layout_weight="7"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
@@ -53,7 +60,7 @@ tools:context="appslattur.appslatturdemo.Gluggar.SpecificDetails">
             <ImageView
                 android:layout_weight="3"
                 android:id="@+id/putthecardhere"
-                android:background="#FF33CC"
+                android:src="@mipmap/mastercard"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" />
 

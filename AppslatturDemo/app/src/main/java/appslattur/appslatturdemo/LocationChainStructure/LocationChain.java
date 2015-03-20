@@ -11,15 +11,20 @@ public class LocationChain {
     String chainName;
     ArrayList<LocationLink> links = new ArrayList<>();
     int count = 0;
+    int ID;
     public LocationChain(String chainName){
         this.chainName = chainName;
 
+    }
+    public int getID(){
+        return ID;
     }
     public String getName(){
         return this.chainName;
     }
     public void newLink(Location location, int id, int en){
         LocationLink tlink = new LocationLink(location, id, en);
+        ID = id;
         this.links.add(tlink);
         this.count++;
     }

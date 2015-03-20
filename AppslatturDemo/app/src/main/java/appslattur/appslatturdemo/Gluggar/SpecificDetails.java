@@ -1,10 +1,12 @@
 package appslattur.appslatturdemo.Gluggar;
 
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
+import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.R;
 
 public class SpecificDetails extends ActionBarActivity {
@@ -13,6 +15,29 @@ public class SpecificDetails extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_specific_details);
+        String locationID ="";
+
+        Bundle b=getIntent().getExtras();
+        if(b != null){
+            locationID = b.getString("locationID");
+        }
+        populateView(locationID);
+
+
+    }
+
+    public void populateView(String s){
+        DataBaseHelper db = new DataBaseHelper(this);
+        int id = Integer.parseInt(s);
+
+
+
+        TextView details = (TextView)findViewById(R.id.details);
+        TextView detailsname = (TextView)findViewById(R.id.locationname);
+
+        details.setText( db.getLongDescById(id));
+        detailsname.setText( db.getNameById(id));
+
     }
 
 
