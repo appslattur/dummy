@@ -1,13 +1,12 @@
 package appslattur.appslatturdemo.Gluggar;
 
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Menu;
@@ -23,7 +22,8 @@ import appslattur.appslatturdemo.R;
 
 public class Splash extends Activity {
     public double alfa;
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,8 +68,18 @@ public class Splash extends Activity {
 
 
     }
+    /*
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_splash);
 
-
+        Intent intent = new Intent(Splash.this, MainActivity.class);
+        Splash.this.startActivity(intent);
+        Splash.this.finish();
+    }
+    */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

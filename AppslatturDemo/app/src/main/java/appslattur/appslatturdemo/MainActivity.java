@@ -1,12 +1,11 @@
 package appslattur.appslatturdemo;
 
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,17 +19,18 @@ import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 public class MainActivity extends Activity {
     DataBaseHelper mdb;
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AssetManager assetManager = this.getAssets();
+
         Bitmap dickbutt;
         InputStream jizz = null;
 
         try{
+            AssetManager assetManager = this.getAssets();
             jizz = assetManager.open("appslattur.png");
             dickbutt = BitmapFactory.decodeStream(jizz);
 
@@ -39,10 +39,6 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
 
     }
     protected void makeToast(String s){

@@ -22,9 +22,9 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.39"
         android:id="@+id/space"
-        android:backgroundTint="#ffffffff"
+
         android:background="#fffffdc2"
-        android:backgroundTintMode="src_in"
+        
         android:focusableInTouchMode="true" />
 
     <Button
@@ -32,9 +32,9 @@
         android:layout_height="wrap_content"
         android:text="Mín Kort"
         android:id="@+id/button3"
-        android:src="@anim/liftit"
+
         android:layout_marginTop="4dp"
-        android:background="@drawable/ripple"
+
         android:height="1dp"
         android:layout_gravity="center_horizontal"
         />
@@ -44,9 +44,9 @@
         android:layout_height="wrap_content"
         android:text="Sjá Loftmynd"
         android:id="@+id/button2"
-        android:src="@anim/liftit"
+
         android:layout_marginTop="4dp"
-        android:background="@drawable/ripple"
+
         android:height="1dp"
         android:layout_gravity="center_horizontal" />
 
@@ -54,8 +54,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Settings"
-        android:src="@anim/liftit"
-        android:background="@drawable/ripple"
+
+
         android:height="1dp"
         android:layout_marginTop="4dp"
         android:id="@+id/settingsButton"
@@ -67,9 +67,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Setja í gang"
-        android:src="@anim/liftit"
+
         android:layout_marginTop="4dp"
-        android:background="@drawable/ripple"
+
         android:height="1dp"
         android:id="@+id/button" />
 
