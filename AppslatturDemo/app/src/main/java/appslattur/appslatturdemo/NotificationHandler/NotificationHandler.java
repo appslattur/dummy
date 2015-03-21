@@ -6,6 +6,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
 
@@ -91,7 +92,7 @@ public class NotificationHandler {
 
     public void addNotification(int id) {
 
-        if(this.isActive || this.activeId == id || this.lastActiveId == id) {
+        if(this.isActive || this.activeId == id) {
             return;
         }
 
@@ -99,11 +100,36 @@ public class NotificationHandler {
 
         Notification notification = createNotification(nData);
 
-        nManager.notify(id, notification);
+        this.activeId = id;
+        this.isActive = true;
+
+        this.nManager.notify(id, notification);
+
+        // TODO: remove debbugging trials
+        CountDownTimer cTimer = new CountDownTimer(1000 * 32, 1000 * 15) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+
+            }
+
+            @Override
+            public void onFinish() {
+                nManager.cancel(activeId);
+                activeId = -1;
+                isActive = false;
+            }
+        }.start();
+
+        //Runnable r = new UpdateActive(id, 1000 * 60 * 5);
+        //new Thread(r).start();
 
         //this.manageTime(data.getId());
 
     }
+
+    
+
+
 
 
 }

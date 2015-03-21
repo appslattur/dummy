@@ -18,6 +18,7 @@ import java.io.InputStream;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.Gluggar.Listar.MinKort;
+import appslattur.appslatturdemo.ServiceHandler.AppService;
 
 public class MainActivity extends Activity {
     DataBaseHelper mdb;
@@ -56,6 +57,14 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 DataBaseHelper ddddd = new DataBaseHelper(MainActivity.this.getBaseContext());
                 ddddd.populateTable();
+            }
+        });
+
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(), AppService.class);
+                startService(i);
             }
         });
 
