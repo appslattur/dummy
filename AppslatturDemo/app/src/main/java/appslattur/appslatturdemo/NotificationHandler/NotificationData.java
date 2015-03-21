@@ -51,7 +51,7 @@ public class NotificationData {
     }
 
     public int getVibrationLength() {
-        return Integer.parseInt(this.vibrationLength);
+        return this.vibrationLength;
     }
 
     public void setId(int id) {

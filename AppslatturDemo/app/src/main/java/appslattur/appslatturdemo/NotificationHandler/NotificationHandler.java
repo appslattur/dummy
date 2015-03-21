@@ -4,114 +4,106 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+
+import appslattur.appslatturdemo.Gluggar.SpecificDetails;
 
 /**
  * Created by Arnar Jónsson on 9.2.2015.
  */
 public class NotificationHandler {
 
+
+    // The ApplicationContext
     private Context context;
 
+    // A non-static NotificationManager
     private NotificationManager nManager;
+
+    // The Active Id;
     private int activeId = -1;
-    private int notificationNumber = 0;
+
+    // The last Active Id;
+    private int lastActiveId = -1;
+
+    // Current state of the NotificationManager
+    private boolean isActive;
+
+    // Interval between available notifications
+    private int NOTIFICATION_INTERVAL;
+    private int DEFAULT_NOTIFICATION_INTERVAL = 60000;
+
+    // Number of notifications since last initialation
+    private int NOTIFICATION_NO = 0;
+
+    // The NotificationPoppulator
+    NotificationPoppulator nPoppulator;
 
     public NotificationHandler(Context context) {
 
         this.context = context;
+
+        this.NOTIFICATION_INTERVAL = this.DEFAULT_NOTIFICATION_INTERVAL;
+
+        this.isActive = false;
+
+        this.nPoppulator = new NotificationPoppulator(context);
 
         this.nManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
 
 
     }
 
-    private Notification createNotification(NotificationData data, PendingIntent pIntent) {
-        NotificationCompat.Builder newBuilder = new NotificationCompat.Builder(this.context);
+    private Notification createNotification(NotificationData data) {
 
-        newBuilder.setTicker(data.getTickerTitle());
-        newBuilder.setContentTitle(data.getTitle());
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(this.context);
 
-        // TODO: Remove notification number used for debugging
-        newBuilder.setContentText(data.getText() + " " + this.notificationNumber);
+        builder.setTicker(data.getTickerTitle());
+        builder.setContentTitle(data.getTitle());
+
+        builder.setContentText(data.getText());
 
         // context.getResources().getDrawable(R.drawable.icon); med okkar icon
-        newBuilder.setSmallIcon(data.getIcon());
+        builder.setSmallIcon(data.getIcon());
 
         // Uri uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        newBuilder.setSound(data.getSound());
+        builder.setSound(data.getSound());
 
-        newBuilder.setVibrate(new long[] { Long.valueOf(data.getVibrationLength()) } );
+        builder.setVibrate(new long[] { Long.valueOf(data.getVibrationLength()) } );
 
-        newBuilder.setContentIntent(pIntent);
+        // Startin intents
+        Intent nIntent = new Intent(this.context, SpecificDetails.class);
+        nIntent.putExtra("locationID", Integer.toString(data.getId()));
+        PendingIntent pIntent = PendingIntent.getActivity(this.context, 0, nIntent, 0);
 
-        newBuilder.setAutoCancel(true);
+        builder.setContentIntent(pIntent);
 
-        return newBuilder.build();
-    }
+        builder.setAutoCancel(true);
 
-    private boolean isActive() {
-        return this.activeId != -1;
-    }
-
-    private void cancelNotification() {
-
-        this.nManager.cancel(this.activeId);
-        this.activeId = -1;
-
-    }
-
-    private void manageTime(int id) {
-        /*
-        Timer timer = new Timer();
-        TimerTask notificationLife = new TimerTask() {
-            @Override
-            public void run() {
-
-            }
-        };
-        timer.schedule(notificationLife, 20000);
-        */
-
-        Handler nHandler = new Handler();
-        long delayMS = 20000;
-        nHandler.postDelayed(new Runnable() {
-            public void run() {
-                cancelNotification();
-            }
-        }, delayMS);
-
+        return builder.build();
     }
 
 
-    public void addNotification(NotificationData data, PendingIntent pendingIntent) {
 
-        if(isActive()) {
+
+    public void addNotification(int id) {
+
+        if(this.isActive || this.activeId == id || this.lastActiveId == id) {
             return;
         }
 
-        this.activeId = data.getId();
+        NotificationData nData = nPoppulator.createNotificationData(id);
 
-        this.notificationNumber++;
+        Notification notification = createNotification(nData);
 
-        Notification notification = createNotification(data, pendingIntent);
+        nManager.notify(id, notification);
 
-        nManager.notify(data.getId(), notification);
-
-        this.manageTime(data.getId());
+        //this.manageTime(data.getId());
 
     }
 
-    public int getNotificationNumber() {
-        return this.notificationNumber;
-    }
 
-    public void forceNotificationNumber(int forcedNumber) {
-        this.notificationNumber = forcedNumber;
-    }
-
-    public int getActiveId() {
-        return this.activeId;
-    }
 }

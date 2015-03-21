@@ -86,15 +86,7 @@ public class AppService extends Service {
                             case -1:
                                 break;
                             default:
-                                nHandler.addNotification(new NotificationData(scanResult,
-                                        "Random Tiker Title",
-                                        db.getShortDescById(scanResult),
-                                        db.getLongDescById(scanResult),
-                                        R.mipmap.ic_launcher,
-                                        RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION),
-                                        500),
-                                        PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0)
-                                        );
+                                nHandler.addNotification(scanResult);
                                 makeToast("Found Something!");
                                 break;
                         }
