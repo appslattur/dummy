@@ -3,14 +3,15 @@ xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_paren
 android:layout_height="match_parent"
     android:orientation="vertical"
     android:weightSum="10"
-tools:context="appslattur.appslatturdemo.Gluggar.SpecificDetails">
+tools:context="appslattur.appslatturdemo.Gluggar.SpecificDetails"
+    >
 
     <!-- Holding Location Name -->
     <LinearLayout
         android:layout_weight="8.5"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-       >
+        android:background="#ffe0e0e2">
         <TextView
             android:id="@+id/locationname"
             android:layout_width="fill_parent"
@@ -49,7 +50,7 @@ tools:context="appslattur.appslatturdemo.Gluggar.SpecificDetails">
             android:orientation="horizontal"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            >
+            android:background="#ffe0e0e2">
             <!--Because space -->
             <Space
 

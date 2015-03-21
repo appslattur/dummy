@@ -1,7 +1,7 @@
 package appslattur.appslatturdemo.Gluggar;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -9,7 +9,7 @@ import android.widget.TextView;
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.R;
 
-public class SpecificDetails extends ActionBarActivity {
+public class SpecificDetails extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

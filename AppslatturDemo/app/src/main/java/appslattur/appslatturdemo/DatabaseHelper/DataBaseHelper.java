@@ -359,10 +359,12 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 for(LocationChain subChain: myLocationChain){
                     if(subChain.getName().equals(name)&& subChain != null) {
                         matched = true;
+                        /*
                         Location temploc = new Location(name);
                         temploc.setLatitude(latitude);
                         temploc.setLongitude(longitude);
                         subChain.newLink(temploc, id, enabled);
+                        */
                         break;
                     }
                 }

@@ -70,10 +70,6 @@ public class MinKort extends Activity {
             return locationEntry;
         }
 
-        public void setupDetails(){
-
-        }
-
         private class LocationDetails{
             private TextView textView;
             private LocationChain mychain;
@@ -98,8 +94,6 @@ public class MinKort extends Activity {
                     }
                 });
             }
-
-
         }
 
         @Override

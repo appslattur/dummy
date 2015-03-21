@@ -46,29 +46,6 @@
         android:height="1dp"
         android:layout_gravity="center_horizontal" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Settings"
-
-
-        android:height="1dp"
-        android:layout_marginTop="4dp"
-        android:id="@+id/settingsButton"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Setja í gang"
-
-        android:layout_marginTop="4dp"
-
-        android:height="1dp"
-        android:id="@+id/button" />
-
     <ToggleButton
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
