@@ -4,35 +4,30 @@ import android.net.Uri;
 
 /**
  * Created by Arnar Jónsson on 9.2.2015.
+ * Refactored 21.3.2015
  */
 public class NotificationData {
 
-    private String id;
+    private int id;
     private String tickerTitle;
     private String title;
     private String text;
-    private String icon;
+    private int icon;
     private String sound;
-    private String vibrationLength;
+    private int vibrationLength;
 
 
-    public NotificationData(int id, String tickerTitle, String title, String text, int icon, Uri sound, int vibrationLength) {
+    public NotificationData() {
 
-        this.id = Integer.toString(id);
-        this.tickerTitle = tickerTitle;
-        this.title = title;
-        this.text = text;
-        this.icon = Integer.toString(icon);
-        this.sound = sound.toString();
-        this.vibrationLength = Integer.toString(vibrationLength);
+        // Empty Constructor
 
     }
 
     /////
-    // Public Methods
+    // GET/SET Methods
     /////
     public int getId() {
-        return Integer.parseInt(this.id);
+        return this.id;
     }
 
     public String getTickerTitle() {
@@ -48,7 +43,7 @@ public class NotificationData {
     }
 
     public int getIcon() {
-        return Integer.parseInt(this.icon);
+        return this.icon;
     }
 
     public Uri getSound() {
@@ -57,6 +52,34 @@ public class NotificationData {
 
     public int getVibrationLength() {
         return Integer.parseInt(this.vibrationLength);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setTickerTitle(String tickerTitle) {
+        this.tickerTitle = tickerTitle;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
+    }
+
+    public void setSound(Uri sound) {
+        this.sound = sound.toString();
+    }
+
+    public void setVibrationLength(int vibrationLength) {
+        this.vibrationLength = vibrationLength;
     }
 
     /////

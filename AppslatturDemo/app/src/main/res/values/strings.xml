@@ -8,4 +8,8 @@
     <string name="title_activity_splash">Splash</string>
     <string name="title_activity_specific_details">SpecificDetails</string>
     <string name="title_activity_min_kort">MinKort</string>
+
+    <!-- Notification Strings -->
+    <string name="tickerTitle">Nýttu þér Appsláttinn</string>
+    <!-- Notification Strings -->
 </resources>
