@@ -48,7 +48,7 @@ public class NotificationPoppulator {
 
     public NotificationData createNotificationData(int id) {
         NotificationData nData = new NotificationData();
-
+        /*
         DataBaseHelper dbHelper = new DataBaseHelper(this.context);
 
         nData.setId(id);
@@ -58,7 +58,14 @@ public class NotificationPoppulator {
         nData.setIcon(getDefaultMipMap());
         nData.setSound(getDefaultRingtone());
         nData.setVibrationLength(500);
-
+        */
+        nData.setId(id);
+        nData.setTickerTitle("Notification id = " + Integer.toString(id));
+        nData.setTitle(Integer.toString(id));
+        nData.setText(Integer.toString(id));
+        nData.setIcon(getDefaultMipMap());
+        nData.setSound(getDefaultRingtone());
+        nData.setVibrationLength(500);
         return nData;
     }
 }

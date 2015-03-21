@@ -99,7 +99,7 @@ public class NotificationHandler{
 
     public void addNotification(int id) {
 
-        if(this.isActive || this.activeId == id || this.spamHandler.isLegal(id)) {
+        if(this.isActive || this.activeId == id || !this.spamHandler.isLegal(id)) {
             return;
         }
 

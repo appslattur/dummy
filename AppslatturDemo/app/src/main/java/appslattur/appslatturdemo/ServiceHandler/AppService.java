@@ -59,13 +59,14 @@ public class AppService extends Service {
     @Override
     public void onCreate() {
         //super.onCreate();
+        Toast.makeText(getApplicationContext(), "Service Started", Toast.LENGTH_LONG).show();
         this.nHandler = new NotificationHandler(getBaseContext());
         db = new DataBaseHelper(getBaseContext());
         this.debugStage = 1;
         this.hasBounded = 1;
         this.hasStarted = true;
 
-        this.db.populateTable();
+        //this.db.populateTable();
 
 
 
@@ -85,6 +86,7 @@ public class AppService extends Service {
                         //LifeCycle lC = new LifeCycle(this.nHandler, this.db);
                         //lC.run();
                         //makeToast("Hello World!");
+
                         nHandler.addNotification(DEBUGIDCASEONE++);
                         if(DEBUGIDCASEONE > 5) {
                             DEBUGIDCASEONE = 0;
