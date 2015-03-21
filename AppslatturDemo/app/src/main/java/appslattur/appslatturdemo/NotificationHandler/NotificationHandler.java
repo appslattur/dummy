@@ -9,13 +9,17 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 import appslattur.appslatturdemo.Gluggar.SpecificDetails;
 
 /**
  * Created by Arnar Jónsson on 9.2.2015.
  */
-public class NotificationHandler {
+public class NotificationHandler{
 
 
     // The ApplicationContext
@@ -35,13 +39,16 @@ public class NotificationHandler {
 
     // Interval between available notifications
     private int NOTIFICATION_INTERVAL;
-    private int DEFAULT_NOTIFICATION_INTERVAL = 60000;
+    private int DEFAULT_NOTIFICATION_INTERVAL = 32000;
 
     // Number of notifications since last initialation
     private int NOTIFICATION_NO = 0;
 
     // The NotificationPoppulator
     NotificationPoppulator nPoppulator;
+
+    // SpamHandler
+    private SpamHandler spamHandler = new SpamHandler();
 
     public NotificationHandler(Context context) {
 
@@ -92,7 +99,7 @@ public class NotificationHandler {
 
     public void addNotification(int id) {
 
-        if(this.isActive || this.activeId == id) {
+        if(this.isActive || this.activeId == id || this.spamHandler.isLegal(id)) {
             return;
         }
 
@@ -103,8 +110,14 @@ public class NotificationHandler {
         this.activeId = id;
         this.isActive = true;
 
+        this.spamHandler.addId(id);
+
         this.nManager.notify(id, notification);
 
+        Timer activeIdTimer = new Timer();
+        activeIdTimer.schedule(new ActiveIdUpdater(), this.NOTIFICATION_INTERVAL);
+
+        /*
         // TODO: remove debbugging trials
         CountDownTimer cTimer = new CountDownTimer(1000 * 32, 1000 * 15) {
             @Override
@@ -119,15 +132,38 @@ public class NotificationHandler {
                 isActive = false;
             }
         }.start();
-
+        */
         //Runnable r = new UpdateActive(id, 1000 * 60 * 5);
         //new Thread(r).start();
 
         //this.manageTime(data.getId());
 
+        //activeIdUpdater = new UpdateActive(this.NOTIFICATION_INTERVAL, this.NOTIFICATION_INTERVAL/2).start();
+
     }
 
-    
+
+    private void refreshActiveId() {
+        try {
+            this.nManager.cancel(activeId);
+            this.activeId = -1;
+            this.isActive = false;
+        }
+        catch ( Exception e ) {
+            Log.w("Exception", e);
+        }
+    }
+
+    private class ActiveIdUpdater extends TimerTask {
+        @Override
+        public void run() {
+            refreshActiveId();
+        }
+    }
+
+
+
+
 
 
 

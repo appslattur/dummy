@@ -25,6 +25,8 @@ import appslattur.appslatturdemo.Radar.Radar;
  */
 public class AppService extends Service {
 
+    public int DEBUGIDCASEONE = 0;
+
     //Debugging variables
     private boolean debug = true;
     private int debugStage;
@@ -56,12 +58,14 @@ public class AppService extends Service {
 
     @Override
     public void onCreate() {
-
+        //super.onCreate();
         this.nHandler = new NotificationHandler(getBaseContext());
         db = new DataBaseHelper(getBaseContext());
         this.debugStage = 1;
         this.hasBounded = 1;
         this.hasStarted = true;
+
+        this.db.populateTable();
 
 
 
@@ -81,15 +85,11 @@ public class AppService extends Service {
                         //LifeCycle lC = new LifeCycle(this.nHandler, this.db);
                         //lC.run();
                         //makeToast("Hello World!");
-                        int scanResult = radar.cycle();
-                        switch (scanResult){
-                            case -1:
-                                break;
-                            default:
-                                nHandler.addNotification(scanResult);
-                                makeToast("Found Something!");
-                                break;
+                        nHandler.addNotification(DEBUGIDCASEONE++);
+                        if(DEBUGIDCASEONE > 5) {
+                            DEBUGIDCASEONE = 0;
                         }
+                        //Toast.makeText(getApplicationContext(), "Testing the service", Toast.LENGTH_SHORT).show();
                     }
                 });
             }
