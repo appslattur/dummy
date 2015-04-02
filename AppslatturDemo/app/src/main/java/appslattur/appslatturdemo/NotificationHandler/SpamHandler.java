@@ -12,19 +12,19 @@ import java.util.TimerTask;
 public class SpamHandler {
 
     // Storage for oldIds
-    private ArrayList<Integer> oldIds;
+    private ArrayList<String> oldIds;
 
     // Storage Time
     private int STANDARD_STORAGE_INTERVAL = 1000 * 60 * 30;
 
     public SpamHandler() {
-        this.oldIds = new ArrayList<Integer>();
+        this.oldIds = new ArrayList<String>();
     }
 
     /////
     // Private Methods
     /////
-    private void removeOldId(int id) {
+    private void removeOldId(String id) {
         this.oldIds.remove(id);
     }
 
@@ -36,25 +36,33 @@ public class SpamHandler {
         if(this.oldIds.indexOf(id) == -1) {
             return true;
         }
-        else {
-            return false;
-        }
+
+        return false;
     }
 
     public void addId(int id) {
 
-        this.oldIds.add(id);
-        int placement = this.oldIds.indexOf(id);
+        String newId = "";
+        try {
+            newId = Integer.toString(id);
+        }
+        catch (Exception e) {
+            Log.w("Exception", e);
+            return;
+        }
+
+        this.oldIds.add(newId);
+
         Timer nTimer = new Timer();
-        nTimer.schedule(new SpamTimerTask(id), this.STANDARD_STORAGE_INTERVAL);
+        nTimer.schedule(new SpamTimerTask(newId), this.STANDARD_STORAGE_INTERVAL);
 
     }
 
     public class SpamTimerTask extends TimerTask {
 
-        private int id;
+        private String id;
 
-        public SpamTimerTask(int id) {
+        public SpamTimerTask(String id) {
             this.id = id;
         }
 
