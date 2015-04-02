@@ -17,16 +17,23 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
+import appslattur.appslatturdemo.GPSListener.GPSHandler;
+import appslattur.appslatturdemo.GPSListener.GPSLocation;
 import appslattur.appslatturdemo.Gluggar.Listar.MinKort;
 import appslattur.appslatturdemo.ServiceHandler.AppService;
 
 public class MainActivity extends Activity {
     DataBaseHelper mdb;
 
+    GPSHandler gpsHandler;
+
     @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        gpsHandler = new GPSHandler(MainActivity.this);
+
         setContentView(R.layout.activity_main);
 
 
@@ -63,8 +70,11 @@ public class MainActivity extends Activity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(), AppService.class);
-                startService(i);
+                //Intent i = new Intent(getApplicationContext(), AppService.class);
+                //startService(i);
+                GPSLocation gpsLocation = gpsHandler.getGPSLocation();
+                Toast.makeText(MainActivity.this, "Lat: " + gpsLocation.getLatitude() +
+                    " | lon: " + gpsLocation.getLongitude(), Toast.LENGTH_SHORT).show();
             }
         });
 
