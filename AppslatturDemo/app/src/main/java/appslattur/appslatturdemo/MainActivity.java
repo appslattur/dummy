@@ -11,21 +11,26 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
+import appslattur.appslatturdemo.DatabaseHelper.FSDatabase;
+import appslattur.appslatturdemo.DatabaseHelper.FSDatabaseEntry;
 import appslattur.appslatturdemo.GPSListener.GPSHandler;
 import appslattur.appslatturdemo.GPSListener.GPSLocation;
 import appslattur.appslatturdemo.Gluggar.Listar.MinKort;
+import appslattur.appslatturdemo.RadarHandler.RadarScannerIterable;
 import appslattur.appslatturdemo.ServiceHandler.AppService;
 
 public class MainActivity extends Activity {
     DataBaseHelper mdb;
-
-    GPSHandler gpsHandler;
+    FSDatabase db;
+            GPSHandler gpsHandler;
 
     @SuppressLint("NewApi")
     @Override
@@ -72,9 +77,27 @@ public class MainActivity extends Activity {
             public void onClick(View view) {
                 //Intent i = new Intent(getApplicationContext(), AppService.class);
                 //startService(i);
-                GPSLocation gpsLocation = gpsHandler.getGPSLocation();
-                Toast.makeText(MainActivity.this, "Lat: " + gpsLocation.getLatitude() +
-                    " | lon: " + gpsLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                //GPSLocation gpsLocation = gpsHandler.getGPSLocation();
+                //Toast.makeText(MainActivity.this, "Lat: " + gpsLocation.getLatitude() +
+                //    " | lon: " + gpsLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                db = new FSDatabase(MainActivity.this);
+                ArrayList<FSDatabaseEntry> aList = new ArrayList<>();
+                int count = 0;
+                while (count < 5 ) {
+                    FSDatabaseEntry entry = new FSDatabaseEntry(0.0, 0.0, true);
+                    aList.add(entry);
+                }
+                db.addEntries(aList);
+
+                ArrayList<RadarScannerIterable> iArrayList = db.getIterableArrayList();
+
+                TextView tView = (TextView) findViewById(R.id.textView);
+                String datashit = "";
+                for(RadarScannerIterable rsiterable : iArrayList) {
+                    datashit += rsiterable.getId() + " " + rsiterable.getLatitude() + " " +
+                            rsiterable.getLongitude() + "\n";
+                }
+                Toast.makeText(MainActivity.this, datashit, Toast.LENGTH_LONG).show();
             }
         });
 

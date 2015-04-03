@@ -33,9 +33,11 @@ public class FSDatabase extends SQLiteOpenHelper {
                         "ID INTEGER PRIMARY KEY AUTOINCREMENT, "+
                         "LATITUDE TEXT NOT NULL, "  +
                         "LONGITUDE TEXT NOT NULL, " +
-                        "ENABLED INTEGER NOT NULL, "+   ");";
+                        "ENABLED INTEGER NOT NULL"  +   ");";
         db.execSQL(newTable);
     }
+
+
 
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
@@ -51,6 +53,7 @@ public class FSDatabase extends SQLiteOpenHelper {
         values.put("LONGITUDE", entry.getLongitude());
         values.put("ENABLED", entry.getEnableStatus());
         this.db.insert(this.DATABASE_MAIN_TABLE, null, values);
+        values.clear();
     }
 
     public void addEntries(ArrayList<FSDatabaseEntry> entries) {
@@ -63,24 +66,30 @@ public class FSDatabase extends SQLiteOpenHelper {
         ArrayList<RadarScannerIterable> iterableObjects =
                 new ArrayList<RadarScannerIterable>();
 
-        String query = "SELECT * FROM " + this.DATABASE_MAIN_TABLE;
+        String query = "SELECT (ID, LATITUDE, LONGITUDE, ENABLED) FROM " + this.DATABASE_MAIN_TABLE;
 
         Cursor cursor = this.db.rawQuery(query, null);
 
         if( cursor.moveToFirst() ) {
 
             do {
+                int id = cursor.getInt(0);
+                String latitude = cursor.getString(1);
+                String longitude = cursor.getString(2);
+                int isEnabled = cursor.getInt(3);
                 RadarScannerIterable rsIterable = new
-                        RadarScannerIterable(   cursor.getInt(0),
-                                                cursor.getString(1),
-                                                cursor.getString(2),
-                                                cursor.getInt(3));
+                        RadarScannerIterable(   id,
+                                                latitude,
+                                                longitude,
+                                                isEnabled);
 
                 iterableObjects.add(rsIterable);
             }
             while (cursor.moveToNext());
 
         }
+
+        cursor.close();
 
         if( iterableObjects.size() < 1 ) {
             return null;
