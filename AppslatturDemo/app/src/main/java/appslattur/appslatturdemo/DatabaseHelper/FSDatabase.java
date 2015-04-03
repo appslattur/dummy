@@ -53,6 +53,12 @@ public class FSDatabase extends SQLiteOpenHelper {
         this.db.insert(this.DATABASE_MAIN_TABLE, null, values);
     }
 
+    public void addEntries(ArrayList<FSDatabaseEntry> entries) {
+        for(FSDatabaseEntry entry : entries) {
+            addEntry(entry);
+        }
+    }
+
     public ArrayList<RadarScannerIterable> getIterableArrayList() {
         ArrayList<RadarScannerIterable> iterableObjects =
                 new ArrayList<RadarScannerIterable>();
