@@ -1,112 +1,96 @@
 package appslattur.appslatturdemo.DatabaseHelper;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * @author Arnar Jonsson
  * @version 0.1
  * @since 02.04.2015
  */
-public class FSDatabaseEntry {
+public class FSDatabaseEntry implements Parcelable {
 
-    private String name;
-    private double latitude;
-    private double longitude;
-    private boolean isEnable;
-    private String shortDescription;
-    private String longDescription;
-    private String discountText;
-    private String group;
+
+    private String latitude;
+    private String longitude;
+    private String isEnable;
 
     /**
      * FSDatabaseEntry
      * Converts java variables destined for FSDatabase to SQLite variables
      * This constructor has default group null
-     * @param name
      * @param latitude
      * @param longitude
      * @param isEnable
-     * @param shortDescription
-     * @param longDescription
-     * @param discountText
      */
-    public FSDatabaseEntry(String name,
-                           double latitude,
+    public FSDatabaseEntry(double latitude,
                            double longitude,
-                           boolean isEnable,
-                           String shortDescription,
-                           String longDescription,
-                           String discountText) {
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.isEnable = isEnable;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.discountText = discountText;
-        this.group = null;
+                           boolean isEnable) {
+
+        this.latitude = Double.toString(latitude);
+        this.longitude = Double.toString(longitude);
+
+        if( isEnable ) {
+            this.isEnable = "1";
+        }
+        else {
+            this.isEnable = "0";
+        }
     }
 
-    /**
-     * FSDatabaseEntry
-     * Converts java variables destined for FSDatabase to SQLite variables
-     * @param name
-     * @param latitude
-     * @param longitude
-     * @param isEnable
-     * @param shortDescription
-     * @param longDescription
-     * @param discountText
-     * @param group
-     */
-    public FSDatabaseEntry(String name,
-                           double latitude,
-                           double longitude,
-                           boolean isEnable,
-                           String shortDescription,
-                           String longDescription,
-                           String discountText,
-                           String group) {
-        this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.isEnable = isEnable;
-        this.shortDescription = shortDescription;
-        this.longDescription = longDescription;
-        this.discountText = discountText;
-        this.group = group;
-    }
-
-    public String getName() {
-        return this.name;
-    }
+    /////
+    // Get/Set Methods
+    /////
 
     public String getLatitude() {
-        return Double.toString(this.latitude);
+        return this.latitude;
     }
 
     public String getLongitude() {
-        return Double.toString(this.longitude);
+        return this.longitude;
     }
 
     public int getEnableStatus() {
-        if(this.isEnable) {
-            return 1;
-        }
+        return Integer.parseInt(this.isEnable);
+    }
+
+    /////
+    // Parcelable Methods
+    /////
+
+    public FSDatabaseEntry(Parcel in) {
+        String[] data = new String[3];
+
+        in.writeStringArray(data);
+        this.latitude = data[0];
+        this.longitude = data[1];
+        this.isEnable = data[2];
+    }
+
+    @Override
+    public int describeContents() {
         return 0;
     }
 
-    public String getShortDescription() {
-        return this.shortDescription;
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[] {
+                                this.latitude,
+                                this.longitude,
+                                this.isEnable });
     }
 
-    public String getLongDescription() {
-        return this.longDescription;
-    }
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
 
-    public String getDiscountText() {
-        return this.discountText;
-    }
+        public FSDatabaseEntry createFromParcel(Parcel in) {
+            return new FSDatabaseEntry(in);
+        }
 
-    public String getGroup() {
-        return this.group;
-    }
+        public FSDatabaseEntry[] newArray(int size) {
+            return new FSDatabaseEntry[size];
+        }
+    };
+
+
+
 }

@@ -2,6 +2,7 @@ package appslattur.appslatturdemo.DatabaseHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -53,6 +54,32 @@ public class FSDatabase extends SQLiteOpenHelper {
     }
 
     public ArrayList<RadarScannerIterable> getIterableArrayList() {
-        return null;
+        ArrayList<RadarScannerIterable> iterableObjects =
+                new ArrayList<RadarScannerIterable>();
+
+        String query = "SELECT * FROM " + this.DATABASE_MAIN_TABLE;
+
+        Cursor cursor = this.db.rawQuery(query, null);
+
+        if( cursor.moveToFirst() ) {
+
+            do {
+                RadarScannerIterable rsIterable = new
+                        RadarScannerIterable(   cursor.getInt(0),
+                                                cursor.getString(1),
+                                                cursor.getString(2),
+                                                cursor.getInt(3));
+
+                iterableObjects.add(rsIterable);
+            }
+            while (cursor.moveToNext());
+
+        }
+
+        if( iterableObjects.size() < 1 ) {
+            return null;
+        }
+
+        return iterableObjects;
     }
 }
