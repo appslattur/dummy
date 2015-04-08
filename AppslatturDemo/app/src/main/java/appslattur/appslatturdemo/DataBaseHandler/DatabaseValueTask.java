@@ -39,7 +39,7 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, ArrayList<Databa
         }
 
         try {
-            return dbController.getInitTable();
+            return dbController.getInitialTable(0);
         }
         catch (Exception e) {
             return null;

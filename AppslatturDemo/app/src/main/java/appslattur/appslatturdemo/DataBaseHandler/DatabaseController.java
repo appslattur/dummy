@@ -90,6 +90,34 @@ public class DatabaseController {
     }
 
 
+    public ArrayList<DatabaseValue> getInitialTable(int flag) {
+        ArrayList<DatabaseValue> allValues = new ArrayList<>();
+        switch (flag) {
+            default:
+                Cursor cursor = db.query(DatabaseHelper.INIT_TABLE_NAME,
+                        INITIAL_allColumns,
+                        null, null, null, null, null);
+                cursor.moveToFirst();
+
+                while(!cursor.isAfterLast()) {
+                    DatabaseValue dbValue = new DatabaseValue(
+                            cursor.getInt(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getString(4),
+                            cursor.getInt(5),
+                            cursor.getString(6),
+                            cursor.getString(7),
+                            cursor.getInt(8)
+                    );
+                    allValues.add(dbValue);
+                }
+                cursor.close();
+                return allValues;
+        }
+    }
+
     /*
     public DatabaseValue retrieveSpecificValue(int id) {
         Cursor cursor = db.query(DatabaseHelper.TABLE_NAME,
