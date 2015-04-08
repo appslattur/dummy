@@ -17,11 +17,23 @@ public class DatabaseController {
 
     private SQLiteDatabase db;
     private DatabaseHelper dbHelper;
-    private String[] allColumns = {
-            DatabaseHelper.COLUMN_ID,
-            DatabaseHelper.COLUMN_LATITUDE,
-            DatabaseHelper.COLUMN_LONGITUDE,
-            DatabaseHelper.COLUMN_ENABLED
+
+    private String[] INITIAL_allColumns = {
+            DatabaseHelper.INIT_COLUMN_ID,
+            DatabaseHelper.INIT_COLUMN_LATITUDE,
+            DatabaseHelper.INIT_COLUMN_LONGITUDE,
+            DatabaseHelper.INIT_COLUMN_CARDGROUP,
+            DatabaseHelper.INIT_COLUMN_MALLGROUP,
+            DatabaseHelper.INIT_COLUMN_HASTIMELIMIT,
+            DatabaseHelper.INIT_COLUMN_LONGDESCRIPTION,
+            DatabaseHelper.INIT_COLUMN_SHORTDESCRIPTION,
+            DatabaseHelper.INIT_COLUMN_ENABLED
+    };
+
+    private String[] SECONDARY_allColumns = {
+            DatabaseHelper.SEC_COLUMN_ID,
+            DatabaseHelper.SEC_COLUMN_TIMESTART,
+            DatabaseHelper.SEC_COLUMN_TIMESTOP
     };
 
     public DatabaseController(Context context) {
@@ -36,20 +48,49 @@ public class DatabaseController {
         dbHelper.close();
     }
 
-    public void insertEntry(DatabaseEntry entry) {
+    private long insertInitialEntry(DatabaseEntry entry) {
         ContentValues values = new ContentValues();
-        values.put(DatabaseHelper.COLUMN_LATITUDE, entry.getLatitude());
-        values.put(DatabaseHelper.COLUMN_LONGITUDE, entry.getLongitude());
-        values.put(DatabaseHelper.COLUMN_ENABLED, entry.getEnableStatus());
-        long insertId = db.insert(DatabaseHelper.TABLE_NAME, null, values);
+        //values.put(INITIAL_allColumns[0], entry.getId());
+        values.put(INITIAL_allColumns[1], entry.getLatitude());
+        values.put(INITIAL_allColumns[2], entry.getLongitude());
+        values.put(INITIAL_allColumns[3], entry.getCardGroup());
+        values.put(INITIAL_allColumns[4], entry.getMallGroup());
+        values.put(INITIAL_allColumns[5], entry.hasTimeLimit());
+        values.put(INITIAL_allColumns[6], entry.getLongDescription());
+        values.put(INITIAL_allColumns[7], entry.getShortDescription());
+        values.put(INITIAL_allColumns[8], entry.getEnableState());
+        long insertId = db.insert(DatabaseHelper.INIT_TABLE_NAME, null, values);
+        values.clear();
+        return insertId;
     }
 
-    public void insertEntries(ArrayList<DatabaseEntry> entries) {
-        for(DatabaseEntry entry : entries) {
-            insertEntry(entry);
+    private long insertSecondaryEntry(DatabaseEntry entry) {
+        ContentValues values = new ContentValues();
+        values.put(SECONDARY_allColumns[0], entry.getID());
+        values.put(SECONDARY_allColumns[1], entry.getTimeStart());
+        values.put(SECONDARY_allColumns[2], entry.getTimeStop());
+        long insertId = db.insert(DatabaseHelper.SEC_TABLE_NAME, null, values);
+        values.clear();
+        return insertId;
+    }
+
+    public long insertEntry(DatabaseEntry entry) {
+        long insertState = 0;
+        switch (entry.getType()) {
+            case DatabaseEntry.INITIAL_QUERY:
+                insertState = insertInitialEntry(entry);
+                break;
+            case DatabaseEntry.SECONDARY_QUERY:
+                insertState = insertSecondaryEntry(entry);
+                break;
+            default:
+                break;
         }
+        return insertState;
     }
 
+
+    /*
     public DatabaseValue retrieveSpecificValue(int id) {
         Cursor cursor = db.query(DatabaseHelper.TABLE_NAME,
                 allColumns,
@@ -64,7 +105,8 @@ public class DatabaseController {
 
         return value;
     }
-
+    */
+    /*
     public ArrayList<DatabaseValue> retrieveAllValues() {
         ArrayList<DatabaseValue> allValues = new ArrayList<>();
 
@@ -85,7 +127,8 @@ public class DatabaseController {
 
         return allValues;
     }
-
+*/
+    /*
     public void removeEntry(int id) {
         db.delete(DatabaseHelper.TABLE_NAME,
                 DatabaseHelper.COLUMN_ID + " = " + id,
@@ -99,5 +142,6 @@ public class DatabaseController {
         cursor.close();
         return rowCount;
     }
+    */
 
 }

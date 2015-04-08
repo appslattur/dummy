@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseController;
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntry;
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseValue;
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.DatabaseHelper.FSDatabase;
 import appslattur.appslatturdemo.DatabaseHelper.FSDatabaseEntry;
@@ -29,7 +32,6 @@ import appslattur.appslatturdemo.ServiceHandler.AppService;
 
 public class MainActivity extends Activity {
     DataBaseHelper mdb;
-    FSDatabase db;
             GPSHandler gpsHandler;
 
     @SuppressLint("NewApi")
@@ -80,24 +82,30 @@ public class MainActivity extends Activity {
                 //GPSLocation gpsLocation = gpsHandler.getGPSLocation();
                 //Toast.makeText(MainActivity.this, "Lat: " + gpsLocation.getLatitude() +
                 //    " | lon: " + gpsLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                db = new FSDatabase(MainActivity.this);
-                ArrayList<FSDatabaseEntry> aList = new ArrayList<>();
-                int count = 0;
-                while (count < 5 ) {
-                    FSDatabaseEntry entry = new FSDatabaseEntry(0.0, 0.0, true);
-                    aList.add(entry);
+                DatabaseController dbController = new DatabaseController(MainActivity.this);
+                try {
+                    dbController.open();
+                    if(dbController.getRowCount() < 3) {
+                        for(int i = 0; i < 5; i++) {
+                            dbController.insertEntry(
+                                    new DatabaseEntry(0.0,0.0,true)
+                            );
+                        }
+                    }
+                    String toastString = "";
+                    ArrayList<DatabaseValue> allValues = dbController.retrieveAllValues();
+                    for(DatabaseValue value : allValues) {
+                        toastString +=
+                                value.getId() + " | " +
+                                value.getLatitude() + " | " +
+                                value.getLongitude() + "\n";
+                    }
+                    dbController.close();
+                    Toast.makeText(MainActivity.this, toastString, Toast.LENGTH_LONG).show();
                 }
-                db.addEntries(aList);
-
-                ArrayList<RadarScannerIterable> iArrayList = db.getIterableArrayList();
-
-                TextView tView = (TextView) findViewById(R.id.textView);
-                String datashit = "";
-                for(RadarScannerIterable rsiterable : iArrayList) {
-                    datashit += rsiterable.getId() + " " + rsiterable.getLatitude() + " " +
-                            rsiterable.getLongitude() + "\n";
+                catch (Exception e) {
+                    Toast.makeText(MainActivity.this, "Something went horribly wrong", Toast.LENGTH_LONG).show();
                 }
-                Toast.makeText(MainActivity.this, datashit, Toast.LENGTH_LONG).show();
             }
         });
 
