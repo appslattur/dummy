@@ -14,7 +14,7 @@ public class DatabaseEntryTask extends AsyncTask<DatabaseEntry, Void, Long> {
     private Context context;
     private DatabaseController dbController;
 
-    private int DATABASE_ENTRY_CODE;
+    private int DATABASE_ENTRY_CODE = 0;
 
     public DatabaseEntryTask(Context context) {
         this.context = context;
@@ -28,7 +28,7 @@ public class DatabaseEntryTask extends AsyncTask<DatabaseEntry, Void, Long> {
             DATABASE_ENTRY_CODE = 1;
         }
         catch (SQLException e) {
-            DATABASE_ENTRY_CODE = 0;
+            // Do Nothing
         }
 
     }
