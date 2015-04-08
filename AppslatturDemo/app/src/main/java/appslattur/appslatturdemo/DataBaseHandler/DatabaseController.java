@@ -58,7 +58,7 @@ public class DatabaseController {
         values.put(INITIAL_allColumns[5], entry.hasTimeLimit());
         values.put(INITIAL_allColumns[6], entry.getLongDescription());
         values.put(INITIAL_allColumns[7], entry.getShortDescription());
-        values.put(INITIAL_allColumns[8], entry.getEnableState());
+        values.put(INITIAL_allColumns[8], entry.isEnabled());
         long insertId = db.insert(DatabaseHelper.INIT_TABLE_NAME, null, values);
         values.clear();
         return insertId;
@@ -66,7 +66,7 @@ public class DatabaseController {
 
     private long insertSecondaryEntry(DatabaseEntry entry) {
         ContentValues values = new ContentValues();
-        values.put(SECONDARY_allColumns[0], entry.getID());
+        values.put(SECONDARY_allColumns[0], entry.getId());
         values.put(SECONDARY_allColumns[1], entry.getTimeStart());
         values.put(SECONDARY_allColumns[2], entry.getTimeStop());
         long insertId = db.insert(DatabaseHelper.SEC_TABLE_NAME, null, values);

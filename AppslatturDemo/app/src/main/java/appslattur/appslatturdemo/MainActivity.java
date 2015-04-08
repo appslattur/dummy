@@ -20,6 +20,7 @@ import java.util.ArrayList;
 
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseController;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntry;
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntryTask;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseValue;
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.DatabaseHelper.FSDatabase;
@@ -82,29 +83,24 @@ public class MainActivity extends Activity {
                 //GPSLocation gpsLocation = gpsHandler.getGPSLocation();
                 //Toast.makeText(MainActivity.this, "Lat: " + gpsLocation.getLatitude() +
                 //    " | lon: " + gpsLocation.getLongitude(), Toast.LENGTH_SHORT).show();
-                DatabaseController dbController = new DatabaseController(MainActivity.this);
+                DatabaseEntry entry = new DatabaseEntry(0.0,
+                        0.0,
+                        "cardGroup",
+                        "mallGroup",
+                        false,
+                        "longDesc",
+                        "shortDesc",
+                        true);
+                long please = 0;
                 try {
-                    dbController.open();
-                    if(dbController.getRowCount() < 3) {
-                        for(int i = 0; i < 5; i++) {
-                            dbController.insertEntry(
-                                    new DatabaseEntry(0.0,0.0,true)
-                            );
-                        }
-                    }
-                    String toastString = "";
-                    ArrayList<DatabaseValue> allValues = dbController.retrieveAllValues();
-                    for(DatabaseValue value : allValues) {
-                        toastString +=
-                                value.getId() + " | " +
-                                value.getLatitude() + " | " +
-                                value.getLongitude() + "\n";
-                    }
-                    dbController.close();
-                    Toast.makeText(MainActivity.this, toastString, Toast.LENGTH_LONG).show();
+                     please = new DatabaseEntryTask(MainActivity.this).
+                            execute(entry).get();
+                    Toast.makeText(MainActivity.this,
+                            please+"", Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e) {
-                    Toast.makeText(MainActivity.this, "Something went horribly wrong", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MainActivity.this,
+                            "SomeThingWrong", Toast.LENGTH_SHORT).show();
                 }
             }
         });
