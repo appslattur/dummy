@@ -10,65 +10,254 @@ import java.io.Serializable;
  */
 public class DatabaseValue implements Serializable {
 
-    private String id;
+    // Private Values for an objective DatabaseValue
+    private int id;
+
     private String latitude;
     private String longitude;
-    private String isEnabled;
+    private String cardGroup;
+    private String mallGroup;
+    private int hasTimeLimit;
+    private String longDescription;
+    private String shortDescription;
+    private int isEnabled;
 
-    /**
-     * RadarScannerIterable
-     * Object that contains minimal information for GPS-coord matching
-     * @param id
-     * @param latitude
-     * @param longitude
-     * @param isEnabled
-     */
-    public DatabaseValue(int id, String latitude, String longitude, int isEnabled) {
+    private String timeStart;
+    private String timeStop;
 
-        this.id = Integer.toString(id);
+    // Entry flow control
 
-        this.latitude = latitude;
-        this.longitude = longitude;
+    // 0 == created
+    // 1 == in progress
+    // 2 == finished and ready to be cleaned up
+    private int ENTRY_STATE = 0;
 
-        this.isEnabled = Integer.toString(isEnabled);
+    // 0 == Initial Entry
+    // 1 == Secondary Entry
+    private int ENTRY_TYPE;
+    public static final int INITIAL_QUERY = 0;
+    public static final int SECONDARY_QUERY = 1;
+
+    // 0 == Initial without timestamp
+    // 1 == Initial with timestamp
+    private int NESTED_ENTRY_TYPE;
+    public static final int NESTED_WOTIMESTAMP = 0;
+    public static final int NESTED_TIMESTAMP = 1;
+
+    // Debugging and errorHandling values
+
+    // TODO : place error and snipping strings into strings.xml
+    private String NO_ERROR_FOUND = "No Errors found";
+
+    private String ERROR_DESCRIPTION = "";
+
+    private String ENTRY_ERROR_1 = "Wrong Value Type Extraction";
+    private String ENTRY_ERROR_2 = "Entry value assignment failed";
+
+    public DatabaseValue(int id,
+                         String latitude,
+                         String longitude,
+                         String cardGroup,
+                         String mallGroup,
+                         int hasTimeLimit,
+                         String longDescription,
+                         String shortDescription,
+                         int isEnabled) {
+        try {
+            this.id = id;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.cardGroup = cardGroup;
+            this.mallGroup = mallGroup;
+            this.hasTimeLimit = hasTimeLimit;
+            this.longDescription = longDescription;
+            this.shortDescription = shortDescription;
+            this.isEnabled = isEnabled;
+
+            ERROR_DESCRIPTION = NO_ERROR_FOUND;
+        }
+        catch ( Exception e) {
+            ERROR_DESCRIPTION = ENTRY_ERROR_2;
+        }
+        ENTRY_TYPE = INITIAL_QUERY;
+        NESTED_ENTRY_TYPE = NESTED_WOTIMESTAMP;
+
+    }
+
+    public DatabaseValue(int id,
+                         String latitude,
+                         String longitude,
+                         String cardGroup,
+                         String mallGroup,
+                         int hasTimeLimit,
+                         String timeStart,
+                         String timeStop,
+                         String longDescription,
+                         String shortDescription,
+                         int isEnabled) {
+        try {
+            this.id = id;
+            this.latitude = latitude;
+            this.longitude = longitude;
+            this.cardGroup = cardGroup;
+            this.mallGroup = mallGroup;
+            this.hasTimeLimit = hasTimeLimit;
+            this.timeStart = timeStart;
+            this.timeStop = timeStop;
+            this.longDescription = longDescription;
+            this.shortDescription = shortDescription;
+            this.isEnabled = isEnabled;
+
+            ERROR_DESCRIPTION = NO_ERROR_FOUND;
+        }
+        catch ( Exception e) {
+            ERROR_DESCRIPTION = ENTRY_ERROR_2;
+        }
+        ENTRY_TYPE = INITIAL_QUERY;
+        NESTED_ENTRY_TYPE = NESTED_TIMESTAMP;
+
+    }
+
+    public DatabaseValue(int id,
+                         String timeStart,
+                         String timeStop) {
+        try {
+            this.id = id;
+            this.timeStart = timeStart;
+            this.timeStop = timeStop;
+
+            ERROR_DESCRIPTION = NO_ERROR_FOUND;
+        }
+        catch (Exception e) {
+            ERROR_DESCRIPTION = ENTRY_ERROR_2;
+        }
+        ENTRY_TYPE = SECONDARY_QUERY;
+        NESTED_ENTRY_TYPE = -1;
+
+    }
+
+    /////
+    // Flow Control Methods
+    /////
+    public int getType() {
+        return ENTRY_TYPE;
+    }
+
+    public String getWorkingStatus() {
+        return ERROR_DESCRIPTION;
     }
 
     /////
     // Get/Set Methods
     /////
-
     public int getId() {
-        try {
-            return Integer.parseInt(this.id);
-        }
-        catch ( NumberFormatException e ) {
-            return -1;
-        }
+        return id;
     }
 
     public double getLatitude() {
-        try {
-            return Double.parseDouble(this.latitude);
-        }
-        catch ( NumberFormatException e ) {
-            return -1.0;
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return Double.parseDouble(latitude);
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return -1.0;
         }
     }
 
     public double getLongitude() {
-        try {
-            return Double.parseDouble(this.longitude);
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return Double.parseDouble(longitude);
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return -1.0;
         }
-        catch ( NumberFormatException e ) {
-            return -1.0;
+    }
+
+    public String getCardGroup() {
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return cardGroup;
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return null;
+        }
+    }
+
+    public String getMallGroup() {
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return mallGroup;
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return null;
+        }
+    }
+
+    public boolean hasTimeLimit() {
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                if(hasTimeLimit == 1) {
+                    return true;
+                }
+                return false;
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return false;
+        }
+    }
+
+    public String getTimeStart() {
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                switch (NESTED_ENTRY_TYPE) {
+                    case NESTED_WOTIMESTAMP:
+                        ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                        return null;
+                    default:
+                        ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                        return timeStart;
+                }
+            default:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return timeStart;
+        }
+    }
+
+    public String getTimeStop() {
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                switch (NESTED_ENTRY_TYPE) {
+                    case NESTED_WOTIMESTAMP:
+                        ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                        return null;
+                    default:
+                        ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                        return timeStop;
+                }
+            default:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return timeStop;
         }
     }
 
     public boolean isEnabled() {
-        if(this.isEnabled.equals("1")) {
-            return true;
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                if(isEnabled == 1) {
+                    return true;
+                }
+                return false;
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return false;
         }
-        return false;
     }
 
     /////
