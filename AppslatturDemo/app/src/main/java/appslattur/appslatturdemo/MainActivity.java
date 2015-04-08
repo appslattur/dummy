@@ -22,6 +22,7 @@ import appslattur.appslatturdemo.DataBaseHandler.DatabaseController;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntry;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntryTask;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseValue;
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseValueTask;
 import appslattur.appslatturdemo.DatabaseHelper.DataBaseHelper;
 import appslattur.appslatturdemo.DatabaseHelper.FSDatabase;
 import appslattur.appslatturdemo.DatabaseHelper.FSDatabaseEntry;
@@ -83,10 +84,11 @@ public class MainActivity extends Activity {
                 //GPSLocation gpsLocation = gpsHandler.getGPSLocation();
                 //Toast.makeText(MainActivity.this, "Lat: " + gpsLocation.getLatitude() +
                 //    " | lon: " + gpsLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+
                 DatabaseEntry entry = new DatabaseEntry(0.0,
                         0.0,
                         "cardGroup",
-                        "mallGroup",
+                        null,
                         false,
                         "longDesc",
                         "shortDesc",
@@ -95,12 +97,40 @@ public class MainActivity extends Activity {
                 try {
                      please = new DatabaseEntryTask(MainActivity.this).
                             execute(entry).get();
-                    Toast.makeText(MainActivity.this,
-                            please+"", Toast.LENGTH_SHORT).show();
                 }
                 catch (Exception e) {
                     Toast.makeText(MainActivity.this,
                             "SomeThingWrong", Toast.LENGTH_SHORT).show();
+                }
+
+                int stateCheck = 0;
+                ArrayList<DatabaseValue> aList = new ArrayList<DatabaseValue>();
+                try {
+                    aList = new DatabaseValueTask(MainActivity.this).
+                            execute().get();
+                    stateCheck = 1;
+                }
+                catch (Exception e) {
+                    //Do Nothing
+                }
+                try {
+                    DatabaseValue tv = aList.get(0);
+                    String fuckString =
+                            "id is : " + tv.getId() + "\n" +
+                            " lat is : " + tv.getLatitude() + "\n" +
+                            " lon is : " + tv.getLongitude() + "\n" +
+                            " cardgroup is : " + tv.getCardGroup() + "\n" +
+                            " mallgroup is : " + tv.getMallGroup() + "\n" +
+                            " hasTimeLimit is : " + tv.hasTimeLimit() + "\n" +
+                            " longDesc is : " + tv.getLongDescription() + "\n" +
+                            " shortDesc is : " + tv.getShortDescription() + "\n" +
+                            " isEnabled is : " + tv.isEnabled();
+                    TextView textView = (TextView) findViewById(R.id.textView);
+                    textView.setText(fuckString);
+
+                }
+                catch (Exception e) {
+
                 }
             }
         });

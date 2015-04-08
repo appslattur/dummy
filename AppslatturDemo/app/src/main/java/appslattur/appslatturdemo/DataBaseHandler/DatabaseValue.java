@@ -246,6 +246,28 @@ public class DatabaseValue implements Serializable {
         }
     }
 
+    public String getLongDescription() {
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return longDescription;
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return null;
+        }
+    }
+
+    public String getShortDescription() {
+        switch (ENTRY_TYPE) {
+            case INITIAL_QUERY:
+                ERROR_DESCRIPTION = NO_ERROR_FOUND;
+                return shortDescription;
+            default:
+                ERROR_DESCRIPTION = ENTRY_ERROR_1;
+                return null;
+        }
+    }
+
     public boolean isEnabled() {
         switch (ENTRY_TYPE) {
             case INITIAL_QUERY:

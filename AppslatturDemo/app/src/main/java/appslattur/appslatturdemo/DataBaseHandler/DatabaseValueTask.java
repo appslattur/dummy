@@ -19,6 +19,8 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, ArrayList<Databa
 
     public DatabaseValueTask(Context context) {
         this.context = context;
+
+        dbController = new DatabaseController(context);
     }
 
     @Override
@@ -28,7 +30,7 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, ArrayList<Databa
             DATABASE_ENTRY_CODE = 1;
         }
         catch (SQLException e) {
-
+            // Do nothing
         }
     }
 
