@@ -10,14 +10,14 @@ import java.util.ArrayList;
 /**
  * Created by arnarjons on 8.4.2015.
  */
-public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue> {
+public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue[]> {
 
     private Context context;
     private String controlString;
 
     private DatabaseController dbController;
 
-    private int DATABASE_ENTRY_CODE = 0;
+    private boolean DATABASE_CONN = false;
 
     public DatabaseValueTask(Context context, String controlString) {
         this.context = context;
@@ -31,7 +31,7 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue> {
     protected void onPreExecute() {
         try {
             dbController.open();
-            DATABASE_ENTRY_CODE = 1;
+            DATABASE_CONN = true;
         }
         catch (SQLException e) {
             // Do nothing
@@ -39,38 +39,39 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue> {
     }
 
     @Override
-    protected DatabaseValue doInBackground(Integer... args) {
-        if(DATABASE_ENTRY_CODE != 1) {
+    protected DatabaseValue[] doInBackground(Integer... args) {
+        if(!DATABASE_CONN) {
             return null;
         }
 
+        DatabaseValue[] returnValues = new DatabaseValue[1];
         try {
-            switch (controlString) {
-                case "StudentCard":
-                    try {
-                        return dbController.getInitialEntry(args[0]);
-                    }
-                    catch (Exception e) {
-                        return null;
-                    }
-                case "TimeStamp":
-                    try {
-                        return dbController.getSecondaryEntry(args[0]);
-                    }
-                    catch (Exception e) {
-                        return null;
-                    }
-                default:
-                    return null;
+            int id = args[0];
+            if(controlString.equals("StudentCard")) returnValues[0] = dbController.getFSEntry(id);
+            if(controlString.equals("FSTimeStamp")) returnValues[0] = dbController.getFSTSEntry(id);
+            if(controlString.equals("FSMallGroup")) returnValues[0] = dbController.getFSMGEntry(id);
+            return returnValues;
+        }
+        catch (NullPointerException e) {
+            try {
+                if(controlString.equals("StudentCard")) returnValues = dbController.getFSTable();
+                if(controlString.equals("FSTimeStamp")) returnValues = dbController.getFSTSTable();
+                if(controlString.equals("FSMallGroup")) returnValues = dbController.getFSMGTable();
+                return returnValues;
+            }
+            catch (Exception f) {
+                return null;
             }
         }
         catch (Exception e) {
             return null;
         }
+
+ 
     }
 
     @Override
-    protected void onPostExecute(DatabaseValue value) {
+    protected void onPostExecute(DatabaseValue[] value) {
         dbController.close();
     }
 }
