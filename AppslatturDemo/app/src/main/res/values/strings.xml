@@ -11,5 +11,6 @@
 
     <!-- Notification Strings -->
     <string name="tickerTitle">Nýttu þér Appsláttinn</string>
+    <string name="title_activity_testing">TestingActivity</string>
     <!-- Notification Strings -->
 </resources>

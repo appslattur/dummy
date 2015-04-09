@@ -7,8 +7,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
-
     <!-- Vibrate permission -->
     <uses-permission android:name="android.permission.VIBRATE" />
     <!-- Vibrate permission -->
@@ -43,7 +41,6 @@
             android:name=".MainActivity"
             android:label="@string/app_name" >
         </activity>
-
         <activity
             android:name=".Gluggar.SaveThisLocation"
             android:label="@string/title_activity_save_this_location"
@@ -72,6 +69,10 @@
         <activity
             android:name=".Gluggar.Listar.MinKort"
             android:label="@string/title_activity_min_kort" >
+        </activity>
+        <activity
+            android:name=".TestingActivity"
+            android:label="@string/title_activity_testing" >
         </activity>
     </application>
 
