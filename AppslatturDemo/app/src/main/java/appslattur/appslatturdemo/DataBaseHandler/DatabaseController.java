@@ -178,7 +178,7 @@ public class DatabaseController {
 
         final String queryFS = "SELECT * FROM " +
                     DatabaseHelper.FS_TABLE_NAME +
-                    " ORDER BY " + FS_allColumns[0];
+                    " ORDER BY " + FS_allColumns[0] + ";";
 
         Cursor cursor = db.rawQuery(queryFS, null);
         cursor.moveToFirst();
@@ -215,7 +215,7 @@ public class DatabaseController {
 
         final String query = "SELECT * FROM " +
                 DatabaseHelper.FSTS_TABLE_NAME +
-                " ORDER BY " + FSTS_allColumns[0];
+                " ORDER BY " + FSTS_allColumns[0] + ";";
 
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
@@ -244,7 +244,7 @@ public class DatabaseController {
 
         final String queryFSMG = "SELECT * FROM " +
                 DatabaseHelper.FSMG_TABLE_NAME +
-                " ORDER BY " + FSMG_allColumns[0];
+                " ORDER BY " + FSMG_allColumns[0] + ";";
 
         Cursor cursor = db.rawQuery(queryFSMG, null);
         cursor.moveToFirst();
@@ -274,7 +274,7 @@ public class DatabaseController {
     public DatabaseValue getFSEntry(int id) {
         final String queryFSE = "SELECT * FROM " +
                 DatabaseHelper.FS_TABLE_NAME +
-                " WHERE " + DatabaseHelper.FS_COLUMN_ID + " = " + id;
+                " WHERE " + DatabaseHelper.FS_COLUMN_ID + " = " + id + ";";
 
         Cursor cursor = db.rawQuery(queryFSE, null);
         cursor.moveToFirst();
@@ -307,7 +307,7 @@ public class DatabaseController {
     public DatabaseValue getFSTSEntry(int id) {
         final String queryFSTSE = "SELECT * FROM " +
                 DatabaseHelper.FSTS_TABLE_NAME +
-                " WHERE " + DatabaseHelper.FSTS_COLUMN_ID + " = " + id;
+                " WHERE " + DatabaseHelper.FSTS_COLUMN_ID + " = " + id + ";";
 
         Cursor cursor = db.rawQuery(queryFSTSE, null);
         cursor.moveToFirst();
@@ -332,7 +332,7 @@ public class DatabaseController {
     public DatabaseValue getFSMGEntry(int id) {
         final String queryFSMGE = "SELECT * FROM " +
                 DatabaseHelper.FSMG_TABLE_NAME +
-                " WHERE " + DatabaseHelper.FSMG_COLUMN_ID + " = " + id;
+                " WHERE " + DatabaseHelper.FSMG_COLUMN_ID + " = " + id + ";";
 
         Cursor cursor = db.rawQuery(queryFSMGE, null);
         cursor.moveToFirst();
@@ -354,8 +354,17 @@ public class DatabaseController {
     // DatabaseIterationTask functions
     /////
 
+    /////
+    //  Special static integers for special Iteration functions
+
+        public static final int ITERABLE_SWITCH_ONE = 0;
+        public static final String ITERABLE_KEY_ONE = "General";
+
+    //
+    /////
+
     /**
-     * getRadarIterables
+     * getRI_FIRSTSWITCH()
      * @return Array of RadarIterable objects according to the rules:
      *                  (id, latitude, longitude, hasTimeLimit)
      *                  from table FS where mallgroup = general
@@ -364,8 +373,122 @@ public class DatabaseController {
      *                  (id, latitude, longitude)
      *                  from table FSMG
      */
-    public RadarIterable[] getRadarIterables() {
-        return null;
+    private RadarIterable[] getRI_FIRSTSWITCH() {
+
+        final String query_FS = "SELECT (" +
+                DatabaseHelper.FS_COLUMN_ID + ", " +
+                DatabaseHelper.FS_COLUMN_LATITUDE + ", " +
+                DatabaseHelper.FS_COLUMN_LONGITUDE + ", " +
+                DatabaseHelper.FS_COLUMN_HASTIMELIMIT + ", " +
+                DatabaseHelper.FS_COLUMN_PINGRADIUS + ") " +
+                "FROM " + DatabaseHelper.FS_TABLE_NAME + " " +
+                "WHERE " + DatabaseHelper.FS_COLUMN_MALLGROUP + " " +
+                "= " + ITERABLE_KEY_ONE + ";";
+
+        Cursor cursor_FS = db.rawQuery(query_FS, null);
+
+        RadarIterable[] iterable_dump_FS =
+                new RadarIterable[cursor_FS.getCount()];
+
+        cursor_FS.moveToFirst();
+        int dumpCount = 0;
+        while(!cursor_FS.isAfterLast()) {
+
+            RadarIterable rIterable = new RadarIterable();
+
+            rIterable.setId(cursor_FS.getInt(0));
+            rIterable.setLatitude(cursor_FS.getString(1));
+            rIterable.setLongitude(cursor_FS.getString(2));
+            rIterable.setTimeLimitFlag(cursor_FS.getInt(3));
+            rIterable.setPingRadius(cursor_FS.getInt(4));
+
+            iterable_dump_FS[dumpCount++] = rIterable;
+
+            cursor_FS.moveToNext();
+        }
+
+        cursor_FS.close();
+
+        String query_FSTS_UNPREPARED = "SELECT (" +
+                DatabaseHelper.FSTS_COLUMN_TIMESTART + ", " +
+                DatabaseHelper.FSTS_COLUMN_TIMESTOP + ") " +
+                "FROM " + DatabaseHelper.FSTS_TABLE_NAME + " " +
+                "WHERE " + DatabaseHelper.FSTS_COLUMN_ID + " " +
+                "= ";
+
+        for(RadarIterable FS_DUMP : iterable_dump_FS) {
+            if(FS_DUMP.getTimeLimitFlag()) {
+                String query_FSTS =
+                        query_FSTS_UNPREPARED +
+                        FS_DUMP.getId() + ";";
+                Cursor cursor_FSTS = db.rawQuery(query_FSTS, null);
+                // TODO : Check For Infinite Loop on Single rawQuery moveToFirst() call
+                cursor_FSTS.moveToFirst();
+
+                FS_DUMP.setTimeStart(cursor_FSTS.getString(0));
+                FS_DUMP.setTimeStop(cursor_FSTS.getString(1));
+
+                cursor_FSTS.close();
+            }
+        }
+
+        final String query_FSMG = "SELECT (" +
+                DatabaseHelper.FSMG_COLUMN_ID + ", " +
+                DatabaseHelper.FSMG_COLUMN_LATITUDE + ", " +
+                DatabaseHelper.FSMG_COLUMN_LONGITUDE + ", " +
+                DatabaseHelper.FSMG_COLUMN_PINGRADIUS + ") " +
+                "FROM " + DatabaseHelper.FSMG_TABLE_NAME + ";";
+
+        Cursor cursor_FSMG = db.rawQuery(query_FSMG, null);
+
+        RadarIterable[] iterable_dump_FSMG =
+                new RadarIterable[cursor_FSMG.getCount()];
+
+        cursor_FSMG.moveToFirst();
+        dumpCount = 0;
+        while(!cursor_FSMG.isAfterLast()) {
+
+            RadarIterable rIterable = new RadarIterable();
+            rIterable.setId(cursor_FSMG.getInt(0));
+            rIterable.setLatitude(cursor_FSMG.getString(1));
+            rIterable.setLongitude(cursor_FSMG.getString(2));
+            rIterable.setPingRadius(cursor_FSMG.getInt(3));
+
+            iterable_dump_FSMG[dumpCount++] = rIterable;
+
+            cursor_FSMG.moveToNext();
+        }
+
+        cursor_FSMG.close();
+
+        RadarIterable[] allValues = new RadarIterable
+                [iterable_dump_FS.length + iterable_dump_FSMG.length];
+
+        dumpCount = 0;
+        for(RadarIterable rI1 : iterable_dump_FS) {
+            allValues[dumpCount++] = rI1;
+        }
+
+        for(RadarIterable rI2 : iterable_dump_FSMG) {
+            allValues[dumpCount++] = rI2;
+        }
+
+        return allValues;
+    }
+
+    /**
+     * getRadarIterables
+     * @param staticHelpId Flow control signal
+     * @return Array of RadarIterable objects according to the rule
+     *              stated by the staticHelpId
+     */
+    public RadarIterable[] getRadarIterables(int staticHelpId) {
+        switch (staticHelpId) {
+            case ITERABLE_SWITCH_ONE:
+                return getRI_FIRSTSWITCH();
+            default:
+                return null;
+        }
     }
 
     /////
