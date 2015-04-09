@@ -8,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntry;
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntryTask;
+
 
 public class TestingActivity extends ActionBarActivity {
 
@@ -22,7 +25,28 @@ public class TestingActivity extends ActionBarActivity {
         entryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                textView.setText("I am a debug button");
+                long insertId = 0;
+                DatabaseEntry dbEntry = new DatabaseEntry(
+                        0.0,
+                        0.0,
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        "text",
+                        true,
+                        1
+
+                );
+                try {
+                    insertId = new DatabaseEntryTask(getApplicationContext()).
+                            execute(dbEntry).get();
+                }
+                catch (Exception e) {
+                    insertId = -1;
+                }
+                textView.setText("Last inserted item in database has id : " +
+                            insertId);
             }
         });
 

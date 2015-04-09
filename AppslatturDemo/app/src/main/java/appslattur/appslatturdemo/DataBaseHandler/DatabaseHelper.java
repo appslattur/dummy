@@ -55,7 +55,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                     FS_COLUMN_HASTIMELIMIT + " INTEGER NOT NULL, " +
                     FS_COLUMN_LONGDESCRIPTION + " TEXT NOT NULL, " +
                     FS_COLUMN_SHORTDESCRIPTION + " TEXT NOT NULL, " +
-                    FS_COLUMN_ENABLED + " INTEGER NOT NULL" +
+                    FS_COLUMN_ENABLED + " INTEGER NOT NULL, " +
                     FS_COLUMN_PINGRADIUS + " INTEGER NOT NULL " + ");";
 
     // SECONDARY TABLE CREATE STATEMENT
