@@ -14,7 +14,7 @@ public class DatabaseEntryTask extends AsyncTask<DatabaseEntry, Void, Long> {
     private Context context;
     private DatabaseController dbController;
 
-    private int DATABASE_ENTRY_CODE = 0;
+    private boolean DATABASE_CONN = false;
 
     public DatabaseEntryTask(Context context) {
         this.context = context;
@@ -25,7 +25,7 @@ public class DatabaseEntryTask extends AsyncTask<DatabaseEntry, Void, Long> {
         dbController = new DatabaseController(context);
         try {
             dbController.open();
-            DATABASE_ENTRY_CODE = 1;
+            DATABASE_CONN = true;
         }
         catch (SQLException e) {
             // Do Nothing
@@ -36,26 +36,36 @@ public class DatabaseEntryTask extends AsyncTask<DatabaseEntry, Void, Long> {
     @Override
     protected Long doInBackground(DatabaseEntry... entry) {
 
-        if(entry == null) {
+        if(!DATABASE_CONN) {
             return new Long(-1);
         }
 
-        switch (DATABASE_ENTRY_CODE) {
-            case 1:
-                if(entry.length == 1) {
-                    return dbController.insertEntry(entry[0]);
-                }
-                else {
-                    for(DatabaseEntry ent : entry) {
-                        long insertId = dbController.insertEntry(ent);
-                        if(insertId == -1) {
-                            return  insertId;
-                        }
-                    }
-                    return new Long(1);
-                }
-            default:
+        if(entry == null || entry.length == 0) {
+            return new Long(-1);
+        }
+
+        if(entry.length == 1) {
+            try {
+                return dbController.insertEntry(entry[0]);
+            }
+            catch (Exception e) {
                 return new Long(-1);
+            }
+        }
+        else {
+            long insertId = new Long(0);
+            for(DatabaseEntry ent : entry) {
+                try {
+                    insertId = dbController.insertEntry(ent);
+                }
+                catch (Exception e) {
+                    return new Long(-1);
+                }
+                if(insertId < 0) {
+                    return insertId;
+                }
+            }
+            return insertId;
         }
     }
 
