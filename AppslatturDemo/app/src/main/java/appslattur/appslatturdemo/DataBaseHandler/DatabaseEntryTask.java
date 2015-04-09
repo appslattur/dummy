@@ -7,7 +7,9 @@ import android.os.AsyncTask;
 import java.sql.SQLException;
 
 /**
- * Created by arnarjons on 8.4.2015.
+ * @author Arnar Jonsson
+ * @version 0.1
+ * @since  8.4.2015.
  */
 public class DatabaseEntryTask extends AsyncTask<DatabaseEntry, Void, Long> {
 
@@ -16,6 +18,16 @@ public class DatabaseEntryTask extends AsyncTask<DatabaseEntry, Void, Long> {
 
     private boolean DATABASE_CONN = false;
 
+    /**
+     * DatabaseEntryTask(context)
+     * AsyncTask that handles data entry tasks for the Appslattur application
+     * Started with a filled DatabaseEntry object
+     * Returns the id of the new row (or the last row inserted) on successful entry,
+     * and -1 if the entry failed.
+     * The first entry to fail when inserting multiple objects will result in Task termination
+     * The task will also return -1 if connection is not established with the database
+     * @param context Context of the calling application
+     */
     public DatabaseEntryTask(Context context) {
         this.context = context;
     }

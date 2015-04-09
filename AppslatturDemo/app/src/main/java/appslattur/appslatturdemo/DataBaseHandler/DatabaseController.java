@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * @author Arnar Jonsson
+ * @author Arnar Jonsson, Ari Freyr Gudmundsson
  * @version 0.2
  * @since  3.4.2015.
  */
@@ -48,18 +48,43 @@ public class DatabaseController {
             DatabaseHelper.FSMG_COLUMN_PINGRADIUS
     };
 
+    /**
+     * DatabaseController
+     * Allows connection to the Appslattur database
+     * Do not use unless called inside an <b>AsyncTask</b>
+     * or other <b>separated threads</b>
+     * @param context From the calling application
+     */
     public DatabaseController(Context context) {
         dbHelper = new DatabaseHelper(context);
     }
 
+    /**
+     * Opens the Appslattur database
+     * @throws SQLException
+     */
     public void open() throws SQLException {
         db = dbHelper.getWritableDatabase();
     }
 
+    /**
+     * Closes the Appslattur database
+     */
     public void close() {
         dbHelper.close();
     }
 
+    /////
+    // DatabaseEntryTask functions
+    /////
+
+    /**
+     * insertFSEntry(DatabaseEntry entry)
+     * Inserts a single DatabaseEntry to Appslattur database
+     * main table, and its helper table if needs be
+     * @param entry DatabaseEntry destined for insertion
+     * @return ID of the new table row if successful, -1 if unsuccessful
+     */
     private long insertFSEntry(DatabaseEntry entry) {
         //TODO : HANDLE ID LOGIC CHANGES IF NEED BE
         ContentValues values = new ContentValues();
@@ -80,6 +105,13 @@ public class DatabaseController {
         return insertId;
     }
 
+    /**
+     * insertFSTSEntry(DatabaseEntry entry)
+     * Inserts a single DatabaseEntry into Appslattur database
+     * secondary helper table
+     * @param entry DatabaseEntry destined for insertion
+     * @return ID of the new table row if successful, -1 if unsuccessful
+     */
     private long insertFSTSEntry(DatabaseEntry entry) {
         ContentValues values = new ContentValues();
         values.put(FSTS_allColumns[0], entry.getId());
@@ -90,7 +122,12 @@ public class DatabaseController {
         return insertId;
     }
 
-    private long insertFTMGEntry(DatabaseEntry entry) {
+    /**
+     * insertFSMGEntry(DatabaseEntry entry)
+     * @param entry DatabaseEntry destined for insertion
+     * @return ID of the new table row if successful, -1 if unsuccessful
+     */
+    private long insertFSMGEntry(DatabaseEntry entry) {
         ContentValues values = new ContentValues();
         values.put(FSMG_allColumns[0], entry.getId());
         values.put(FSMG_allColumns[1], entry.getLatitude());
@@ -102,6 +139,12 @@ public class DatabaseController {
         return insertId;
     }
 
+    /**
+     * insertEntry(DatabaseEntry entry)
+     * Control flow function of the DatabaseEntryTask thread
+     * @param entry DatabaseEntry destined for insertion
+     * @return ID of the new table row if successful, -1 if unsuccessful
+     */
     public long insertEntry(DatabaseEntry entry) {
         long insertState = -1;
         switch (entry.getType()) {
@@ -112,14 +155,21 @@ public class DatabaseController {
                 insertState = insertFSTSEntry(entry);
                 break;
             case DatabaseEntry.FSMG_QUERY:
-                insertState = insertFTMGEntry(entry);
+                insertState = insertFSMGEntry(entry);
             default:
                 break;
         }
         return insertState;
     }
 
+    /////
+    // DatabaseValueTask functions
+    /////
 
+    /**
+     * getFSTable()
+     * @return All rows of the Appslattur database main table
+     */
     public DatabaseValue[] getFSTable() {
         DatabaseValue[] allValues =
                 new DatabaseValue[getRowCount(DatabaseHelper.FS_TABLE_NAME)];
@@ -153,6 +203,10 @@ public class DatabaseController {
         return allValues;
     }
 
+    /**
+     * getFSTSTable()
+     * @return All rows of the Appslattur database second (helper) table
+     */
     public DatabaseValue[] getFSTSTable() {
         DatabaseValue[] allValues =
                 new DatabaseValue[getRowCount(DatabaseHelper.FSTS_TABLE_NAME)];
@@ -178,6 +232,10 @@ public class DatabaseController {
         return allValues;
     }
 
+    /**
+     * getFSMGTable()
+     * @return All rows of the Appslattur database third (helper) table
+     */
     public DatabaseValue[] getFSMGTable() {
         DatabaseValue[] allValues =
                 new DatabaseValue[getRowCount(DatabaseHelper.FSMG_TABLE_NAME)];
@@ -205,6 +263,12 @@ public class DatabaseController {
         return allValues;
     }
 
+    /**
+     * getFSEntry(id)
+     * Retrieves specific data from Appslattur database main table
+     * @param id ID of row to retrieve
+     * @return DatabaseValue corresponding to the retrieved row data
+     */
     public DatabaseValue getFSEntry(int id) {
         final String queryFSE = "SELECT * FROM " +
                 DatabaseHelper.FS_TABLE_NAME +
@@ -232,6 +296,12 @@ public class DatabaseController {
         return dbValue;
     }
 
+    /**
+     * getFSTSEntry(id)
+     * Retrieves specific data from Appslatturs database second table
+     * @param id ID of row to retrieve
+     * @return DatabaseValue corresponding to the retrieved row data
+     */
     public DatabaseValue getFSTSEntry(int id) {
         final String queryFSTSE = "SELECT * FROM " +
                 DatabaseHelper.FSTS_TABLE_NAME +
@@ -251,6 +321,12 @@ public class DatabaseController {
         return dbValue;
     }
 
+    /**
+     * getFSMGEntry(id)
+     * Retrieves specific data from Appslattur third table
+     * @param id ID of row to retrieve
+     * @return DatabaseValue corresponding to the retrieved row data
+     */
     public DatabaseValue getFSMGEntry(int id) {
         final String queryFSMGE = "SELECT * FROM " +
                 DatabaseHelper.FSMG_TABLE_NAME +
@@ -272,7 +348,23 @@ public class DatabaseController {
         return dbValue;
     }
 
+    /////
+    // DatabaseIterationTask functions
+    /////
 
+    /////
+    // DatabaseUpdateTask functions
+    /////
+
+    /////
+    // Utility methods
+    /////
+
+    /**
+     * getRowCount(tableName)
+     * @param tableName Name of the table you want to check on
+     * @return Row count of the table in question
+     */
     public int getRowCount(String tableName) {
 
         final String FScount =

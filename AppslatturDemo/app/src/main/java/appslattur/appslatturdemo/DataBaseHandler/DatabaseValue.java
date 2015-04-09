@@ -6,7 +6,9 @@ import android.os.Parcelable;
 import java.io.Serializable;
 
 /**
- * Created by arnarjons on 3.4.2015.
+ * @author Arnar Jonsson
+ * @version 0.2
+ * @since  3.4.2015.
  */
 public class DatabaseValue implements Serializable {
 
@@ -183,6 +185,10 @@ public class DatabaseValue implements Serializable {
     }
 
     // TODO : Double check initial and update logic for correct id handling
+
+    /**
+     * @return ID of the object
+     */
     public int getId() {
         if(isFSTS || isFSMG) {
             return this.id;
@@ -190,6 +196,9 @@ public class DatabaseValue implements Serializable {
         return -1;
     }
 
+    /**
+     * @return GPS latitude coordinate if allowed, otherwise -1
+     */
     public double getLatitude() {
         if(isFS || isFSMG) {
             return Double.parseDouble(this.latitude);
@@ -197,6 +206,9 @@ public class DatabaseValue implements Serializable {
         return -1.0;
     }
 
+    /**
+     * @return GPS longitude coordinate of allowed, otherwise -1
+     */
     public double getLongitude() {
         if(isFS || isFSMG) {
             return Double.parseDouble(this.longitude);
@@ -204,6 +216,9 @@ public class DatabaseValue implements Serializable {
         return -1.0;
     }
 
+    /**
+     * @return Name of the object if allowed, otherwise null
+     */
     public String getName() {
         if(isFS || isFSMG) {
             return this.name;
@@ -211,6 +226,9 @@ public class DatabaseValue implements Serializable {
         return null;
     }
 
+    /**
+     * @return Cardgroup of the object if allowed, otherwise null
+     */
     public String getCardGroup() {
         if(isFS) {
             return this.cardGroup;
@@ -218,6 +236,9 @@ public class DatabaseValue implements Serializable {
         return null;
     }
 
+    /**
+     * @return Mallgroup of object if allowed, otherwise null
+     */
     public String getMallGroup() {
         if(isFS) {
             return this.mallGroup;
@@ -225,6 +246,10 @@ public class DatabaseValue implements Serializable {
         return null;
     }
 
+    /**
+     * @return true if the object has a time limit
+     * @return false if the object does not have, or is not entitled to a time limit
+     */
     public boolean hasTimeLimit() {
         if(isFS) {
             if(hasTimeLimit == 1) {
@@ -235,6 +260,9 @@ public class DatabaseValue implements Serializable {
         return false;
     }
 
+    /**
+     * @return Long description if allowed, otherwise null
+     */
     public String getLongDescription() {
         if(isFS) {
             return this.longDescription;
@@ -242,6 +270,9 @@ public class DatabaseValue implements Serializable {
         return null;
     }
 
+    /**
+     * @return Short description if allowed, otherwise null
+     */
     public String getShortDescription() {
         if(isFS) {
             return this.shortDescription;
@@ -249,6 +280,11 @@ public class DatabaseValue implements Serializable {
         return null;
     }
 
+    /**
+     * @return 1 if the object is enable to construct a notification notification
+     * @return 0 if the object is not enable .....
+     * @return -1 if the object is not viable for .....
+     */
     public boolean isEnabled() {
         if(isFS) {
             if(this.isEnabled == 1) {
@@ -259,6 +295,9 @@ public class DatabaseValue implements Serializable {
         return false;
     }
 
+    /**
+     * @return PingRadius in meters if allowed, otherwise -1
+     */
     public int getPingRadius() {
         if(isFS || isFSMG) {
             return this.pingRadius;
@@ -266,6 +305,9 @@ public class DatabaseValue implements Serializable {
         return -1;
     }
 
+    /**
+     * @return A String representation of a start time stamp if allowed, otherwise null
+     */
     public String getTimeStart() {
         if(isFS || isFSTS) {
             return this.timeStart;
@@ -273,6 +315,9 @@ public class DatabaseValue implements Serializable {
         return null;
     }
 
+    /**
+     * @return A String representation of a stop time stamp if allowed, otherwise null
+     */
     public String getTimeStop() {
         if(isFS || isFSTS) {
             return this.timeStop;

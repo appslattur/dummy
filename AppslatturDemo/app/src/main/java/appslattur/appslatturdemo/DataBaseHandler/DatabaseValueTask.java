@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by arnarjons on 8.4.2015.
+ * @author Arnar Jonsson
+ * @version 0.1
+ * @since  8.4.2015.
  */
 public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue[]> {
 
@@ -19,6 +21,21 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue[]>
 
     private boolean DATABASE_CONN = false;
 
+    /**
+     * DatabaseValueTask(context, controlString)
+     * AsyncTask that handles data extraction tasks for the Appslattur application
+     * Started with an ID representation of a row placement in the Appslattur database,
+     * which table you want to retrieve from is controlled by the constructor argument
+     * controlString
+     * Starting it with no specific ID returns all rows of the table controlled by the
+     * constructor argument controlString
+     * Returns a DatabaseValue array containing ether a single result (task called by id)
+     * or all results (task called without id) of the specified table
+     * The task will return null on ether failure or if it failed to connect to the Appslattur
+     * database
+     * @param context Context of the calling application
+     * @param controlString TableTag (name) of the table you want to retrieve data from
+     */
     public DatabaseValueTask(Context context, String controlString) {
         this.context = context;
         this.controlString = controlString;

@@ -181,6 +181,10 @@ public class DatabaseEntry implements Serializable {
     }
 
     // TODO : Double check initial and update logic for correct id handling
+
+    /**
+     * @return Id of the object if allowed, -1 otherwise
+     */
     public int getId() {
         if(isFSTS || isFSMG) {
             return this.id;
@@ -188,6 +192,9 @@ public class DatabaseEntry implements Serializable {
         return -1;
     }
 
+    /**
+     * @return A String representation of a GPS Latitude coordinate if allowed, otherwise null
+     */
     public String getLatitude() {
         if(isFS || isFSMG) {
             return this.latitude+"";
@@ -195,6 +202,9 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return A String representation of a GPS Longitude coordinate if allowed, otherwise null
+     */
     public String getLongitude() {
         if(isFS || isFSMG) {
             return this.longitude+"";
@@ -202,6 +212,9 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return Name of the object if allowed, otherwise null
+     */
     public String getName() {
         if(isFS || isFSMG) {
             return this.name;
@@ -209,6 +222,9 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return CardGroup of the object if allowed, otherwise null
+     */
     public String getCardGroup() {
         if(isFS) {
             return this.cardGroup;
@@ -216,6 +232,9 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return MallGroup of the object if allowed, otherwise null
+     */
     public String getMallGroup() {
         if(isFS) {
             return this.mallGroup;
@@ -223,6 +242,11 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return 1 if the object has a time limit
+     * @return 0 if the object does not have a time limit
+     * @return -1 of the object is not entitled to a time limit
+     */
     public int hasTimeLimit() {
         if(isFS) {
             if(hasTimeLimit) {
@@ -233,6 +257,9 @@ public class DatabaseEntry implements Serializable {
         return -1;
     }
 
+    /**
+     * @return Long description of object if allowed, otherwise null
+     */
     public String getLongDescription() {
         if(isFS) {
             return this.longDescription;
@@ -240,6 +267,9 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return Short description of object if allowed, otherwise null
+     */
     public String getShortDescription() {
         if(isFS) {
             return this.shortDescription;
@@ -247,6 +277,11 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return 1 if the object is viable for notification construction
+     * @return 0 if the object is not viable for notification construction
+     * @return -1 of the object is not entitled to a n... c...
+     */
     public int isEnabled() {
         if(isFS) {
             if(this.isEnabled) {
@@ -257,6 +292,9 @@ public class DatabaseEntry implements Serializable {
         return -1;
     }
 
+    /**
+     * @return PingRadius of object in meters if allowed, otherwise -1
+     */
     public int getPingRadius() {
         if(isFS || isFSMG) {
             return this.pingRadius;
@@ -264,6 +302,9 @@ public class DatabaseEntry implements Serializable {
         return -1;
     }
 
+    /**
+     * @return String representation of a time start stamp if allowed, null otherwise
+     */
     public String getTimeStart() {
         if(isFS || isFSTS) {
             return this.timeStart;
@@ -271,6 +312,9 @@ public class DatabaseEntry implements Serializable {
         return null;
     }
 
+    /**
+     * @return String representation of a time stop stamp if allowed, null otherwise
+     */
     public String getTimeStop() {
         if(isFS || isFSTS) {
             return this.timeStop;

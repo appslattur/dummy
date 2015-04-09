@@ -5,7 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
- * @author Arnar Jonsson
+ * @author Arnar Jonsson, Ari Freyr Gudmundsson
  * @version 0.2
  * @since 3.4.2015.
  */
