@@ -75,7 +75,7 @@ public class DatabaseController {
     }
 
     public long insertEntry(DatabaseEntry entry) {
-        long insertState = 0;
+        long insertState = -1;
         switch (entry.getType()) {
             case DatabaseEntry.INITIAL_QUERY:
                 insertState = insertInitialEntry(entry);
@@ -119,7 +119,13 @@ public class DatabaseController {
         return allValues;
     }
 
+    public DatabaseValue getInitialEntry(int id) {
+        return null;
+    }
 
+    public DatabaseValue getSecondaryEntry(int id) {
+        return null;
+    }
 
     /*
     public DatabaseValue retrieveSpecificValue(int id) {
