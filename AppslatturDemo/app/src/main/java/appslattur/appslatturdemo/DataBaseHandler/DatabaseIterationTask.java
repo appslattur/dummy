@@ -8,7 +8,7 @@ import appslattur.appslatturdemo.RadarHandler.RadarIterable;
 /**
  * Created by arnarjons on 9.4.2015.
  */
-public class DatabaseIterationTask extends AsyncTask<Void, Void, RadarIterable[]> {
+public class DatabaseIterationTask extends AsyncTask<Integer, Void, RadarIterable[]> {
 
     private Context context;
     private String controlString;
@@ -45,7 +45,7 @@ public class DatabaseIterationTask extends AsyncTask<Void, Void, RadarIterable[]
     }
 
     @Override
-    protected RadarIterable[] doInBackground(Void... args) {
+    protected RadarIterable[] doInBackground(Integer... args) {
         if(!DATABASE_CONN) {
             return null;
         }
@@ -53,7 +53,7 @@ public class DatabaseIterationTask extends AsyncTask<Void, Void, RadarIterable[]
         switch (controlString) {
             case "RadarIterations":
                 try {
-                    return dbController.getRadarIterables();
+                    return dbController.getRadarIterables(0);
                 }
                 catch (Exception e) {
                     return null;
