@@ -358,9 +358,9 @@ public class DatabaseController {
      * getRadarIterables
      * @return Array of RadarIterable objects according to the rules:
      *                  (id, latitude, longitude, hasTimeLimit)
-     *                  from table FS
+     *                  from table FS where mallgroup = general
      *                  (id, timeStart, timeStop)
-     *                  from table FSTS
+     *                  from table FSTS (if needed)
      *                  (id, latitude, longitude)
      *                  from table FSMG
      */
