@@ -67,7 +67,7 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue[]>
             return null;
         }
 
- 
+
     }
 
     @Override

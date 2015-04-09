@@ -120,8 +120,9 @@ public class DatabaseController {
     }
 
 
-    public ArrayList<DatabaseValue> getFSTable() {
-        ArrayList<DatabaseValue> allValues = new ArrayList<>();
+    public DatabaseValue[] getFSTable() {
+        DatabaseValue[] allValues =
+                new DatabaseValue[getRowCount(DatabaseHelper.FS_TABLE_NAME)];
 
         final String queryFS = "SELECT * FROM " +
                     DatabaseHelper.FS_TABLE_NAME +
@@ -130,6 +131,7 @@ public class DatabaseController {
         Cursor cursor = db.rawQuery(queryFS, null);
         cursor.moveToFirst();
 
+        int rowCount = 0;
         while(!cursor.isAfterLast()) {
             DatabaseValue dbValue = new DatabaseValue(
                     cursor.getInt(0),
@@ -144,15 +146,16 @@ public class DatabaseController {
                     cursor.getInt(9),
                     cursor.getInt(10)
             );
-            allValues.add(dbValue);
+            allValues[rowCount++] = dbValue;
             cursor.moveToNext();
         }
         cursor.close();
         return allValues;
     }
 
-    public ArrayList<DatabaseValue> getFSTSTable() {
-        ArrayList<DatabaseValue> allValues = new ArrayList<>();
+    public DatabaseValue[] getFSTSTable() {
+        DatabaseValue[] allValues =
+                new DatabaseValue[getRowCount(DatabaseHelper.FSTS_TABLE_NAME)];
 
         final String query = "SELECT * FROM " +
                 DatabaseHelper.FSTS_TABLE_NAME +
@@ -161,21 +164,23 @@ public class DatabaseController {
         Cursor cursor = db.rawQuery(query, null);
         cursor.moveToFirst();
 
+        int valueCount = 0;
         while(!cursor.isAfterLast()) {
             DatabaseValue dbValue = new DatabaseValue(
                     cursor.getInt(0),
                     cursor.getString(1),
                     cursor.getString(2)
             );
-            allValues.add(dbValue);
+            allValues[valueCount++] = dbValue;
             cursor.moveToNext();
         }
         cursor.close();
         return allValues;
     }
 
-    public ArrayList<DatabaseValue> getFSMGTable() {
-        ArrayList<DatabaseValue> allValues = new ArrayList<>();
+    public DatabaseValue[] getFSMGTable() {
+        DatabaseValue[] allValues =
+                new DatabaseValue[getRowCount(DatabaseHelper.FSMG_TABLE_NAME)];
 
         final String queryFSMG = "SELECT * FROM " +
                 DatabaseHelper.FSMG_TABLE_NAME +
@@ -184,6 +189,7 @@ public class DatabaseController {
         Cursor cursor = db.rawQuery(queryFSMG, null);
         cursor.moveToFirst();
 
+        int rowCount = 0;
         while(!cursor.isAfterLast()) {
             DatabaseValue dbValue = new DatabaseValue(
                     cursor.getInt(0),
@@ -192,7 +198,7 @@ public class DatabaseController {
                     cursor.getString(3),
                     cursor.getInt(4)
             );
-            allValues.add(dbValue);
+            allValues[rowCount++] = dbValue;
             cursor.moveToNext();
         }
         cursor.close();
@@ -266,14 +272,37 @@ public class DatabaseController {
         return dbValue;
     }
 
-    /*
-    public int getRowCount() {
-        Cursor cursor = db.query(DatabaseHelper.INIT_TABLE_NAME,
-                INITIAL_allColumns, null, null, null, null, null);
-        int rowCount = cursor.getCount();
-        cursor.close();
-        return rowCount;
+
+    public int getRowCount(String tableName) {
+
+        final String FScount =
+                        "SELECT " + DatabaseHelper.FS_COLUMN_ID +
+                        " FROM " + DatabaseHelper.FS_TABLE_NAME + ";";
+        final String FSTScount =
+                "SELECT " + DatabaseHelper.FSTS_COLUMN_ID +
+                        " FROM " + DatabaseHelper.FSTS_TABLE_NAME + ";";
+        final String FSMGcount =
+                "SELECT " + DatabaseHelper.FSMG_COLUMN_ID +
+                        " FROM " + DatabaseHelper.FSMG_TABLE_NAME + ";";
+
+
+        Cursor cursor;
+
+        switch (tableName) {
+            case DatabaseHelper.FS_TABLE_NAME:
+                cursor = db.rawQuery(FScount, null);
+                return cursor.getCount();
+            case DatabaseHelper.FSTS_TABLE_NAME:
+                cursor = db.rawQuery(FSTScount, null);
+                return cursor.getCount();
+            case DatabaseHelper.FSMG_TABLE_NAME:
+                cursor = db.rawQuery(FSMGcount, null);
+                return cursor.getCount();
+            default:
+                return 0;
+
+        }
     }
-    */
+
 
 }
