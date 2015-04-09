@@ -11,7 +11,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
- * Created by arnarjons on 3.4.2015.
+ * @author Arnar Jonsson
+ * @version 0.2
+ * @since  3.4.2015.
  */
 public class DatabaseController {
 
@@ -59,6 +61,7 @@ public class DatabaseController {
     }
 
     private long insertFSEntry(DatabaseEntry entry) {
+        //TODO : HANDLE ID LOGIC CHANGES IF NEED BE
         ContentValues values = new ContentValues();
         //values.put(FS_allColumns[0], entry.getId());
         values.put(FS_allColumns[1], entry.getLatitude());

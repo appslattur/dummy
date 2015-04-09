@@ -10,315 +10,273 @@ import java.io.Serializable;
  */
 public class DatabaseValue implements Serializable {
 
-    // Private Values for an objective DatabaseValue
+    // Private Values for an objective DatabaseEntry
     private int id;
-
     private String latitude;
     private String longitude;
+    private String name;
     private String cardGroup;
     private String mallGroup;
     private int hasTimeLimit;
     private String longDescription;
     private String shortDescription;
     private int isEnabled;
+    private int pingRadius;
 
     private String timeStart;
     private String timeStop;
 
     // Entry flow control
-
-    // 0 == created
-    // 1 == in progress
-    // 2 == finished and ready to be cleaned up
-    private int ENTRY_STATE = 0;
-
     // 0 == Initial Entry
     // 1 == Secondary Entry
+    // 2 == Third Entry
     private int ENTRY_TYPE;
-    public static final int INITIAL_QUERY = 0;
-    public static final int SECONDARY_QUERY = 1;
 
-    // 0 == Initial without timestamp
-    // 1 == Initial with timestamp
-    private int NESTED_ENTRY_TYPE;
-    public static final int NESTED_WOTIMESTAMP = 0;
-    public static final int NESTED_TIMESTAMP = 1;
+    /**
+     * FS_QUERY == Destined for database table FS
+     * FSTS_QUERY == ------------------------- FSTS
+     * FSMG_QUERY == ------------------------- FSMG
+     */
+    public static final int FS_QUERY = 0;
+    public static final int FSTS_QUERY = 1;
+    public static final int FSMG_QUERY = 2;
 
-    // Debugging and errorHandling values
+    private boolean isFS = false;
+    private boolean isFSTS = false;
+    private boolean isFSMG = false;
 
-    // TODO : place error and snipping strings into strings.xml
-    private String NO_ERROR_FOUND = "No Errors found";
-
-    private String ERROR_DESCRIPTION = "";
-
-    private String ENTRY_ERROR_1 = "Wrong Value Type Extraction";
-    private String ENTRY_ERROR_2 = "Entry value assignment failed";
-
+    /**
+     * DatabaseValue
+     * Handles raw output sent from Appslattur.db
+     * @param id Appslattur.db row id
+     * @param latitude GPS-coord Latitute
+     * @param longitude GSP-coord Longitude
+     * @param name Store name
+     * @param cardGroup Cardgroup name
+     * @param mallGroup Mallgroup name (if no mallgroup put 'General')
+     * @param longDescription Long message
+     * @param shortDescription Short message
+     * @param isEnabled Should it be monitored
+     * @param pingRadius Radius of ping-hit
+     */
     public DatabaseValue(int id,
                          String latitude,
                          String longitude,
+                         String name,
                          String cardGroup,
                          String mallGroup,
                          int hasTimeLimit,
                          String longDescription,
                          String shortDescription,
-                         int isEnabled) {
-        try {
-            this.id = id;
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.cardGroup = cardGroup;
-            this.mallGroup = mallGroup;
-            this.hasTimeLimit = hasTimeLimit;
-            this.longDescription = longDescription;
-            this.shortDescription = shortDescription;
-            this.isEnabled = isEnabled;
+                         int isEnabled,
+                         int pingRadius) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.name = name;
+        this.cardGroup = cardGroup;
+        this.mallGroup = mallGroup;
+        this.hasTimeLimit = hasTimeLimit;
+        this.longDescription = longDescription;
+        this.shortDescription = shortDescription;
+        this.isEnabled = isEnabled;
+        this.pingRadius = pingRadius;
 
-            ERROR_DESCRIPTION = NO_ERROR_FOUND;
-        }
-        catch ( Exception e) {
-            ERROR_DESCRIPTION = ENTRY_ERROR_2;
-        }
-        ENTRY_TYPE = INITIAL_QUERY;
-        NESTED_ENTRY_TYPE = NESTED_WOTIMESTAMP;
-
+        ENTRY_TYPE = FS_QUERY;
+        isFS = true;
     }
 
+    /**
+     * DatabaseValue
+     * Handles raw output sent from Appslattur.db
+     * @param id Appslattur.db row id
+     * @param latitude GPS-coord Latitute
+     * @param longitude GSP-coord Longitude
+     * @param name Store name
+     * @param cardGroup Cardgroup name
+     * @param mallGroup Mallgroup name (if no mallgroup put 'General')
+     * @param longDescription Long message
+     * @param shortDescription Short message
+     * @param isEnabled Should it be monitored
+     * @param pingRadius Radius of ping-hit
+     * @param timeStart String representation of time
+     * @param timeStop String representation of time
+     */
     public DatabaseValue(int id,
                          String latitude,
                          String longitude,
+                         String name,
                          String cardGroup,
                          String mallGroup,
                          int hasTimeLimit,
+                         String longDescription,
+                         String shortDescription,
+                         int isEnabled,
+                         int pingRadius,
                          String timeStart,
-                         String timeStop,
-                         String longDescription,
-                         String shortDescription,
-                         int isEnabled) {
-        try {
-            this.id = id;
-            this.latitude = latitude;
-            this.longitude = longitude;
-            this.cardGroup = cardGroup;
-            this.mallGroup = mallGroup;
-            this.hasTimeLimit = hasTimeLimit;
-            this.timeStart = timeStart;
-            this.timeStop = timeStop;
-            this.longDescription = longDescription;
-            this.shortDescription = shortDescription;
-            this.isEnabled = isEnabled;
+                         String timeStop) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.name = name;
+        this.cardGroup = cardGroup;
+        this.mallGroup = mallGroup;
+        this.hasTimeLimit = hasTimeLimit;
+        this.longDescription = longDescription;
+        this.shortDescription = shortDescription;
+        this.isEnabled = isEnabled;
+        this.pingRadius = pingRadius;
+        this.timeStart = timeStart;
+        this.timeStop = timeStop;
 
-            ERROR_DESCRIPTION = NO_ERROR_FOUND;
-        }
-        catch ( Exception e) {
-            ERROR_DESCRIPTION = ENTRY_ERROR_2;
-        }
-        ENTRY_TYPE = INITIAL_QUERY;
-        NESTED_ENTRY_TYPE = NESTED_TIMESTAMP;
-
+        ENTRY_TYPE = FS_QUERY;
+        isFS = true;
     }
 
+    /**
+     * DatabaseValue
+     * Handles raw output sent from Appslattur.db
+     * @param id Appslattur.db row id
+     * @param timeStart String representation of time
+     * @param timeStop String representation of time
+     */
     public DatabaseValue(int id,
                          String timeStart,
                          String timeStop) {
-        try {
-            this.id = id;
-            this.timeStart = timeStart;
-            this.timeStop = timeStop;
+        this.id = id;
+        this.timeStart = timeStart;
+        this.timeStop = timeStop;
 
-            ERROR_DESCRIPTION = NO_ERROR_FOUND;
-        }
-        catch (Exception e) {
-            ERROR_DESCRIPTION = ENTRY_ERROR_2;
-        }
-        ENTRY_TYPE = SECONDARY_QUERY;
-        NESTED_ENTRY_TYPE = -1;
-
+        ENTRY_TYPE = FSTS_QUERY;
+        isFSTS = true;
     }
 
-    /////
-    // Flow Control Methods
-    /////
+    /**
+     * DatabaseValue
+     * Handles raw input which is to be sent to Appslattur.db
+     * @param id Appslattur.db row id
+     * @param latitude GPS-coord Latitute
+     * @param longitude GSP-coord Longitude
+     * @param name Store name
+     * @param pingRadius Radius of ping-hit
+     */
+    public DatabaseValue(int id,
+                         String latitude,
+                         String longitude,
+                         String name,
+                         int pingRadius) {
+        this.id = id;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.name = name;
+        this.pingRadius = pingRadius;
+
+        ENTRY_TYPE = FSMG_QUERY;
+        isFSMG = true;
+    }
+
+
+    /**
+     * getType()
+     * @return Flow control flag ENTRY_TYPE
+     */
     public int getType() {
-        return ENTRY_TYPE;
+        return this.ENTRY_TYPE;
     }
 
-    public String getWorkingStatus() {
-        return ERROR_DESCRIPTION;
-    }
-
-    /////
-    // Get/Set Methods
-    /////
+    // TODO : Double check initial and update logic for correct id handling
     public int getId() {
-        return id;
+        if(isFSTS || isFSMG) {
+            return this.id;
+        }
+        return -1;
     }
 
     public double getLatitude() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return Double.parseDouble(latitude);
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return -1.0;
+        if(isFS || isFSMG) {
+            return Double.parseDouble(this.latitude);
         }
+        return -1.0;
     }
 
     public double getLongitude() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return Double.parseDouble(longitude);
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return -1.0;
+        if(isFS || isFSMG) {
+            return Double.parseDouble(this.longitude);
         }
+        return -1.0;
+    }
+
+    public String getName() {
+        if(isFS || isFSMG) {
+            return this.name;
+        }
+        return null;
     }
 
     public String getCardGroup() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return cardGroup;
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return null;
+        if(isFS) {
+            return this.cardGroup;
         }
+        return null;
     }
 
     public String getMallGroup() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return mallGroup;
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return null;
+        if(isFS) {
+            return this.mallGroup;
         }
+        return null;
     }
 
     public boolean hasTimeLimit() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                if(hasTimeLimit == 1) {
-                    return true;
-                }
-                return false;
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return false;
+        if(isFS) {
+            if(hasTimeLimit == 1) {
+                return true;
+            }
+            return false;
         }
-    }
-
-    public String getTimeStart() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                switch (NESTED_ENTRY_TYPE) {
-                    case NESTED_WOTIMESTAMP:
-                        ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                        return null;
-                    default:
-                        ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                        return timeStart;
-                }
-            default:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return timeStart;
-        }
-    }
-
-    public String getTimeStop() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                switch (NESTED_ENTRY_TYPE) {
-                    case NESTED_WOTIMESTAMP:
-                        ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                        return null;
-                    default:
-                        ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                        return timeStop;
-                }
-            default:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return timeStop;
-        }
+        return false;
     }
 
     public String getLongDescription() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return longDescription;
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return null;
+        if(isFS) {
+            return this.longDescription;
         }
+        return null;
     }
 
     public String getShortDescription() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                return shortDescription;
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return null;
+        if(isFS) {
+            return this.shortDescription;
         }
+        return null;
     }
 
     public boolean isEnabled() {
-        switch (ENTRY_TYPE) {
-            case INITIAL_QUERY:
-                ERROR_DESCRIPTION = NO_ERROR_FOUND;
-                if(isEnabled == 1) {
-                    return true;
-                }
-                return false;
-            default:
-                ERROR_DESCRIPTION = ENTRY_ERROR_1;
-                return false;
+        if(isFS) {
+            if(this.isEnabled == 1) {
+                return true;
+            }
+            return false;
         }
+        return false;
     }
 
-    /////
-    // Parcelabel implementation
-    /////
-
-    /*
-    public DatabaseValue(Parcel in) {
-        String[] data = new String[4];
-
-        in.readStringArray(data);
-        this.id = data[0];
-        this.latitude = data[1];
-        this.longitude = data[2];
-        this.isEnabled = data[3];
-    }
-
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeStringArray(new String[] { this.id,
-                this.latitude,
-                this.longitude,
-                this.isEnabled });
-    }
-
-    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
-
-        public DatabaseValue createFromParcel(Parcel in) {
-            return new DatabaseValue(in);
+    public int getPingRadius() {
+        if(isFS || isFSMG) {
+            return this.pingRadius;
         }
+        return -1;
+    }
 
-        public DatabaseValue[] newArray(int size) {
-            return new DatabaseValue[size];
+    public String getTimeStart() {
+        if(isFS || isFSTS) {
+            return this.timeStart;
         }
-    };
-    */
+        return null;
+    }
+
+    public String getTimeStop() {
+        if(isFS || isFSTS) {
+            return this.timeStop;
+        }
+        return null;
+    }
 }
