@@ -17,6 +17,15 @@ public class DatabaseIterationTask extends AsyncTask<Void, Void, RadarIterable[]
 
     private boolean DATABASE_CONN = false;
 
+    /**
+     * DatabaseIterationTask(context, controlString)
+     * Handles data extraction destined for the Appslattur applications Radar object
+     * Returns an array of RadarIterable objects that correspond to the function chosen by the
+     * constructor argument controlString
+     * Returns null on ether failure or if the task could not connect to the Appslattur database
+     * @param context Context of the calling application
+     * @param controlString String that controls the flow of the task
+     */
     public DatabaseIterationTask(Context context, String controlString) {
         this.context = context;
         this.controlString = controlString;
