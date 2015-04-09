@@ -84,54 +84,9 @@ public class MainActivity extends Activity {
                 //GPSLocation gpsLocation = gpsHandler.getGPSLocation();
                 //Toast.makeText(MainActivity.this, "Lat: " + gpsLocation.getLatitude() +
                 //    " | lon: " + gpsLocation.getLongitude(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, TestingActivity.class);
+                startActivity(intent);
 
-                DatabaseEntry entry = new DatabaseEntry(0.0,
-                        0.0,
-                        "cardGroup",
-                        null,
-                        false,
-                        "longDesc",
-                        "shortDesc",
-                        true);
-                long please = 0;
-                try {
-                     please = new DatabaseEntryTask(MainActivity.this).
-                            execute(entry).get();
-                }
-                catch (Exception e) {
-                    Toast.makeText(MainActivity.this,
-                            "SomeThingWrong", Toast.LENGTH_SHORT).show();
-                }
-
-                int stateCheck = 0;
-                ArrayList<DatabaseValue> aList = new ArrayList<DatabaseValue>();
-                try {
-                    aList = new DatabaseValueTask(MainActivity.this).
-                            execute().get();
-                    stateCheck = 1;
-                }
-                catch (Exception e) {
-                    //Do Nothing
-                }
-                try {
-                    DatabaseValue tv = aList.get(0);
-                    String fuckString =
-                            "id is : " + tv.getId() + "\n" +
-                            " lat is : " + tv.getLatitude() + "\n" +
-                            " lon is : " + tv.getLongitude() + "\n" +
-                            " cardgroup is : " + tv.getCardGroup() + "\n" +
-                            " mallgroup is : " + tv.getMallGroup() + "\n" +
-                            " hasTimeLimit is : " + tv.hasTimeLimit() + "\n" +
-                            " longDesc is : " + tv.getLongDescription() + "\n" +
-                            " shortDesc is : " + tv.getShortDescription() + "\n" +
-                            " isEnabled is : " + tv.isEnabled();
-                    TextView textView = (TextView) findViewById(R.id.textView);
-                    textView.setText(fuckString);
-
-                }
-                catch (Exception e) {
-
-                }
             }
         });
 
