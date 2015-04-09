@@ -10,6 +10,8 @@ import android.provider.ContactsContract;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import appslattur.appslatturdemo.RadarHandler.RadarIterable;
+
 /**
  * @author Arnar Jonsson, Ari Freyr Gudmundsson
  * @version 0.2
@@ -52,7 +54,7 @@ public class DatabaseController {
      * DatabaseController
      * Allows connection to the Appslattur database
      * Do not use unless called inside an <b>AsyncTask</b>
-     * or other <b>separated threads</b>
+     * or other <b>threads</b> separated from the main thread
      * @param context From the calling application
      */
     public DatabaseController(Context context) {
@@ -351,6 +353,10 @@ public class DatabaseController {
     /////
     // DatabaseIterationTask functions
     /////
+
+    public RadarIterable[] getRadarIterables() {
+        return null;
+    }
 
     /////
     // DatabaseUpdateTask functions
