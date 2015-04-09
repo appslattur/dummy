@@ -354,6 +354,16 @@ public class DatabaseController {
     // DatabaseIterationTask functions
     /////
 
+    /**
+     * getRadarIterables
+     * @return Array of RadarIterable objects according to the rules:
+     *                  (id, latitude, longitude, hasTimeLimit)
+     *                  from table FS
+     *                  (id, timeStart, timeStop)
+     *                  from table FSTS
+     *                  (id, latitude, longitude)
+     *                  from table FSMG
+     */
     public RadarIterable[] getRadarIterables() {
         return null;
     }
