@@ -85,6 +85,15 @@ public class RadarIterable implements Serializable {
         this.pingRadius = pingRadius;
     }
 
+    public void setTimeLimitFlag(int flag) {
+        if(flag == 1) this.hasTimeLimit = true;
+        else this.hasTimeLimit = false;
+    }
+
+    public boolean getTimeLimitFlag() {
+        return this.hasTimeLimit;
+    }
+
     /**
      * @return GPS-coord margin of errors, in meters
      */
