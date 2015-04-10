@@ -72,6 +72,7 @@ public class DatabaseValue implements Serializable {
                          String shortDescription,
                          int isEnabled,
                          int pingRadius) {
+        this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
@@ -116,6 +117,7 @@ public class DatabaseValue implements Serializable {
                          int pingRadius,
                          String timeStart,
                          String timeStop) {
+        this.id = id;
         this.latitude = latitude;
         this.longitude = longitude;
         this.name = name;
@@ -190,7 +192,7 @@ public class DatabaseValue implements Serializable {
      * @return ID of the object
      */
     public int getId() {
-        if(isFSTS || isFSMG) {
+        if(isFS || isFSTS || isFSMG) {
             return this.id;
         }
         return -1;
