@@ -25,9 +25,12 @@ public class TestingActivity extends ActionBarActivity {
 
         Button entryButton = (Button) findViewById(R.id.entryButton);
         entryButton.setOnClickListener(new View.OnClickListener() {
+            int idNo = 0;
             @Override
             public void onClick(View v) {
                 long insertId = 0;
+                /*
+                FS_ENTRY_TEST
                 DatabaseEntry dbEntry = new DatabaseEntry(
                         0.0,
                         0.0,
@@ -39,6 +42,13 @@ public class TestingActivity extends ActionBarActivity {
                         true,
                         1
 
+                );
+                */
+
+                DatabaseEntry dbEntry = new DatabaseEntry(
+                        idNo++,
+                        "clockText",
+                        "clockText"
                 );
                 try {
                     insertId = new DatabaseEntryTask(getApplicationContext()).
