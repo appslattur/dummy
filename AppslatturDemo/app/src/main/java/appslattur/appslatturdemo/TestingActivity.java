@@ -29,6 +29,43 @@ public class TestingActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 long insertId = 0;
+
+                DatabaseEntry[] dbEntryFS = new DatabaseEntry[5];
+                DatabaseEntry[] dbEntryFSTS = new DatabaseEntry[5];
+                DatabaseEntry[] dbEntryFSMG = new DatabaseEntry[5];
+
+
+                for(int i = 0; i < 5; i ++) {
+                    DatabaseEntry dbEFS = new DatabaseEntry(
+                            0.0,
+                            0.0,
+                            "text",
+                            "text",
+                            "text",
+                            "text",
+                            "text",
+                            true,
+                            1
+
+                    );
+                    dbEntryFS[i] = dbEFS;
+
+                    DatabaseEntry dbEFSTS = new DatabaseEntry(
+                            i+1,
+                            "clockText",
+                            "clockText"
+                    );
+                    dbEntryFSTS[i] = dbEFSTS;
+
+                    DatabaseEntry dbEFSMG = new DatabaseEntry(
+                            i+1,
+                            0.0,
+                            0.0,
+                            "name",
+                            1
+                    );
+                    dbEntryFSMG[i] = dbEFSMG;
+                }
                 /*
                 FS_ENTRY_TEST
                 DatabaseEntry dbEntry = new DatabaseEntry(
@@ -52,7 +89,8 @@ public class TestingActivity extends ActionBarActivity {
                         "clockText"
                 );
                 */
-
+                /*
+                FSMG_ENTY_TEST
                 DatabaseEntry dbEntry = new DatabaseEntry(
                         idNo++,
                         0.0,
@@ -60,10 +98,14 @@ public class TestingActivity extends ActionBarActivity {
                         "name",
                         1
                 );
-
+                */
                 try {
                     insertId = new DatabaseEntryTask(getApplicationContext()).
-                            execute(dbEntry).get();
+                            execute(dbEntryFS).get();
+                    insertId = new DatabaseEntryTask(getApplicationContext()).
+                            execute(dbEntryFSTS).get();
+                    insertId = new DatabaseEntryTask(getApplicationContext()).
+                            execute(dbEntryFSMG).get();
                 }
                 catch (Exception e) {
                     insertId = -1;
@@ -79,17 +121,168 @@ public class TestingActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 String outputValue = "";
-                DatabaseValue[] dbValue = new DatabaseValue[1];
+                DatabaseValue[] dbValueFS = new DatabaseValue[1];
+                DatabaseValue[] dbValueFSTS = new DatabaseValue[1];
+                DatabaseValue[] dbValueFSMG = new DatabaseValue[1];
                 try {
                     // TODO : Constructor argument controlString needs to be swapped between tests
                     // StudentCard
                     // FSTimeStamp
                     // FSMallGroup
-                    dbValue = new DatabaseValueTask(getApplicationContext(),"FSMallGroup").
-                            execute(idTest++).get();
+                    dbValueFS = new DatabaseValueTask(getApplicationContext(),"StudentCard").
+                            execute().get();
+                    dbValueFSTS = new DatabaseValueTask(getApplicationContext(),"FSTimeStamp").
+                            execute().get();
+                    dbValueFSMG = new DatabaseValueTask(getApplicationContext(),"FSMallGroup").
+                            execute().get();
 
-                    DatabaseValue value = dbValue[0];
                     outputValue = "Output from value/s is/are following : " + "\n";
+
+                    for(DatabaseValue out : dbValueFS) {
+                        switch (out.getType()) {
+                            case DatabaseValue.FS_QUERY:
+                                outputValue +=
+                                        "Id : " + out.getId() + "\n" +
+                                                "lat is : " + out.getLatitude() + "\n" +
+                                                "lon is : " + out.getLongitude() + "\n" +
+                                                "name is : " + out.getName() + "\n" +
+                                                "cG is : " + out.getCardGroup() + "\n" +
+                                                "mG is : " + out.getMallGroup() + "\n" +
+                                                "lD is : " + out.getLongDescription() + "\n" +
+                                                "sD is : " + out.getShortDescription() + "\n" +
+                                                "iE is : " + out.hasTimeLimit() + "\n" +
+                                                "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            case DatabaseValue.FSTS_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "tS is : " + out.getTimeStart() + "\n"
+                                                + "tT is : " + out.getTimeStop() + "\n";
+                                break;
+                            case DatabaseValue.FSMG_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "lat is : " + out.getLatitude() + "\n"
+                                                + "lon is : " + out.getLongitude() + "\n"
+                                                + "name is : " + out.getName() + "\n"
+                                                + "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    for(DatabaseValue out : dbValueFSTS) {
+                        switch (out.getType()) {
+                            case DatabaseValue.FS_QUERY:
+                                outputValue +=
+                                        "Id : " + out.getId() + "\n" +
+                                                "lat is : " + out.getLatitude() + "\n" +
+                                                "lon is : " + out.getLongitude() + "\n" +
+                                                "name is : " + out.getName() + "\n" +
+                                                "cG is : " + out.getCardGroup() + "\n" +
+                                                "mG is : " + out.getMallGroup() + "\n" +
+                                                "lD is : " + out.getLongDescription() + "\n" +
+                                                "sD is : " + out.getShortDescription() + "\n" +
+                                                "iE is : " + out.hasTimeLimit() + "\n" +
+                                                "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            case DatabaseValue.FSTS_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "tS is : " + out.getTimeStart() + "\n"
+                                                + "tT is : " + out.getTimeStop() + "\n";
+                                break;
+                            case DatabaseValue.FSMG_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "lat is : " + out.getLatitude() + "\n"
+                                                + "lon is : " + out.getLongitude() + "\n"
+                                                + "name is : " + out.getName() + "\n"
+                                                + "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    outputValue = "Output from value/s is/are following : " + "\n";
+
+                    for(DatabaseValue out : dbValueFSMG) {
+                        switch (out.getType()) {
+                            case DatabaseValue.FS_QUERY:
+                                outputValue +=
+                                        "Id : " + out.getId() + "\n" +
+                                                "lat is : " + out.getLatitude() + "\n" +
+                                                "lon is : " + out.getLongitude() + "\n" +
+                                                "name is : " + out.getName() + "\n" +
+                                                "cG is : " + out.getCardGroup() + "\n" +
+                                                "mG is : " + out.getMallGroup() + "\n" +
+                                                "lD is : " + out.getLongDescription() + "\n" +
+                                                "sD is : " + out.getShortDescription() + "\n" +
+                                                "iE is : " + out.hasTimeLimit() + "\n" +
+                                                "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            case DatabaseValue.FSTS_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "tS is : " + out.getTimeStart() + "\n"
+                                                + "tT is : " + out.getTimeStop() + "\n";
+                                break;
+                            case DatabaseValue.FSMG_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "lat is : " + out.getLatitude() + "\n"
+                                                + "lon is : " + out.getLongitude() + "\n"
+                                                + "name is : " + out.getName() + "\n"
+                                                + "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    /*
+
+                    //DatabaseValue value = dbValue[0];
+                    outputValue = "Output from value/s is/are following : " + "\n";
+
+                    for(DatabaseValue out : value) {
+                        switch (out.getType()) {
+                            case DatabaseValue.FS_QUERY:
+                                outputValue +=
+                                        "Id : " + out.getId() + "\n" +
+                                                "lat is : " + out.getLatitude() + "\n" +
+                                                "lon is : " + out.getLongitude() + "\n" +
+                                                "name is : " + out.getName() + "\n" +
+                                                "cG is : " + out.getCardGroup() + "\n" +
+                                                "mG is : " + out.getMallGroup() + "\n" +
+                                                "lD is : " + out.getLongDescription() + "\n" +
+                                                "sD is : " + out.getShortDescription() + "\n" +
+                                                "iE is : " + out.hasTimeLimit() + "\n" +
+                                                "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            case DatabaseValue.FSTS_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "tS is : " + out.getTimeStart() + "\n"
+                                                + "tT is : " + out.getTimeStop() + "\n";
+                                break;
+                            case DatabaseValue.FSMG_QUERY:
+                                outputValue +=
+                                        "id is : " + out.getId() + "\n"
+                                                + "lat is : " + out.getLatitude() + "\n"
+                                                + "lon is : " + out.getLongitude() + "\n"
+                                                + "name is : " + out.getName() + "\n"
+                                                + "pR is : " + out.getPingRadius() + "\n";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    */
+
                     /*
                     Main table value test
                     outputValue +=
@@ -111,18 +304,16 @@ public class TestingActivity extends ActionBarActivity {
                             + "tS is : " + value.getTimeStart() + "\n"
                             + "tT is : " + value.getTimeStop();
                     */
-
+                    /*
+                    Third table value test
                     outputValue +=
                             "id is : " + value.getId() + "\n"
                             + "lat is : " + value.getLatitude() + "\n"
                             + "lon is : " + value.getLongitude() + "\n"
                             + "name is : " + value.getName() + "\n"
                             + "pR is : " + value.getPingRadius();
+                    */
 
-                    boolean checks = false;
-                    if(dbValue != null) {
-                        checks = true;
-                    }
                     //outputValue = "thread returns " + checks;
                 }
                 catch (Exception e) {
