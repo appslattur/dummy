@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntry;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntryTask;
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseValue;
+import appslattur.appslatturdemo.DataBaseHandler.DatabaseValueTask;
 
 
 public class TestingActivity extends ActionBarActivity {
@@ -52,9 +54,40 @@ public class TestingActivity extends ActionBarActivity {
 
         Button valueButton = (Button) findViewById(R.id.valueButton);
         valueButton.setOnClickListener(new View.OnClickListener() {
+            int idTest = 3;
             @Override
             public void onClick(View v) {
-                textView.setText("I am a debug button");
+                String outputValue = "";
+                DatabaseValue[] dbValue = new DatabaseValue[1];
+                try {
+                    dbValue = new DatabaseValueTask(getApplicationContext(),"StudentCard").
+                            execute(idTest++).get();
+
+                    DatabaseValue value = dbValue[0];
+                    outputValue = "Output from value/s is/are following : " + "\n";
+                    outputValue +=
+                                    "Id : " + value.getId() + "\n" +
+                                    "lat is : " + value.getLatitude() + "\n" +
+                                    "lon is : " + value.getLongitude() + "\n" +
+                                    "name is : " + value.getName() + "\n" +
+                                    "cG is : " + value.getCardGroup() + "\n" +
+                                    "mG is : " + value.getMallGroup() + "\n" +
+                                    "lD is : " + value.getLongDescription() + "\n" +
+                                    "sD is : " + value.getShortDescription() + "\n" +
+                                    "iE is : " + value.hasTimeLimit() + "\n" +
+                                    "pR is : " + value.getPingRadius();
+
+                    boolean checks = false;
+                    if(dbValue != null) {
+                        checks = true;
+                    }
+                    //outputValue = "thread returns " + checks;
+                }
+                catch (Exception e) {
+                    outputValue = "Something went wrong";
+                }
+                //textView.setText("dbValue length is : " + dbValue.length + "\n" + outputValue);
+                textView.setText(outputValue);
             }
         });
 
