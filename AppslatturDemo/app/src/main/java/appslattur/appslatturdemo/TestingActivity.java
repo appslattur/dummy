@@ -44,12 +44,23 @@ public class TestingActivity extends ActionBarActivity {
 
                 );
                 */
-
+                /*
+                FSTS_ENTRY_TEST
                 DatabaseEntry dbEntry = new DatabaseEntry(
                         idNo++,
                         "clockText",
                         "clockText"
                 );
+                */
+
+                DatabaseEntry dbEntry = new DatabaseEntry(
+                        idNo++,
+                        0.0,
+                        0.0,
+                        "name",
+                        1
+                );
+
                 try {
                     insertId = new DatabaseEntryTask(getApplicationContext()).
                             execute(dbEntry).get();
@@ -74,7 +85,7 @@ public class TestingActivity extends ActionBarActivity {
                     // StudentCard
                     // FSTimeStamp
                     // FSMallGroup
-                    dbValue = new DatabaseValueTask(getApplicationContext(),"FSTimeStamp").
+                    dbValue = new DatabaseValueTask(getApplicationContext(),"FSMallGroup").
                             execute(idTest++).get();
 
                     DatabaseValue value = dbValue[0];
@@ -93,11 +104,21 @@ public class TestingActivity extends ActionBarActivity {
                                     "iE is : " + value.hasTimeLimit() + "\n" +
                                     "pR is : " + value.getPingRadius();
                     */
-
+                    /*
+                    Secondary table value test
                     outputValue +=
                             "id is : " + value.getId() + "\n"
                             + "tS is : " + value.getTimeStart() + "\n"
                             + "tT is : " + value.getTimeStop();
+                    */
+
+                    outputValue +=
+                            "id is : " + value.getId() + "\n"
+                            + "lat is : " + value.getLatitude() + "\n"
+                            + "lon is : " + value.getLongitude() + "\n"
+                            + "name is : " + value.getName() + "\n"
+                            + "pR is : " + value.getPingRadius();
+
                     boolean checks = false;
                     if(dbValue != null) {
                         checks = true;
