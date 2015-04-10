@@ -305,8 +305,8 @@ public class DatabaseController {
      * @return DatabaseValue corresponding to the retrieved row data
      */
     public DatabaseValue getFSTSEntry(int id) {
-        final String queryFSTSE = "SELECT * FROM " +
-                DatabaseHelper.FSTS_TABLE_NAME +
+        final String queryFSTSE = "SELECT * " +
+                "FROM " + DatabaseHelper.FSTS_TABLE_NAME +
                 " WHERE " + DatabaseHelper.FSTS_COLUMN_ID + " = " + id + ";";
 
         Cursor cursor = db.rawQuery(queryFSTSE, null);
@@ -330,8 +330,8 @@ public class DatabaseController {
      * @return DatabaseValue corresponding to the retrieved row data
      */
     public DatabaseValue getFSMGEntry(int id) {
-        final String queryFSMGE = "SELECT * FROM " +
-                DatabaseHelper.FSMG_TABLE_NAME +
+        final String queryFSMGE = "SELECT * " +
+                "FROM " + DatabaseHelper.FSMG_TABLE_NAME +
                 " WHERE " + DatabaseHelper.FSMG_COLUMN_ID + " = " + id + ";";
 
         Cursor cursor = db.rawQuery(queryFSMGE, null);
