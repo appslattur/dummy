@@ -79,6 +79,7 @@ public class DatabaseController {
     /////
     // DatabaseEntryTask functions
     /////
+    // TODO : Add insert primary key error handling check thingies, app does not die if err occ.
 
     /**
      * insertFSEntry(DatabaseEntry entry)

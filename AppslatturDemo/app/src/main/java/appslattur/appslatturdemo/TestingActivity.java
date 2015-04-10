@@ -64,17 +64,23 @@ public class TestingActivity extends ActionBarActivity {
 
         Button valueButton = (Button) findViewById(R.id.valueButton);
         valueButton.setOnClickListener(new View.OnClickListener() {
-            int idTest = 3;
+            int idTest = 0;
             @Override
             public void onClick(View v) {
                 String outputValue = "";
                 DatabaseValue[] dbValue = new DatabaseValue[1];
                 try {
-                    dbValue = new DatabaseValueTask(getApplicationContext(),"StudentCard").
+                    // TODO : Constructor argument controlString needs to be swapped between tests
+                    // StudentCard
+                    // FSTimeStamp
+                    // FSMallGroup
+                    dbValue = new DatabaseValueTask(getApplicationContext(),"FSTimeStamp").
                             execute(idTest++).get();
 
                     DatabaseValue value = dbValue[0];
                     outputValue = "Output from value/s is/are following : " + "\n";
+                    /*
+                    Main table value test
                     outputValue +=
                                     "Id : " + value.getId() + "\n" +
                                     "lat is : " + value.getLatitude() + "\n" +
@@ -86,7 +92,12 @@ public class TestingActivity extends ActionBarActivity {
                                     "sD is : " + value.getShortDescription() + "\n" +
                                     "iE is : " + value.hasTimeLimit() + "\n" +
                                     "pR is : " + value.getPingRadius();
+                    */
 
+                    outputValue +=
+                            "id is : " + value.getId() + "\n"
+                            + "tS is : " + value.getTimeStart() + "\n"
+                            + "tT is : " + value.getTimeStop();
                     boolean checks = false;
                     if(dbValue != null) {
                         checks = true;
