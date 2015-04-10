@@ -12,6 +12,7 @@ import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntry;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseEntryTask;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseValue;
 import appslattur.appslatturdemo.DataBaseHandler.DatabaseValueTask;
+import appslattur.appslatturdemo.DataStructure.DBFSEntryTask;
 
 
 public class TestingActivity extends ActionBarActivity {
@@ -21,7 +22,15 @@ public class TestingActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testing);
 
+        /////
+        // Inheritance testing
+        /////
+        DBFSEntryTask eTask = new DBFSEntryTask();
+        eTask.setId(1);
+
         final TextView textView = (TextView) findViewById(R.id.outputView);
+
+
 
         Button entryButton = (Button) findViewById(R.id.entryButton);
         entryButton.setOnClickListener(new View.OnClickListener() {
