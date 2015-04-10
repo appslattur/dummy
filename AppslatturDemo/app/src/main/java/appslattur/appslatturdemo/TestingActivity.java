@@ -136,112 +136,114 @@ public class TestingActivity extends ActionBarActivity {
                     dbValueFSMG = new DatabaseValueTask(getApplicationContext(),"FSMallGroup").
                             execute().get();
 
+
+
                     outputValue = "Output from value/s is/are following : " + "\n";
 
+                    /*
                     for(DatabaseValue out : dbValueFS) {
                         switch (out.getType()) {
                             case DatabaseValue.FS_QUERY:
                                 outputValue +=
-                                        "Id : " + out.getId() + "\n" +
-                                                "lat is : " + out.getLatitude() + "\n" +
-                                                "lon is : " + out.getLongitude() + "\n" +
-                                                "name is : " + out.getName() + "\n" +
-                                                "cG is : " + out.getCardGroup() + "\n" +
-                                                "mG is : " + out.getMallGroup() + "\n" +
-                                                "lD is : " + out.getLongDescription() + "\n" +
-                                                "sD is : " + out.getShortDescription() + "\n" +
-                                                "iE is : " + out.hasTimeLimit() + "\n" +
-                                                "pR is : " + out.getPingRadius() + "\n";
+                                        "Id : " + out.getId() +
+                                                " lat is : " + out.getLatitude() +
+                                                " lon is : " + out.getLongitude() +
+                                                " name is : " + out.getName() +
+                                                " cG is : " + out.getCardGroup() +
+                                                " mG is : " + out.getMallGroup() +
+                                                " lD is : " + out.getLongDescription() +
+                                                " sD is : " + out.getShortDescription() +
+                                                " iE is : " + out.hasTimeLimit() +
+                                                " pR is : " + out.getPingRadius();
                                 break;
                             case DatabaseValue.FSTS_QUERY:
                                 outputValue +=
-                                        "id is : " + out.getId() + "\n"
-                                                + "tS is : " + out.getTimeStart() + "\n"
-                                                + "tT is : " + out.getTimeStop() + "\n";
+                                        "id is : " + out.getId()
+                                                + " tS is : " + out.getTimeStart()
+                                                + " tT is : " + out.getTimeStop();
                                 break;
                             case DatabaseValue.FSMG_QUERY:
                                 outputValue +=
-                                        "id is : " + out.getId() + "\n"
-                                                + "lat is : " + out.getLatitude() + "\n"
-                                                + "lon is : " + out.getLongitude() + "\n"
-                                                + "name is : " + out.getName() + "\n"
-                                                + "pR is : " + out.getPingRadius() + "\n";
+                                        "id is : " + out.getId()
+                                                + " lat is : " + out.getLatitude()
+                                                + " lon is : " + out.getLongitude()
+                                                + " name is : " + out.getName()
+                                                + " pR is : " + out.getPingRadius();
                                 break;
                             default:
                                 break;
                         }
                     }
+                    */
 
                     for(DatabaseValue out : dbValueFSTS) {
                         switch (out.getType()) {
                             case DatabaseValue.FS_QUERY:
                                 outputValue +=
-                                        "Id : " + out.getId() + "\n" +
-                                                "lat is : " + out.getLatitude() + "\n" +
-                                                "lon is : " + out.getLongitude() + "\n" +
-                                                "name is : " + out.getName() + "\n" +
-                                                "cG is : " + out.getCardGroup() + "\n" +
-                                                "mG is : " + out.getMallGroup() + "\n" +
-                                                "lD is : " + out.getLongDescription() + "\n" +
-                                                "sD is : " + out.getShortDescription() + "\n" +
-                                                "iE is : " + out.hasTimeLimit() + "\n" +
-                                                "pR is : " + out.getPingRadius() + "\n";
+                                        "Id : " + out.getId() +
+                                                "lat is : " + out.getLatitude() +
+                                                "lon is : " + out.getLongitude() +
+                                                "name is : " + out.getName() +
+                                                "cG is : " + out.getCardGroup() +
+                                                "mG is : " + out.getMallGroup() +
+                                                "lD is : " + out.getLongDescription() +
+                                                "sD is : " + out.getShortDescription() +
+                                                "iE is : " + out.hasTimeLimit() +
+                                                "pR is : " + out.getPingRadius();
                                 break;
                             case DatabaseValue.FSTS_QUERY:
                                 outputValue +=
-                                        "id is : " + out.getId() + "\n"
-                                                + "tS is : " + out.getTimeStart() + "\n"
-                                                + "tT is : " + out.getTimeStop() + "\n";
+                                        "id is : " + out.getId()
+                                                + " tS is : " + out.getTimeStart()
+                                                + " tT is : " + out.getTimeStop();
                                 break;
                             case DatabaseValue.FSMG_QUERY:
                                 outputValue +=
-                                        "id is : " + out.getId() + "\n"
-                                                + "lat is : " + out.getLatitude() + "\n"
-                                                + "lon is : " + out.getLongitude() + "\n"
-                                                + "name is : " + out.getName() + "\n"
-                                                + "pR is : " + out.getPingRadius() + "\n";
+                                        "id is : " + out.getId()
+                                                + " lat is : " + out.getLatitude()
+                                                + " lon is : " + out.getLongitude()
+                                                + " name is : " + out.getName()
+                                                + " pR is : " + out.getPingRadius();
                                 break;
                             default:
                                 break;
                         }
                     }
 
-                    outputValue = "Output from value/s is/are following : " + "\n";
 
                     for(DatabaseValue out : dbValueFSMG) {
                         switch (out.getType()) {
                             case DatabaseValue.FS_QUERY:
                                 outputValue +=
-                                        "Id : " + out.getId() + "\n" +
-                                                "lat is : " + out.getLatitude() + "\n" +
-                                                "lon is : " + out.getLongitude() + "\n" +
-                                                "name is : " + out.getName() + "\n" +
-                                                "cG is : " + out.getCardGroup() + "\n" +
-                                                "mG is : " + out.getMallGroup() + "\n" +
-                                                "lD is : " + out.getLongDescription() + "\n" +
-                                                "sD is : " + out.getShortDescription() + "\n" +
-                                                "iE is : " + out.hasTimeLimit() + "\n" +
-                                                "pR is : " + out.getPingRadius() + "\n";
+                                        "Id : " + out.getId() +
+                                                " lat is : " + out.getLatitude() +
+                                                " lon is : " + out.getLongitude() +
+                                                " name is : " + out.getName() +
+                                                " cG is : " + out.getCardGroup() +
+                                                " mG is : " + out.getMallGroup() +
+                                                " lD is : " + out.getLongDescription() +
+                                                " sD is : " + out.getShortDescription() +
+                                                " iE is : " + out.hasTimeLimit() +
+                                                " pR is : " + out.getPingRadius();
                                 break;
                             case DatabaseValue.FSTS_QUERY:
                                 outputValue +=
-                                        "id is : " + out.getId() + "\n"
-                                                + "tS is : " + out.getTimeStart() + "\n"
-                                                + "tT is : " + out.getTimeStop() + "\n";
+                                        "id is : " + out.getId()
+                                                + " tS is : " + out.getTimeStart()
+                                                + " tT is : " + out.getTimeStop();
                                 break;
                             case DatabaseValue.FSMG_QUERY:
                                 outputValue +=
-                                        "id is : " + out.getId() + "\n"
-                                                + "lat is : " + out.getLatitude() + "\n"
-                                                + "lon is : " + out.getLongitude() + "\n"
-                                                + "name is : " + out.getName() + "\n"
-                                                + "pR is : " + out.getPingRadius() + "\n";
+                                        "id is : " + out.getId()
+                                                + " lat is : " + out.getLatitude()
+                                                + " lon is : " + out.getLongitude()
+                                                + " name is : " + out.getName()
+                                                + " pR is : " + out.getPingRadius();
                                 break;
                             default:
                                 break;
                         }
                     }
-
                     /*
 
                     //DatabaseValue value = dbValue[0];

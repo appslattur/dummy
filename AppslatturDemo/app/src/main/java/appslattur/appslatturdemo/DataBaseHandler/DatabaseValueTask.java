@@ -61,6 +61,34 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue[]>
             return null;
         }
 
+
+
+        if(args.length == 1) {
+            DatabaseValue[] returnValues = new DatabaseValue[1];
+            try {
+                int id = args[0];
+                if(controlString.equals("StudentCard")) returnValues[0] = dbController.getFSEntry(id);
+                if(controlString.equals("FSTimeStamp")) returnValues[0] = dbController.getFSTSEntry(id);
+                if(controlString.equals("FSMallGroup")) returnValues[0] = dbController.getFSMGEntry(id);
+                return returnValues;
+            }
+            catch (Exception e) {
+                return null;
+            }
+        }
+        else {
+            try {
+                if(controlString.equals("StudentCard")) return dbController.getFSTable();
+                if(controlString.equals("FSTimeStamp")) return dbController.getFSTSTable();
+                if(controlString.equals("FSMallGroup")) return dbController.getFSMGTable();
+                else return null;
+            }
+            catch (Exception f) {
+                return null;
+            }
+        }
+
+        /*
         DatabaseValue[] returnValues = new DatabaseValue[1];
         try {
             int id = args[0];
@@ -83,7 +111,7 @@ public class DatabaseValueTask extends AsyncTask<Integer, Void, DatabaseValue[]>
         catch (Exception e) {
             return null;
         }
-
+        */
 
     }
 
