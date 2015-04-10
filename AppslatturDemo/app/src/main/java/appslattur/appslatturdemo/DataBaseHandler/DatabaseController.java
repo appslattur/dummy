@@ -272,8 +272,8 @@ public class DatabaseController {
      * @return DatabaseValue corresponding to the retrieved row data
      */
     public DatabaseValue getFSEntry(int id) {
-        final String queryFSE = "SELECT * FROM " +
-                DatabaseHelper.FS_TABLE_NAME +
+        final String queryFSE = "SELECT * " +
+                "FROM " + DatabaseHelper.FS_TABLE_NAME +
                 " WHERE " + DatabaseHelper.FS_COLUMN_ID + " = " + id + ";";
 
         Cursor cursor = db.rawQuery(queryFSE, null);
