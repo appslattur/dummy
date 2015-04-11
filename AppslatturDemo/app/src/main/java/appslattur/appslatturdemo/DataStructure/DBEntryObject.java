@@ -23,6 +23,7 @@ public class DBEntryObject implements Serializable {
     public static final int DATABASE_EXTRACT = 2;
     public static final int DATABASE_CUSTOM_EXTRACT = 3;
     public static final int DATABASE_UTIL = 4;
+    public static final int DATABASE_RESPONSE = 5;
 
     ///
     // Database insertion logic
@@ -70,6 +71,13 @@ public class DBEntryObject implements Serializable {
     ///
     // Destination handling
     ///
+
+    /**
+     * @return Entry type of object
+     */
+    public int getType() {
+        return this.ENTRY_TYPE;
+    }
 
     /**
      * @param dest Represents a destination table in the in-phone database

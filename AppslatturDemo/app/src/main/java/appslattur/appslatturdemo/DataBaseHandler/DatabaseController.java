@@ -6,10 +6,16 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.ContactsContract;
+import android.util.Log;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import appslattur.appslatturdemo.DataStructure.DBEntryFS;
+import appslattur.appslatturdemo.DataStructure.DBEntryFSMG;
+import appslattur.appslatturdemo.DataStructure.DBEntryFSTS;
+import appslattur.appslatturdemo.DataStructure.DBEntryObject;
+import appslattur.appslatturdemo.DataStructure.DBEntryRESPONSE;
 import appslattur.appslatturdemo.RadarHandler.RadarIterable;
 
 /**
@@ -130,6 +136,7 @@ public class DatabaseController {
      * @param entry DatabaseEntry destined for insertion
      * @return ID of the new table row if successful, -1 if unsuccessful
      */
+    /*
     private long insertFSMGEntry(DatabaseEntry entry) {
         ContentValues values = new ContentValues();
         values.put(FSMG_allColumns[0], entry.getId());
@@ -140,7 +147,7 @@ public class DatabaseController {
         long insertId = db.insert(DatabaseHelper.FSMG_TABLE_NAME, null, values);
         values.clear();
         return insertId;
-    }
+    }*/
 
     /**
      * insertEntry(DatabaseEntry entry)
@@ -158,7 +165,7 @@ public class DatabaseController {
                 insertState = insertFSTSEntry(entry);
                 break;
             case DatabaseEntry.FSMG_QUERY:
-                insertState = insertFSMGEntry(entry);
+              //  insertState = insertFSMGEntry(entry);
             default:
                 break;
         }
@@ -536,5 +543,150 @@ public class DatabaseController {
         }
     }
 
+    ////////////
+    //////////
+    /////////// INHERITANCE TEST
+    /////////
+    //////////
+
+    private boolean isInsertError(long id) {
+        return id == -1;
+    }
+
+    private DBEntryRESPONSE insertEntryFS(DBEntryFS entry) {
+        //TODO : HANDLE ID LOGIC CHANGES IF NEED BE
+        ContentValues values = new ContentValues();
+        //values.put(FS_allColumns[0], entry.getId());
+        values.put(FS_allColumns[1], entry.getLatitudeAsString());
+        values.put(FS_allColumns[2], entry.getLongitudeAsString());
+        values.put(FS_allColumns[3], entry.getShopName());
+        values.put(FS_allColumns[4], entry.getCardName());
+        values.put(FS_allColumns[5], entry.getMallGroup());
+        values.put(FS_allColumns[6], entry.getTimeFlagAsInt());
+        values.put(FS_allColumns[7], entry.getLongDescription());
+        values.put(FS_allColumns[8], entry.getShortDescription());
+        values.put(FS_allColumns[9], entry.isEnableAsInt());
+        values.put(FS_allColumns[10], entry.getPingRadius());
+        long insertId = db.insert(DatabaseHelper.FS_TABLE_NAME, null, values);
+        values.clear();
+
+        return new DBEntryRESPONSE(entry.getId(), "Insertion of Id : " +
+                entry.getId() +
+                " returned database Id : " + insertId +
+                " table FS",
+                isInsertError(insertId));
+    }
+
+    private DBEntryRESPONSE insertEntryFSTS(DBEntryFSTS entry) {
+        //TODO : HANDLE ID LOGIC CHANGES IF NEED BE
+        ContentValues values = new ContentValues();
+        //values.put(FS_allColumns[0], entry.getId());
+        values.put(FS_allColumns[1], entry.getLatitudeAsString());
+        values.put(FS_allColumns[2], entry.getLongitudeAsString());
+        values.put(FS_allColumns[3], entry.getCardName());
+        values.put(FS_allColumns[4], entry.getCardName());
+        values.put(FS_allColumns[5], entry.getMallGroup());
+        values.put(FS_allColumns[6], entry.getTimeFlagAsInt());
+        values.put(FS_allColumns[7], entry.getLongDescription());
+        values.put(FS_allColumns[8], entry.getShortDescription());
+        values.put(FS_allColumns[9], entry.isEnableAsInt());
+        values.put(FS_allColumns[10], entry.getPingRadius());
+        long insertId = db.insert(DatabaseHelper.FS_TABLE_NAME, null, values);
+        values.clear();
+
+        DBEntryRESPONSE[] resp = new DBEntryRESPONSE[2];
+        resp[0] = new DBEntryRESPONSE(entry.getId(), "Insertion of Id : " +
+                entry.getId() +
+                " returned database Id : " + insertId +
+                " table FS",
+                isInsertError(insertId));
+
+        values.put(FSTS_allColumns[0], insertId);
+        values.put(FSTS_allColumns[1], entry.getTimeStart());
+        values.put(FSTS_allColumns[2], entry.getTimeStop());
+
+        long oldId = insertId;
+
+        insertId = db.insert(DatabaseHelper.FS_TABLE_NAME, null, values);
+        values.clear();
+
+        resp[1] = new DBEntryRESPONSE(entry.getId(), "Insertion of Id : " +
+                oldId +
+                " returned database Id : " + insertId +
+                " table FSTS",
+                isInsertError(insertId));
+
+        return createOutputResponse(resp);
+    }
+
+    private DBEntryRESPONSE insertEntryFSMG(DBEntryFSMG entry) {
+        ContentValues values = new ContentValues();
+        values.put(FSMG_allColumns[0], entry.getId());
+        values.put(FSMG_allColumns[1], entry.getLatitudeAsString());
+        values.put(FSMG_allColumns[2], entry.getLongitudeAsString());
+        values.put(FSMG_allColumns[3], entry.getName());
+        values.put(FSMG_allColumns[4], entry.getPingRadius());
+        long insertId = db.insert(DatabaseHelper.FSMG_TABLE_NAME, null, values);
+        values.clear();
+        return new DBEntryRESPONSE(10000, "Insertion of id : " +
+                entry.getId() + " returned database id : " + insertId +
+                " table FSMG",
+                isInsertError(insertId));
+
+    }
+
+    private DBEntryRESPONSE createOutputResponse(DBEntryRESPONSE[] responses) {
+        String responseString = "";
+        boolean isError = false;
+        for(DBEntryRESPONSE response : responses) {
+            responseString += response.getResponseMessage() + "\n";
+            if(response.isErrorMessage()) isError = true;
+        }
+        return new DBEntryRESPONSE(10000, responseString, isError);
+    }
+
+    public DBEntryRESPONSE insertEntry(DBEntryObject[] entryObjects) {
+
+        DBEntryRESPONSE[] insertResponse = new DBEntryRESPONSE[entryObjects.length];
+        int responseCount = 0;
+
+        for(DBEntryObject entry : entryObjects) {
+            switch (entry.getDestination()) {
+                case DBEntryObject.DATABASE_TABLE_FS:
+                    try {
+                        insertResponse[responseCount++] =
+                                insertEntryFS((DBEntryFS) entry);
+
+                    }
+                    catch (Exception e) {
+                        return new DBEntryRESPONSE(1000,
+                                "insertEntryFS",
+                                true);
+                    }
+                    break;
+                case DBEntryObject.DATABASE_TABLE_FSTS:
+                    try {
+                        insertResponse[responseCount++] =
+                                insertEntryFSTS((DBEntryFSTS) entry);
+
+                    }
+                    catch (Exception e) {
+                        return new DBEntryRESPONSE(1000,
+                                "insertEntryFSTS",
+                                true);
+                    }
+                    break;
+                default:
+                    insertResponse[responseCount++] =
+                            new DBEntryRESPONSE(50001, "Failure to recognize control flow " +
+                            "insertEntry", true);
+                    break;
+            }
+        }
+
+        return createOutputResponse(insertResponse);
+
+
+    }
 
 }

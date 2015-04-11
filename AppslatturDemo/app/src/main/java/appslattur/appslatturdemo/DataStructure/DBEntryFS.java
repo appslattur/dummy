@@ -44,7 +44,7 @@ public class DBEntryFS extends DBEntryObject {
      *
      * param hasTimeLimit is auto incremented (boolean-int)
      *
-     * Insertion does not affect the helper table
+     * Insertion does not affect the helper table (FSTimeStamps)
      */
     public DBEntryFS(int id,
                      double latitude,
@@ -184,4 +184,22 @@ public class DBEntryFS extends DBEntryObject {
     ///
     // DBEntryFS specialized Get/Set methods
     ///
+
+    public String getLatitudeAsString() {
+        return this.latitude+"";
+    }
+
+    public String getLongitudeAsString() {
+        return this.longitude+"";
+    }
+
+    public int getTimeFlagAsInt() {
+        if(hasTimeLimit) return 1;
+        return 0;
+    }
+
+    public int isEnableAsInt() {
+        if(isEnable) return 1;
+        return 0;
+    }
 }
